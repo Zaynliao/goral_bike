@@ -26,7 +26,7 @@
             </aside>
             <article class="article col-10 ">
                 <?php
-                require("product_order.php");
+                require("order_detail.php");
                 ?>
             </article>
         </section>

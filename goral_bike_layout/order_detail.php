@@ -2,10 +2,28 @@
 require_once("../goral_bike_php/db-connect.php");
 // $sql = "SELECT `user`.`name`,`order_list`.`order_id`,`order_list`.`order_address`,`order_list`.`total_amount`,`order_list`.`order_status`,`order_list`.`order_create_time`,`order_list`.`remark`,`coupons`.`coupon_name`,`coupons`.`coupon_content`,`payment_method`.`payment_method_name` FROM order_list,payment_method,coupons,user WHERE `order_list`.`order_id`='1' AND ";
 
-// $order_id = $_GET["order_id"];
-$order_id = 2;
+if (!isset($_GET["order_id"])) {
+    exit;
+}
 
-$sql = "SELECT `user`.`name`,`user`.`address`,`order_list`.`order_id`,`order_list`.`order_status`,`order_list`.`order_create_time`,payment_method.payment_method_name,`coupons`.`coupon_name`,`coupons`.`coupon_content`,`order_list`.`total_amount` FROM order_list,user,payment_method,coupons WHERE `order_list`.`order_id`='$order_id' AND `order_list`.`user_id`=`user`.`id` AND `order_list`.`payment_method_id`=`payment_method`.`id` AND `order_list`.`coupon_id`=`coupons`.`id` ";
+$order_id = $_GET["order_id"];
+// $order_id = 2;
+
+$sql = "SELECT 
+`user`.`name`,
+`user`.`address`,
+`order_list`.`order_id`,
+`order_list`.`order_status`,
+`order_list`.`order_create_time`,
+payment_method.payment_method_name,
+`coupons`.`coupon_name`,
+`coupons`.`coupon_content`,
+`order_list`.`total_amount`
+FROM order_list,user,payment_method,coupons 
+WHERE `order_list`.`order_id`='$order_id'
+AND `order_list`.`user_id`=`user`.`id` 
+AND `order_list`.`payment_method_id`=`payment_method`.`id` 
+AND `order_list`.`coupon_id`=`coupons`.`id` ";
 
 
 
