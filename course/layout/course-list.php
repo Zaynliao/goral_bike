@@ -44,6 +44,9 @@ switch($type){
         $order= "course_id ASC";
 }
 
+switch($statu){
+    
+}
 
 $sql = "SELECT * FROM classes WHERE course_valid='$valid' $cates";
 $result = $conn->query($sql);
@@ -69,8 +72,11 @@ $page_count=CEIL($total/$per_page);
 $start=($p-1)*$per_page;
 
 // ASC升冪 ; DESC 降冪
-$sql = "SELECT classes.*, course_category.* 
-FROM classes LEFT JOIN course_category on classes.course_category_id=course_category.course_category_id
+$sql = "SELECT classes.*, course_category.*, course_location.*, course_status.*
+FROM classes
+LEFT JOIN course_category on classes.course_category_id=course_category.course_category_id
+LEFT JOIN course_location on classes.course_location_id=course_location.course_location_id
+LEFT JOIN course_status on classes.course_status_id=course_status.course_status_id
 WHERE course_valid='$valid' $cates
 ORDER BY $order
 LIMIT $start,$per_page";
@@ -127,64 +133,80 @@ $user_count=$result->num_rows;
 
         <div class="text-end mb-2">
             <a href="course-list.php?p=1&type=1&valid=<?=$valid?>"
-                class="btn btn-info text-white <?php if($cate==0)echo "active"?>">全部課程</a>
+                class="btn btn-info text-white bg-dark border-dark <?php if($cate==0)echo "active"?>">全部課程</a>
             <a href="course-list.php?p=1&type=1&valid=<?=$valid?>&cate=1"
-                class="btn btn-info text-white <?php if($cate==1)echo "active"?>">入門課程</a>
+                class="btn btn-info text-white bg-success border-success <?php if($cate==1)echo "active"?>">入門課程</a>
             <a href="course-list.php?p=1&type=1&valid=<?=$valid?>&cate=2"
-                class="btn btn-info text-white <?php if($cate==2)echo "active"?>">進階課程</a>
+                class="btn btn-info text-white bg-danger border-danger <?php if($cate==2)echo "active"?>">進階課程</a>
         </div>
 
 
         <div class="text-end">
             <a href="course-list.php?p=<?=$p?>&type=1&valid=<?=$valid?><?php if($cate==0):?><?php else: echo "&cate=$cate"?><?php endif;?>"
-                class="btn btn-info text-white <?php if($type==1)echo "active"?>">依序號正序</a>
+                class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none <?php if($type==1)echo "active"?>">依序號正序</a>
             <a href="course-list.php?p=<?=$p?>&type=2&valid=<?=$valid?><?php if($cate==0):?><?php else: echo "&cate=$cate"?><?php endif;?>"
-                class="btn btn-info text-white <?php if($type==2)echo "active"?>">依序號反序</a>
+                class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none<?php if($type==2)echo "active"?>">依序號反序</a>
             <a href="course-list.php?p=<?=$p?>&type=3&valid=<?=$valid?><?php if($cate==0):?><?php else: echo "&cate=$cate"?><?php endif;?>"
-                class="btn btn-info text-white <?php if($type==3)echo "active"?>">依課程時間正序</a>
+                class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none<?php if($type==3)echo "active"?>">依課程時間正序</a>
             <a href="course-list.php?p=<?=$p?>&type=4&valid=<?=$valid?><?php if($cate==0):?><?php else: echo "&cate=$cate"?><?php endif;?>"
-                class="btn btn-info text-white <?php if($type==4)echo "active"?>">依課程時間反序</a>
+                class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none<?php if($type==4)echo "active"?>">依課程時間反序</a>
         </div>
 
 
 
         <div class="pt-4 pb-2 text-end">
-            <a class="btn btn-info text-white position-relative" href="./course-insert.php"
+            <a class="btn btn-info text-white bg-secondary border-secondary position-relative" href="./course-insert.php"
                 <?php if(isset($_GET["valid"]) && $_GET["valid"]==0): echo "hidden"?> <?php endif;?>>新增課程</a>
         </div>
         <div class="row">
             <h2>COURSE LIST</h2>
+            <?php if($user_count>0): ?>
             <?php foreach($rows as $row): ?>
             <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
-                <div class="card">
+                <div class="card shadow-sm">
                     <figure class="product-img text-center">
                         <img class="object-cover" src="../images/<?=$row["course_pictures"]?>" alt="">
                     </figure>
                     <div class="pb-2 px-3">
-                        <div class="pb-2">
-                            <span class="badge bg-primary"></span>
-                        </div>
-                        <span class="h5"><?=$row["course_title"]?></span>
                         <span class="badge 
                         <?php if($row["course_category_id"]==1): echo "bg-success"?>
                         <?php else: echo "bg-danger"?>
                         <?php endif;?>
-                        rounded-pill px-2 me-2"><?=$row["course_category_name"]?>
+                        rounded-pill px-2 me-1"><?=$row["course_category_name"]?>
                         </span>
-                        <div class="price text-end">$<?=$row["course_price"]?>
+                        <span class="badge 
+                        <?php if($row["course_status_id"]==1): echo "bg-secondary"?>
+                        <?php elseif($row["course_status_id"]==2): echo "bg-success"?>
+                        <?php else: echo "bg-danger"?>
+                        <?php endif;?>
+                        rounded-pill px-2 me-1"><?=$row["course_status_name"]?>
+                        </span>
+                        <span class="badge bg-dark rounded-pill px-2 me-1">
+                            <?=$row["course_location_name"]?>
+                        </span>
+                        <span class="badge bg-dark rounded-pill px-2 me-2">
+                            <?=$row["course_price"]?> / 人
+                        </span>
+                        <div class="name-time mt-3">
+                            <h3 class="text-dark fw-bold"><?=$row["course_title"]?></h3>
+                            <h5 class="text-dark fw-bold"><?=$row["course_date"]?></h5>
                         </div>
-                        <div class="d-grid">
-                            <a class="btn btn-info text-white mb-2"
+
+                        <div class="d-grid mt-4">
+                            <a class="btn btn-info bg-dark border-dark text-white mb-2 fw-bold"
                                 href="./upload-course.php?id=<?=$row["course_id"]?>&statu=<?=$row["course_status_id"]?>&loca=<?=$row["course_location_id"]?>&cate=<?=$row["course_category_id"]?>">修改課程</a>
                         </div>
                         <div class="d-grid">
-                            <button class="delete-btn btn btn-info text-white mb-2" data-id="<?=$row["course_id"]?>"
+                            <button
+                                class="delete-btn btn btn-info bg-secondary border-secondary text-white mb-2 fw-bold"
+                                data-id="<?=$row["course_id"]?>"
                                 <?php if(isset($_GET["valid"]) && $_GET["valid"]==0): echo "hidden"?>
                                 <?php endif;?>>下架課程</button>
-                            <button class="valid-btn btn btn-info text-white mb-2" data-id="<?=$row["course_id"]?>"
+                            <button class="valid-btn btn btn-info text-white mb-2 fw-bold"
+                                data-id="<?=$row["course_id"]?>"
                                 <?php if(!isset($_GET["valid"]) || $_GET["valid"]==1): echo "hidden"?>
                                 <?php endif;?>>上架課程</button>
-                            <button class="isdelete-btn btn btn-info text-white mb-2 bg-danger border-danger"
+                            <button class="isdelete-btn btn btn-info text-white mb-2 bg-danger border-danger fw-bold"
                                 data-id="<?=$row["course_id"]?>"
                                 <?php if(!isset($_GET["valid"]) || $_GET["valid"]==1): echo "hidden"?>
                                 <?php endif;?>>刪除課程</button>
@@ -193,12 +215,14 @@ $user_count=$result->num_rows;
                 </div>
             </div>
             <?php endforeach; ?>
+            <?php else: echo "<p class='text-center mt-4 fw-bold text-secondary'>無資料符合<br>請選擇其他條件</p>"?>
+            <?php endif; ?>
             <div class="py-2">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination  justify-content-center"> 
+                    <ul class="pagination  justify-content-center">
                         <?php for($i=1; $i<=$page_count;$i++): ?>
                         <li class="page-item <?php if($p==$i)echo "active"?>">
-                        <a class="page-link"
+                            <a class="page-link"
                                 href="course-list.php?p=<?=$i?>&type=<?=$type?><?php if($cate==0):?><?php else: echo "&cate=$cate"?><?php endif;?>&valid=<?=$valid?>"><?=$i?></a>
                         </li>
                         <?php endfor; ?>
