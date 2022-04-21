@@ -157,9 +157,18 @@ $conn->close();
 
                                 <div class="col-8">
                                     <div class="mb-3">
+
                                         <label for="product_images" class="form-label">商品圖片</label>
-                                        <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
+
+
+                                        <input type="file" class="form-control" name="product_images" id="product_images" accept=".jpg, .jpeg, .png, .webp, .svg">
+                                        <div class="img-thumbnail text-center">
+                                            <img src="" class="img-fluid" id="img-view">
+                                        </div>
+
                                     </div>
+
+
                                 </div>
 
                                 <div class="col-md-6">

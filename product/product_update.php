@@ -36,8 +36,11 @@ $conn->close();
                     <h3 for="product_img" class="form-label text-center fw-bolder">商品圖片</h3>
                 </div>
 
+
+
                 <figure class=" figure d-flex justify-content-center align-items-center">
-                    <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+                    <!-- <input type="file" class="form-control" name="product_images" id="product_images" accept=".jpg, .jpeg, .png, .webp, .svg"> -->
+                    <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>" class="img-fluid" id="img-view">
                 </figure>
 
                 <div class="py-2 px-3">
