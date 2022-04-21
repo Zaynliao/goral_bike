@@ -115,19 +115,24 @@ $conn->close();
             <?php $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
 
             <div class="dropdown">
-                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     排序方式選擇
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
                     <?php if (strpos($file, "product_category_id") === false) : ?>
-                        <?php for ($i = 0; $i < count($a); $i++) : ?>
-                            <li><a type="" class="dropdown-item <?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a></li>
-                        <?php endfor; ?>
+                    <?php for ($i = 0; $i < count($a); $i++) : ?>
+                    <li><a type="" class="dropdown-item <?php if ($type == $i) echo "active" ?>"
+                            href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
+                    </li>
+                    <?php endfor; ?>
                     <?php else : ?>
-                        <?php for ($i = 0; $i < count($a); $i++) : ?>
-                            <li><a type="button" class="dropdown-item <?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a></li>
-                        <?php endfor; ?>
+                    <?php for ($i = 0; $i < count($a); $i++) : ?>
+                    <li><a type="button" class="dropdown-item <?php if ($type == $i) echo "active" ?>"
+                            href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
+                    </li>
+                    <?php endfor; ?>
                     <?php endif; ?>
 
 
@@ -142,7 +147,8 @@ $conn->close();
 
 
             <p class="d-flex justify-content-end mt-2">
-                <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false" aria-controls="insert">新增商品</a>
+                <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false"
+                    aria-controls="insert">新增商品</a>
             </p>
 
             <div class="row">
@@ -150,22 +156,26 @@ $conn->close();
                     <div class="collapse multi-collapse" id="insert">
                         <div class="container">
 
-                            <form class="row g-3 mt-2" name="insert" action="../product/goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
+                            <form class="row g-3 mt-2" name="insert"
+                                action="../product/goral_bike_php/product_insert.php" method="post"
+                                enctype="multipart/form-data">
 
                                 <div class="col-md-6">
                                     <label for="product_name" class="form-label">商品名稱</label>
-                                    <input type="text" class="form-control" name="product_name" id="product_name" placeholder="請輸入商品名稱">
+                                    <input type="text" class="form-control" name="product_name" id="product_name"
+                                        placeholder="請輸入商品名稱">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="product_price" class="form-label">商品價格</label>
-                                    <input type="text" class="form-control" name="product_price" id="product_price" placeholder="請輸入商品價格">
+                                    <input type="text" class="form-control" name="product_price" id="product_price"
+                                        placeholder="請輸入商品價格">
                                 </div>
-
                                 <div class="col-8">
                                     <div class="mb-3">
                                         <label for="product_images" class="form-label">商品圖片</label>
-                                        <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
+                                        <input class="form-control" type="file" name="product_images"
+                                            id="product_images" placeholder="請輸入商品圖片">
                                     </div>
                                 </div>
 
@@ -173,9 +183,9 @@ $conn->close();
                                     <label for="product_category_id" class="form-label">商品類別</label>
                                     <select name="product_category_id" id="product_category_id" class="form-select">
                                         <?php foreach ($product_category_rows as $product_category_row) : ?>
-                                            <option value="<?= $product_category_row["product_category_id"] ?>">
-                                                <?= $product_category_row["product_category_name"] ?>
-                                            </option>
+                                        <option value="<?= $product_category_row["product_category_id"] ?>">
+                                            <?= $product_category_row["product_category_name"] ?>
+                                        </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -196,42 +206,36 @@ $conn->close();
     </div>
     <div class="row">
         <?php if ($product_count > 0) : ?>
-            <?php foreach ($rows as $row) : ?>
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                    <div class="card p-2">
-                        <div class="py-2 text-end">
-                            <a class="text-decoration-none fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
-                            |
-                            <a class="text-danger text-decoration-none fw-bold" href="../product/goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
-                        </div>
+        <?php foreach ($rows as $row) : ?>
+        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+            <div class="card px-3">
 
 
-                        <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
+                <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
 
-                            <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+                    <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
 
-
-                        </figure>
-
-
-
-                        <h1 class="text-center h4"><?= $row["product_name"] ?></h1>
-
-                        <div class="py-2 px-3">
-                            <div class="price text-end">
-                                $<?= $row["product_price"] ?>
-                            </div>
-                        </div>
-
-                        <div class="py-2 px-3">
-                            <div class="text-end">
-                                <?= $row["product_category_name"] ?>
-                            </div>
-                        </div>
-
-                    </div>
+                </figure>
+                <div class="mb-3">
+                    <span class="badge bg-dark rounded-pill" <?php if (!$row["product_price"]) : echo "hidden"?>
+                        <?php endif; ?>>
+                        $ <?= $row["product_price"] ?>
+                    </span>
+                    <span class="badge bg-dark rounded-pill" <?php if (!$row["product_category_name"]) : echo "hidden"?>
+                        <?php endif; ?>>
+                        <?= $row["product_category_name"] ?>
+                    </span>
                 </div>
-            <?php endforeach; ?>
+                <h1 class="h4 fw-bold"><?= $row["product_name"] ?></h1>
+                <div class="py-2 d-grid">
+                    <a class="delete-btn btn btn-dark text-white mb-2 fw-bold"
+                        href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
+                    <a class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
+                        href="../product/goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
         <?php endif; ?>
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
@@ -245,13 +249,16 @@ $conn->close();
 
 
             <?php if (strpos($file, "product_category_id") === false) : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
+            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+            <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark"
+                    href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+            <?php endfor; ?>
             <?php else : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
+            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+            <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark"
+                    href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a>
+            </li>
+            <?php endfor; ?>
             <?php endif; ?>
 
             <li class="page-item">
