@@ -27,43 +27,21 @@ $conn->close();
     <a href="../payment_method/payment_method_restore_page.php" class="btn btn-dark my-3">Restore deleted payment method</a>
     <a href="../payment_method/payment_method_alter.php" class="btn btn-success">Create payment method</a>
     <!-- <div class="row col-11 justify-content-between align-items-between"> -->
-    <div class="row col-12 justify-content-between align-items-between">
-      <?php foreach ($rows as $row) : ?>
-
-        <div class="my-2 py-2 bg-light border-2 card">
-          <div class="d-flex justify-content-between mt-2 border-bottom border-white pb-1">
-            <div class="ms-5 col-4">
-              <div class="row row-cols-2">
-                <p class="col-6">Payment method id</p>
-                <p class="col-6">Payment method name</p>
-              </div>
-              <div class="row row-cols-2">
-                <p class="col-6"><?= $row["id"] ?></p>
-                <p class="col-6"><?= $row["payment_method_name"] ?></p>
-              </div>
-            </div>
-            <div>
-              <a href="../payment_method/payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a>
-              <a href="../payment_method/payment_method_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete payment method</a>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-        <!-- <div class="my-2 py-2 bg-light border-2 card">
-            <div class="d-flex justify-content-between mt-2 border-bottom border-white pb-1">
-                <p>Payment method id: <?= $row["id"] ?></p>
-                <div>
-                    <a href="payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a>
-                    <a href="payment_method_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete payment method</a>
-                </div>
-            </div>
-            <p>Payment method name: <?= $row["payment_method_name"] ?></p>
-        </div> -->
-      <?php endforeach; ?>
+    <div>
+            <table class="table-bordered w-100">
+              <tr>
+                <td>Payment method id</td>
+                <td>Payment method name</td>
+                <td>Edit coupon</td>
+                <td>Delete</td>
+              </tr>
+              <?php foreach($rows as $row) : 
+            echo '<tr><td>' .$row["id"].'</td><td>'.$row["payment_method_name"].'</td><td class="m-auto">'?>
+          <a href="../payment_method/payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a></td><td>
+          <a href="../payment_method/payment_method_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete payment method</a></td></tr>
+          <?php endforeach;?>
+        </table>
+        </div>  
     </div>
   </div>
   <!-- Bootstrap JavaScript Libraries -->
