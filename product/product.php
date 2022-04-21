@@ -2,12 +2,12 @@
 require_once("../db-connect.php");
 
 // ------------------------------------------------------------------------------------------------
-$path = $_SERVER["REQUEST_URI"];
+// $path = $_SERVER["REQUEST_URI"];
 
 // echo $path;
-// 透過路徑取得檔名
-$file = basename($path);
-// echo $file;
+// // 透過路徑取得檔名
+// $file = basename($path);
+// // echo $file;
 
 if (!isset($_GET["p"])) {
     $p = 1;
@@ -79,7 +79,6 @@ if (!isset($_GET["product_category_id"])) {
 } else {
 
     $product_category_id = $_GET["product_category_id"];
-
     $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' ORDER BY $order LIMIT $start,$per_page";
 }
 
@@ -112,23 +111,23 @@ $conn->close();
 
     <div class="py-2 text-end">
 
-        <?php
-
-        $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
+        <?php $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
 
 
         <?php if (strpos($file, "product_category_id") === false) : ?>
             <?php for ($i = 0; $i < count($a); $i++) : ?>
-                <a type="button" class="btn btn-outline-dark<?php if ($type == $i) echo "active" ?>" href="goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
+                <a type="button" class="btn btn-outline-dark<?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
             <?php endfor; ?>
         <?php else : ?>
             <?php for ($i = 0; $i < count($a); $i++) : ?>
-                <a type="button" class="btn btn-outline-dark<?php if ($type == $i) echo "active" ?>" href="goral_biker_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
+                <a type="button" class="btn btn-outline-dark<?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
             <?php endfor; ?>
         <?php endif; ?>
 
 
     </div>
+
+
 
     <p class="d-flex justify-content-end mt-2">
         <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false" aria-controls="insert">新增商品</a>
@@ -139,7 +138,7 @@ $conn->close();
             <div class="collapse multi-collapse" id="insert">
                 <div class="container">
 
-                    <form class="row g-3 mt-2" name="insert" action="../goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
+                    <form class="row g-3 mt-2" name="insert" action="goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
 
                         <div class="col-md-6">
                             <label for="product_name" class="form-label">商品名稱</label>
@@ -187,10 +186,7 @@ $conn->close();
         <?php if ($product_count > 0) : ?>
             <?php foreach ($rows as $row) : ?>
                 <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-
                     <div class="card p-2">
-
-
                         <div class="py-2 text-end">
                             <a class="text-decoration-none fw-bold" href="goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
                             |
@@ -199,7 +195,10 @@ $conn->close();
 
 
                         <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
-                            <img class="img-fluid" src="../goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+
+                            <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+
+
                         </figure>
 
 
@@ -212,11 +211,6 @@ $conn->close();
                             </div>
                         </div>
 
-                        <!-- <div class="py-2 px-3">
-                            <div class=" d-flex justify-content-end">
-                                <span class="badge bg-success"><?= $row["product_category_name"] ?></span>
-                            </div>
-                        </div> -->
                         <div class="py-2 px-3">
                             <div class="text-end">
                                 <?= $row["product_category_name"] ?>
@@ -236,10 +230,17 @@ $conn->close();
                 </a>
             </li>
 
-            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a></li>
-            <?php endfor; ?>
 
+
+            <?php if (strpos($file, "product_category_id") === false) : ?>
+                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                <?php endfor; ?>
+            <?php else : ?>
+                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a></li>
+                <?php endfor; ?>
+            <?php endif; ?>
 
             <li class="page-item">
                 <a class="page-link text-dark" href="#" aria-label="Next">

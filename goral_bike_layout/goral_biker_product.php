@@ -37,7 +37,7 @@
 
     </div>
     <!-- Bootstrap JavaScript Libraries -->
-    <?php require_once("../goral_bike_php/js.php") ?>
+    <?php require_once("../product/goral_bike_php/js.php") ?>
 
 </body>
 
