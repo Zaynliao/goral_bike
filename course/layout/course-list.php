@@ -183,7 +183,7 @@ $user_count = $result->num_rows;
                     </div>
 
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-info">查詢</button>
+                        <button type="submit" class="btn btn-secondary">查詢</button>
                     </div>
                 </div>
             </form>
@@ -233,7 +233,7 @@ $user_count = $result->num_rows;
                         </div>
                         <div class="d-grid">
                             <button
-                                class="delete-btn btn btn-info bg-secondary border-secondary text-white mb-2 fw-bold"
+                                class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
                                 data-id="<?= $row["course_id"] ?>"
                                 <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?>
                                 <?php endif; ?>>下架課程</button>
@@ -241,7 +241,7 @@ $user_count = $result->num_rows;
                                 data-id="<?= $row["course_id"] ?>"
                                 <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
                                 <?php endif; ?>>上架課程</button>
-                            <button class="isdelete-btn btn btn-info text-white mb-2 bg-danger border-danger fw-bold"
+                            <button class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
                                 data-id="<?= $row["course_id"] ?>"
                                 <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
                                 <?php endif; ?>>刪除課程</button>
