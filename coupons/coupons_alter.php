@@ -24,7 +24,7 @@
         </form>
         <form action="coupons_edit_get.php" method="get">
           <h5>Edit, Restore, and Delete coupons:</h5>
-          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-info text-white">Coupon page</a>
+          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary">Return to coupon page</a>
       </div>
       
 

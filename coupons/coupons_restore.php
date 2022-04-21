@@ -19,10 +19,10 @@ $sql="UPDATE coupons SET valid=1 WHERE id='$id'";
 
 if ($conn->query($sql) === TRUE) {
     	echo "The coupon has been restored";
+        header("location: coupons_restore_page.php");
 } else {
     	echo "Error" . $conn->error;
 }
 
 $conn->close();
-header("location: ../goral_bike_layout/goral_biker_coupons.php");
 ?>

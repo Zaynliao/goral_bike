@@ -32,7 +32,7 @@ if(mysqli_num_rows($select)) {
 $sql="INSERT INTO coupons (coupon_name, coupon_code, coupon_content, coupon_expiry_date) VALUES ('$name', '$code', '$content', '$date')";
 if ($conn->query($sql) === TRUE) {
   echo "You have created a coupon!";
-  header("../goral_bike_layout/goral_biker_coupons.php");
+  header("location: coupons_alter.php");
 } else {
   echo "Error" . $conn->error;
 }

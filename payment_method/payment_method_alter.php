@@ -21,7 +21,7 @@
         </form>
         <form action="payment_method_edit_get.php" method="get">
           <h5>Edit, Restore, and Delete payment methods:</h5>
-          <a href="payment_method_page.php" class="btn btn-info">Payment method page</a>
+          <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary">Return to edit page</a>
       </div>
       
 

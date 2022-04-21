@@ -33,7 +33,8 @@ $conn -> close();
           <input type="hidden" name="id" id="id" value="<?=$id?>">
           <input type="text" name="name" id="name" class="form-control my-2" value="<?=$name?>">
           <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
-          <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
+          <button type="reset" class="btn btn-warning mt-2 my-2">Reset</button>
+          <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary mt-2 my-2">Return to edit page</a>
 
 
 
