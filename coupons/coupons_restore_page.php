@@ -21,15 +21,14 @@ $conn->close();
   </head>
   <body>
       <div class="container">
-          <a href="coupons_page.php" class="btn btn-dark my-3">Back to coupon list</a>
-          <a href="coupons_alter.php" class="btn btn-secondary">Back to create coupons</a>
+          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary my-3">Back to coupon page</a>
         <div class="row col-11 justify-content-between align-items-between">
         <?php foreach($rows as $row) : ?>
         <div class="bg-light w-50 border col-4">
             <div class="d-flex justify-content-between mt-2">
                 <p>Coupon id: <?=$row["id"]?></p>
                 <div>
-                    <a href="coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info">Restore coupon</a>
+                    <a href="coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a>
                 </div>
             </div>
             <p>Coupon name: <?=$row["coupon_name"]?></p>

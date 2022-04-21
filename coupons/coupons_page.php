@@ -24,16 +24,16 @@ $conn->close();
 
 <body>
   <div class="container">
-    <a href="coupons_restore_page.php" class="btn btn-dark my-3">Restore deleted coupons</a>
-    <a href="coupons_alter.php" class="btn btn-secondary">Back to create coupons</a>
+    <a href="../coupons/coupons_restore_page.php" class="btn btn-dark my-3">Restore deleted coupons</a>
+    <a href="../coupons/coupons_alter.php" class="btn btn-success">Create coupons</a>
     <div class="row row-cols-1 gap-2 my-2">
       <?php foreach ($rows as $row) : ?>
         <div class="bg-light card">
           <div class="d-flex justify-content-between my-2">
             <p>Coupon id: <?= $row["id"] ?></p>
             <div>
-              <a href="coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>" class="btn btn-info text-white">Edit coupon</a>
-              <a href="coupons_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete coupon</a>
+              <a href="../coupons/coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>" class="btn btn-info text-white">Edit coupon</a>
+              <a href="../coupons/coupons_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete coupon</a>
             </div>
           </div>
           <p>Coupon name: <?= $row["coupon_name"] ?></p>

@@ -43,7 +43,7 @@ $conn->close();
               </div>
             </div>
             <div>
-              <a href="./payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a>
+              <a href="payment_method/payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a>
               <a href="payment_method_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete payment method</a>
             </div>
           </div>
