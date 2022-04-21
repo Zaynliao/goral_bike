@@ -61,7 +61,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     </div>
                     <div class="mb-2">課程圖片
                         <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <div class="img-thumbnail text-center"> <img src="../../goral_bike/course/icon/no-image.png" class=" img-fluid" id="img-view"></div>
+                        <div class="img-thumbnail text-center"> <img src="../../goral_bike_First/course/icon/no-image.png" class=" img-fluid" id="img-view"></div>
                     </div>
                     <div class="mb-2">
                         <label for="">課程時間</label>
