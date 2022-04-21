@@ -22,11 +22,11 @@
         </header>
         <section class="row p-0 m-0 vh-100">
             <aside class="aside col-2 p-0">
-                <?php require("order_list_aside.php") ?>
+                <?php require("../aside/order_list_aside.php") ?>
             </aside>
             <article class="article col-10 ">
                 <?php
-                require("order_detail.php");
+                require("../order_list/order_detail.php");
                 ?>
             </article>
         </section>
