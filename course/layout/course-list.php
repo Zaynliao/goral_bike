@@ -124,33 +124,33 @@ $user_count = $result->num_rows;
         <div class="py-2">
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a href="./course-list.php?valid=1&p=1&type=<?= $type ?>" class="nav-link <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "active" ?><?php endif; ?>" aria-current="page">已上架商品</a>
+                    <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1&p=1&type=<?= $type?>" class="nav-link <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "active" ?><?php endif; ?>" aria-current="page">已上架商品</a>
                 </li>
                 <li class="nav-item">
-                    <a href="./course-list.php?valid=0&p=1&type=<?= $type ?>" class="nav-link <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "active" ?><?php endif; ?>" aria-current="page">已下架商品</a>
+                    <a href="../goral_bike_layout/goral_biker_course-list.php?valid=0&p=1&type=<?= $type ?>" class="nav-link <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "active" ?><?php endif; ?>" aria-current="page">已下架商品</a>
                 </li>
             </ul>
         </div>
 
 
         <div class="text-end mb-2">
-            <a href="course-list.php?p=1&type=1&valid=<?= $valid ?>" class="btn btn-info text-white bg-dark border-dark <?php if ($cate == 0) echo "active" ?>">全部課程</a>
-            <a href="course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1" class="btn btn-info text-white bg-success border-success <?php if ($cate == 1) echo "active" ?>">入門課程</a>
-            <a href="course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2" class="btn btn-info text-white bg-danger border-danger <?php if ($cate == 2) echo "active" ?>">進階課程</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>" class="btn btn-dark text-white <?php if ($cate == 0) echo "active" ?>">全部課程</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1" class="btn btn-success text-white <?php if ($cate == 1) echo "active" ?>">入門課程</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2" class="btn btn-danger text-white <?php if ($cate == 2) echo "active" ?>">進階課程</a>
         </div>
 
 
         <div class="text-end">
-            <a href="course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none <?php if ($type == 1) echo "active" ?>">依序號正序</a>
-            <a href="course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none<?php if ($type == 2) echo "active" ?>">依序號反序</a>
-            <a href="course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none<?php if ($type == 3) echo "active" ?>">依課程時間正序</a>
-            <a href="course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-info text-white bg-dark border-dark text-decoration-none<?php if ($type == 4) echo "active" ?>">依課程時間反序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 1) echo "active" ?>">依序號正序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 2) echo "active" ?>">依序號反序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 3) echo "active" ?>">依課程時間正序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>" class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 4) echo "active" ?>">依課程時間反序</a>
         </div>
 
 
 
         <div class="pt-4 pb-2 text-end">
-            <a class="btn btn-info text-white bg-secondary border-secondary position-relative" href="./course-insert.php" <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?> <?php endif; ?>>新增課程</a>
+            <a class="btn btn-secondary text-white position-relative" href="../goral_bike_layout/goral_biker_course-insert.php"<?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?> <?php endif; ?>>新增課程</a>
         </div>
         <div class="row">
             <h2>COURSE LIST</h2>
@@ -187,7 +187,7 @@ $user_count = $result->num_rows;
                                 </div>
 
                                 <div class="d-grid mt-4">
-                                    <a class="btn btn-info bg-dark border-dark text-white mb-2 fw-bold" href="./upload-course.php?id=<?= $row["course_id"] ?>&statu=<?= $row["course_status_id"] ?>&loca=<?= $row["course_location_id"] ?>&cate=<?= $row["course_category_id"] ?>">修改課程</a>
+                                    <a class="btn btn-info bg-dark border-dark text-white mb-2 fw-bold" href="../goral_bike_layout/goral_biker_course-upload.php?id=<?= $row["course_id"] ?>&statu=<?= $row["course_status_id"] ?>&loca=<?= $row["course_location_id"] ?>&cate=<?= $row["course_category_id"] ?>">修改課程</a>
                                 </div>
                                 <div class="d-grid">
                                     <button class="delete-btn btn btn-info bg-secondary border-secondary text-white mb-2 fw-bold" data-id="<?= $row["course_id"] ?>" <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?> <?php endif; ?>>下架課程</button>
@@ -205,7 +205,7 @@ $user_count = $result->num_rows;
                     <ul class="pagination  justify-content-center">
                         <?php for ($i = 1; $i <= $page_count; $i++) : ?>
                             <li class="page-item <?php if ($p == $i) echo "active" ?>">
-                                <a class="page-link" href="course-list.php?p=<?= $i ?>&type=<?= $type ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>&valid=<?= $valid ?>"><?= $i ?></a>
+                                <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $i ?>&type=<?= $type ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>&valid=<?= $valid ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
                     </ul>

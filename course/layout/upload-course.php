@@ -44,10 +44,10 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
         <div class="row justify-content-center">
             <div class="col-lg-4">
                 <div class="pt-4 pb-2 text-end">
-                    <a class="btn btn-info text-white position-relative" href="./course-list.php">返回課程管理</a>
+                    <a class="btn btn-info text-white position-relative" href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
                 </div>
                 <h1>修改課程</h1>
-                <form action="../api/course-doUpload.php" enctype="multipart/form-data" method="post">
+                <form action="../course/api/course-doUpload.php" enctype="multipart/form-data" method="post">
                     <div class="mb-2">
                         <label for="">課程編號 : <?=$rows["course_id"]?></label>
                         <input class="form-control" type="hidden" name="id" id="id" value="<?=$rows["course_id"]?>">
@@ -80,7 +80,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <div class="mb-2">課程圖片
                         <input type="file" class="form-control" name="image" id="image"
                             accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <img src="../images/<?=$rows["course_pictures"]?>" class="img-thumbnail" id="img-view">
+                        <img src="../../goral_bike/course/images/<?=$rows["course_pictures"]?>" class="img-thumbnail" id="img-view">
                     </div>
                     <div class="mb-2">
                         <label for="">課程時間</label>

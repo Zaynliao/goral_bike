@@ -1,5 +1,5 @@
 <?php
-require_once("../db-connect.php");
+require("../../goral_bike/goral_bike_php/db-connect.php");
 
 $id=$_POST["id"];
 
