@@ -26,7 +26,7 @@ if (empty($product_name) || empty($product_images) || empty($product_price)) {
 
 if ($_FILES["product_images"]["error"] == 0) {
 
-    if (file_exists("../goral_bike_pic/" . $_FILES["product_images"]["name"])) {
+    if (file_exists("../product/goral_bike_pic/" . $_FILES["product_images"]["name"])) {
         echo $_FILES["product_images"]["name"];
         echo "檔案已存在";
     } else {
@@ -40,7 +40,7 @@ if ($_FILES["product_images"]["error"] == 0) {
 
                 $conn->close();
 
-                header("location:../goral_bike_layout/goral_biker_product.php");
+                header("location:../../goral_bike_layout/goral_biker_product.php");
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
                 exit;

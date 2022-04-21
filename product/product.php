@@ -2,9 +2,9 @@
 require_once("../db-connect.php");
 
 // ------------------------------------------------------------------------------------------------
-// $path = $_SERVER["REQUEST_URI"];
+$path = $_SERVER["REQUEST_URI"];
 
-// echo $path;
+echo $path;
 // // 透過路徑取得檔名
 // $file = basename($path);
 // // echo $file;
@@ -138,7 +138,7 @@ $conn->close();
             <div class="collapse multi-collapse" id="insert">
                 <div class="container">
 
-                    <form class="row g-3 mt-2" name="insert" action="goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
+                    <form class="row g-3 mt-2" name="insert" action="" method="post" enctype="multipart/form-data">
 
                         <div class="col-md-6">
                             <label for="product_name" class="form-label">商品名稱</label>

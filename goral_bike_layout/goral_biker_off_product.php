@@ -22,11 +22,11 @@
         </header>
         <section class="row p-0 m-0 vh-100">
             <aside class="aside col-2 p-0">
-                <?php require("product_aside.php") ?>
+                <?php require("../aside/product_aside.php") ?>
             </aside>
             <article class="article col-10 ">
                 <?php
-                require("off_product.php");
+                require("../product/off_product.php");
                 ?>
             </article>
         </section>
@@ -37,7 +37,8 @@
 
     </div>
     <!-- Bootstrap JavaScript Libraries -->
-    <?php require_once("../goral_bike_php/js.php") ?>
+    <?php require_once("../product/goral_bike_php/js.php") ?>
+
 
 </body>
 

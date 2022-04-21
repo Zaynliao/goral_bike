@@ -2,6 +2,7 @@
 require_once("../db-connect.php");
 
 $product_valid = 0;
+
 if (!isset($_GET["product_category_id"])) {
 
     $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id ORDER BY product.product_id DESC";
@@ -48,7 +49,7 @@ $conn->close();
                         <a class="text-danger text-decoration-none fw-bold" href="../goral_bike_php/product_DELETE_ALL.php?product_id=<?= $row["product_id"] ?>">刪除商品</a>
                     </div>
                     <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
-                        <img class="img-fluid" src="../goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+                        <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
                     </figure>
 
                     <h1 class="text-center h4"><?= $row["product_name"] ?></h1>
