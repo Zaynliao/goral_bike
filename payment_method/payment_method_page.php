@@ -1,5 +1,5 @@
 <?php
-require_once("../../goral_bike/goral_bike_php/db-connect.php");
+require_once("db-connect.php");
 
 
 $sql = "SELECT * FROM payment_method WHERE valid=1";
