@@ -1,5 +1,5 @@
 <?php
-require_once("../goral_bike_php/db-connect.php");
+require_once("../db-connect.php");
 
 $sql = "SELECT * FROM order_list";
 $result = $conn->query($sql);
@@ -127,9 +127,9 @@ $product_count = $result->num_rows;
                         <td><?= $row["remark"] ?></td>
                         <td><?= $row["payment_method_id"] ?></td>
                         <td><?= $row["coupon_id"] ?></td>
-                        <td><a class="btn btn-primary text-white" href="goral_biker_product_order.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a></td>
+                        <td><a class="btn btn-primary text-white" href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a></td>
                         <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td>
-                        <td><a class="btn btn-danger text-white" href="../goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a></td>
+                        <td><a class="btn btn-danger text-white" href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a></td>
                     </tr>
                 <?php endforeach; ?>
 

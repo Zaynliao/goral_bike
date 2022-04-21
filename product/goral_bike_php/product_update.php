@@ -25,9 +25,10 @@ $sql = "UPDATE `product` SET `product_name` = '$product_name ', `product_price` 
 if ($conn->query($sql) === TRUE) {
 
     $conn->close();
-
-    // header("location:../../goral_bike_layout/goral_biker_product.php");
-    echo "<script> alert('修改成功');history.go(-2); </script>";
+    // echo "<script> alert('修改一筆資料成功'); </script>";
+    header("location:../../goral_bike_layout/goral_biker_product.php");
+    // echo "<script> history.go(-2);</script>";
+    // echo "<script> location.href = document.referrer;</script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     exit;

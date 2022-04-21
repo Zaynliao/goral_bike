@@ -26,23 +26,24 @@ $conn->close();
   <div class="container">
     <a href="../coupons/coupons_restore_page.php" class="btn btn-dark my-3">Restore deleted coupons</a>
     <a href="../coupons/coupons_alter.php" class="btn btn-success">Create coupons</a>
-    <div class="row row-cols-1 gap-2 my-2">
-      <?php foreach ($rows as $row) : ?>
-        <div class="bg-light card">
-          <div class="d-flex justify-content-between my-2">
-            <p>Coupon id: <?= $row["id"] ?></p>
-            <div>
-              <a href="../coupons/coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>" class="btn btn-info text-white">Edit coupon</a>
-              <a href="../coupons/coupons_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete coupon</a>
-            </div>
-          </div>
-          <p>Coupon name: <?= $row["coupon_name"] ?></p>
-          <p>Coupon code: <?= $row["coupon_code"] ?></p>
-          <p>Coupon content: <?= $row["coupon_content"] ?></p>
-          <p>Coupon expiry date: <?= $row["coupon_expiry_date"] ?></p>
-        </div>
-      <?php endforeach; ?>
-    </div>
+    <div>
+            <table class="table-bordered w-100">
+              <tr>
+                <td>Coupon id</td>
+                <td>Coupon name</td>
+                <td>Coupon code</td>
+                <td>Coupon content</td>
+                <td>Coupon expiry date</td>
+                <td>Edit coupon</td>
+                <td>Delete</td>
+              </tr>
+              <?php foreach($rows as $row) : 
+            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_name"].'</td><td class="m-auto">'?>
+          <a href="../coupons/coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td class="">
+          <a href="../coupons/coupons_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger m-auto">Delete coupon</a></td></tr>
+          <?php endforeach;?>
+        </table>
+        </div>  
   </div>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

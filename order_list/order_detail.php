@@ -1,5 +1,5 @@
 <?php
-require_once("../goral_bike_php/db-connect.php");
+require_once("../db-connect.php");
 // $sql = "SELECT `user`.`name`,`order_list`.`order_id`,`order_list`.`order_address`,`order_list`.`total_amount`,`order_list`.`order_status`,`order_list`.`order_create_time`,`order_list`.`remark`,`coupons`.`coupon_name`,`coupons`.`coupon_content`,`payment_method`.`payment_method_name` FROM order_list,payment_method,coupons,user WHERE `order_list`.`order_id`='1' AND ";
 
 if (!isset($_GET["order_id"])) {
@@ -67,7 +67,7 @@ $conn->close();
 
 
                             <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
-                                <img class="img-fluid" src="../goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
+                                <img class="img-fluid" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
                             </figure>
 
 

@@ -27,6 +27,15 @@ if (!isset($_GET["type"])) {
     $type = $_GET["type"];
 }
 
+if(isset($_GET["date1"]) && isset($_GET["date2"])){
+    $date1=$_GET["date1"];
+    $date2=$_GET["date2"];
+    $dateorder="AND classes.course_date BETWEEN '$date1' AND '$date2'";
+} else{
+
+    $dateorder="";
+}
+
 if (!isset($_GET["cate"])) {
     $cate = 0;
     $cates = "";
@@ -84,7 +93,7 @@ FROM classes
 LEFT JOIN course_category on classes.course_category_id=course_category.course_category_id
 LEFT JOIN course_location on classes.course_location_id=course_location.course_location_id
 LEFT JOIN course_status on classes.course_status_id=course_status.course_status_id
-WHERE course_valid='$valid' $cates
+WHERE course_valid='$valid' $cates $dateorder
 ORDER BY $order
 LIMIT $start,$per_page";
 $result = $conn->query($sql);
@@ -124,11 +133,14 @@ $user_count = $result->num_rows;
     <div class="container mb-5 mt-4">
         <div class="text-end mb-2">
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>"
-                class="btn btn-dark text-white fw-bold" <?php if ($cate == 0) echo "active"?> <?php if ($valid!=0) echo "hidden"?>>全部課程</a>
+                class="btn btn-dark text-white fw-bold" <?php if ($cate == 0) echo "active"?>
+                <?php if ($valid!=0) echo "hidden"?>>全部課程</a>
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1"
-                class="btn btn-success text-white fw-bold" <?php if ($cate == 1) echo "active" ?> <?php if ($valid!=0) echo "hidden"?>>入門課程</a>
+                class="btn btn-success text-white fw-bold" <?php if ($cate == 1) echo "active" ?>
+                <?php if ($valid!=0) echo "hidden"?>>入門課程</a>
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2"
-                class="btn btn-danger text-white fw-bold" <?php if ($cate == 2) echo "active" ?> <?php if ($valid!=0) echo "hidden"?>>進階課程</a>
+                class="btn btn-danger text-white fw-bold" <?php if ($cate == 2) echo "active" ?>
+                <?php if ($valid!=0) echo "hidden"?>>進階課程</a>
         </div>
 
         <div class="pt-4 pb-2 text-end">
@@ -137,17 +149,46 @@ $user_count = $result->num_rows;
                 <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?> <?php endif; ?>>新增課程</a>
         </div>
 
-        <div class="text-end">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-secondary text-white text-decoration-none fw-bold <?php if ($type == 1) echo "active" ?>">依序號正序</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-secondary text-white text-decoration-none fw-bold <?php if ($type == 2) echo "active" ?>">依序號反序</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-secondary text-white text-decoration-none fw-bold<?php if ($type == 3) echo "active" ?>">依課程時間正序</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-secondary text-white text-decoration-none fw-bold<?php if ($type == 4) echo "active" ?>">依課程時間反序</a>
+        <!-- 排序方式選擇 -->
+        <div class="div">
+            <select name="" id="select" onchange="location.href=this.options[this.selectedIndex].value;">
+                <option
+                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                    <?php if ($type == 1) echo "selected" ?>>依序號正序</option>
+                <option
+                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                    <?php if ($type == 2) echo "selected" ?>>依序號反序</option>
+                <option
+                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                    <?php if ($type == 3) echo "selected" ?>>依課程時間正序</option>
+                <option
+                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                    <?php if ($type == 4) echo "selected" ?>>依課程時間反序</option>
+            </select>
         </div>
+        <!-- 課程時間篩選 -->
+        <div class="py-2">
+            <form action="">
+                <div class="row justify-content-end gx-2">
+                    <div class="col-auto">
+                        <input type="date" name="date1" <?php if(isset($_GET["date1"])): ?> value="<?=$_GET["date1"]?>"
+                            <?php endif; ?> class="form-control">
+                    </div>
+                    <div class="col-auto">
+                        <label class="form-control-label" for="">~</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="date" name="date2" <?php if(isset($_GET["date2"])): ?> value="<?=$_GET["date2"]?>"
+                            <?php endif; ?> class="form-control">
+                    </div>
 
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-secondary">查詢</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- 課程列表顯示 -->
         <div class="row">
             <h2>COURSE LIST</h2>
             <?php if ($user_count > 0) : ?>
@@ -162,31 +203,23 @@ $user_count = $result->num_rows;
                         <?php if ($row["course_category_id"] == 1) : echo "bg-success" ?>
                         <?php else : echo "bg-danger" ?>
                         <?php endif; ?>
-                        rounded-pill px-2 me-1" 
-                        <?php if (!$row["course_category_id"]) : echo "hidden"?>
-                        <?php endif; ?>
-                        ><?= $row["course_category_name"] ?>
+                        rounded-pill px-2 me-1" <?php if (!$row["course_category_id"]) : echo "hidden"?>
+                            <?php endif; ?>><?= $row["course_category_name"] ?>
                         </span>
                         <span class="badge 
                         <?php if ($row["course_status_id"] == 1) : echo "bg-secondary" ?>
                         <?php elseif ($row["course_status_id"] == 2) : echo "bg-success" ?>
                         <?php else : echo "bg-danger" ?>
                         <?php endif; ?>
-                        rounded-pill px-2 me-1"
-                        <?php if (!$row["course_status_id"]) : echo "hidden"?>
-                        <?php endif; ?>
-                        ><?= $row["course_status_name"] ?>
+                        rounded-pill px-2 me-1" <?php if (!$row["course_status_id"]) : echo "hidden"?>
+                            <?php endif; ?>><?= $row["course_status_name"] ?>
                         </span>
                         <span class="badge bg-dark rounded-pill px-2 me-1"
-                        <?php if (!$row["course_location_id"]) : echo "hidden"?>
-                        <?php endif; ?>
-                        >
+                            <?php if (!$row["course_location_id"]) : echo "hidden"?> <?php endif; ?>>
                             <?= $row["course_location_name"] ?>
                         </span>
                         <span class="badge bg-dark rounded-pill px-2 me-2"
-                        <?php if (!$row["course_price"]) : echo "hidden"?>
-                        <?php endif; ?>
-                        >
+                            <?php if (!$row["course_price"]) : echo "hidden"?> <?php endif; ?>>
                             <?= $row["course_price"] ?> / 人
                         </span>
                         <div class="name-time mt-3">
@@ -200,7 +233,7 @@ $user_count = $result->num_rows;
                         </div>
                         <div class="d-grid">
                             <button
-                                class="delete-btn btn btn-info bg-secondary border-secondary text-white mb-2 fw-bold"
+                                class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
                                 data-id="<?= $row["course_id"] ?>"
                                 <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?>
                                 <?php endif; ?>>下架課程</button>
@@ -208,7 +241,7 @@ $user_count = $result->num_rows;
                                 data-id="<?= $row["course_id"] ?>"
                                 <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
                                 <?php endif; ?>>上架課程</button>
-                            <button class="isdelete-btn btn btn-info text-white mb-2 bg-danger border-danger fw-bold"
+                            <button class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
                                 data-id="<?= $row["course_id"] ?>"
                                 <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
                                 <?php endif; ?>>刪除課程</button>
@@ -355,6 +388,12 @@ $user_count = $result->num_rows;
                 console.log("Request failed: " + textStatus);
             });
     }
+
+    $(function() {
+        $("#select").change(function() {
+            var op = $("#select").find('option');
+        });
+    })
     </script>
 </body>
 
