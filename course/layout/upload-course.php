@@ -42,14 +42,12 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-4">
-                <div class="pt-4 pb-2 text-end">
-                    <a class="btn btn-info text-white position-relative" href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
-                </div>
-                <h1>修改課程</h1>
+            <div>
+
+                <h1 class="fw-bold mt-4">修改課程</h1>
                 <form action="../course/api/course-doUpload.php" enctype="multipart/form-data" method="post">
-                    <div class="mb-2">
-                        <label for="">課程編號 : <?=$rows["course_id"]?></label>
+                    <div class="mb-2 text-end">
+                        <div class="badge bg-secondary rounded-pill fw-bold fs-5">課程編號 : <?=$rows["course_id"]?></div>
                         <input class="form-control" type="hidden" name="id" id="id" value="<?=$rows["course_id"]?>">
                     </div>
                     <div class="mb-2">
@@ -80,7 +78,8 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <div class="mb-2">課程圖片
                         <input type="file" class="form-control" name="image" id="image"
                             accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <img src="../../goral_bike_First/course/images/<?=$rows["course_pictures"]?>" class="img-thumbnail" id="img-view">
+                        <img src="../../goral_bike_First/course/images/<?=$rows["course_pictures"]?>"
+                            class="img-thumbnail" id="img-view">
                     </div>
                     <div class="mb-2">
                         <label for="">課程時間</label>
@@ -138,7 +137,12 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                         <textarea class="form-control" name="content" id="content" cols="30"
                             rows="10"><?=$rows["course_content"]?></textarea>
                     </div>
-                    <button id="send" class="btn btn-info text-white mb-2" type="submit">修改送出</button>
+                    <button class="btn btn-secondary text-white mb-2 me-2 fw-bold" type="reset" value="清除表單">清除</button>
+                    <button id="send" class="btn btn-dark text-white mb-2 fw-bold" type="submit">送出修改</button>
+                    <div class="text-end pb-4">
+                        <a class="btn btn-dark text-white position-relative fw-bold"
+                            href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -146,7 +150,6 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-
     $("#image").change(function() {
 
         readURL(this);
