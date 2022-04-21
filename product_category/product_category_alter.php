@@ -21,7 +21,7 @@
         </form>
         <form action="product_category_edit_get.php" method="get">
           <h5>Edit, Restore, and Delete product categories:</h5>
-          <a href="product_category_page.php" class="btn btn-info">Product category page</a>
+          <a href="../goral_bike_layout/goral_biker_product_category.php" class="btn btn-info text-white">Product category page</a>
       </div>
       
 

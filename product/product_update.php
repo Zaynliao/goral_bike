@@ -25,7 +25,7 @@ $conn->close();
         </a>
     </div>
 
-    <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert" action="../goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
+    <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert" action="../product/goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
 
         <div class="col-8 mb-4">
 
@@ -37,7 +37,7 @@ $conn->close();
                 </div>
 
                 <figure class=" figure d-flex justify-content-center align-items-center">
-                    <img class="img-fluid" src="../goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+                    <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
                 </figure>
 
                 <!-- <div class="py-2 px-3">

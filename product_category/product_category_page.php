@@ -21,7 +21,7 @@ $conn->close();
   </head>
   <body>
       <div class="container">
-          <a href="../product_category/product_category_alter.php" class="btn btn-secondary">Back to create product category</a>
+          <a href="../product_category/product_category_alter.php" class="btn btn-secondary mt-2">Create product category</a>
         <!-- <div class="row col-11 justify-content-between align-items-between"> -->
         <div class="row col-12 justify-content-between align-items-between">
         <?php foreach($rows as $row) : ?>

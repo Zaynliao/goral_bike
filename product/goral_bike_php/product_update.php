@@ -26,7 +26,8 @@ if ($conn->query($sql) === TRUE) {
 
     $conn->close();
 
-    header("location:../goral_bike_layout/goral_biker_product.php");
+    // header("location:../../goral_bike_layout/goral_biker_product.php");
+    echo "<script> alert('修改成功');history.go(-2); </script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     exit;
