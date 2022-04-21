@@ -40,7 +40,9 @@ if ($_FILES["product_images"]["error"] == 0) {
 
                 $conn->close();
 
-                header("location:../../goral_bike_layout/goral_biker_product.php");
+                // header("location:../../goral_bike_layout/goral_biker_product.php");
+                
+                echo "<script> location.href = document.referrer;</script>";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
                 exit;
