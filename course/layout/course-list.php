@@ -57,6 +57,12 @@ switch ($type) {
     case "4";
         $order = "course_date DESC";
         break;
+    case "5":
+        $order = "course_price ASC";
+        break;
+    case "6";
+        $order = "course_price DESC";
+        break;
     default:
         $order = "course_id ASC";
 }
@@ -164,6 +170,12 @@ $user_count = $result->num_rows;
                 <option
                     value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
                     <?php if ($type == 4) echo "selected" ?>>依課程時間反序</option>
+                <option
+                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=5&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                    <?php if ($type == 5) echo "selected" ?>>依課程價錢正序</option>
+                <option
+                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=6&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                    <?php if ($type == 6) echo "selected" ?>>依課程價錢反序</option>
             </select>
         </div>
         <!-- 課程時間篩選 -->
@@ -172,18 +184,18 @@ $user_count = $result->num_rows;
                 <div class="row justify-content-end gx-2">
                     <div class="col-auto">
                         <input type="date" name="date1" <?php if(isset($_GET["date1"])): ?> value="<?=$_GET["date1"]?>"
-                            <?php endif; ?> class="form-control">
+                            <?php endif; ?> class="form-control fw-bold">
                     </div>
                     <div class="col-auto">
                         <label class="form-control-label" for="">~</label>
                     </div>
                     <div class="col-auto">
                         <input type="date" name="date2" <?php if(isset($_GET["date2"])): ?> value="<?=$_GET["date2"]?>"
-                            <?php endif; ?> class="form-control">
+                            <?php endif; ?> class="form-control fw-bold">
                     </div>
 
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-secondary">查詢</button>
+                        <button type="submit" class="btn btn-secondary fw-bold">查詢</button>
                     </div>
                 </div>
             </form>
