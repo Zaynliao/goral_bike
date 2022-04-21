@@ -1,7 +1,6 @@
 <?php
 
-require_once("db-connect.php");
-
+require_once("../../db-connect.php");
 if (!isset($_GET['product_id'])) {
     echo "product_id = null";
 }
