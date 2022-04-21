@@ -109,79 +109,91 @@ $conn->close();
         第<?= $p ?>頁,共<?= $total ?>筆,共<?= $page_count ?>頁
     </div>
 
-    <div class="py-2 text-end">
+    <div class="row justify-content-end">
+        <div class="py-2 text-end ">
 
-        <?php $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
+            <?php $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
+
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    排序方式選擇
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                    <?php if (strpos($file, "product_category_id") === false) : ?>
+                        <?php for ($i = 0; $i < count($a); $i++) : ?>
+                            <li><a type="" class="dropdown-item <?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a></li>
+                        <?php endfor; ?>
+                    <?php else : ?>
+                        <?php for ($i = 0; $i < count($a); $i++) : ?>
+                            <li><a type="button" class="dropdown-item <?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a></li>
+                        <?php endfor; ?>
+                    <?php endif; ?>
 
 
-        <?php if (strpos($file, "product_category_id") === false) : ?>
-            <?php for ($i = 0; $i < count($a); $i++) : ?>
-                <a type="button" class="btn btn-outline-dark<?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
-            <?php endfor; ?>
-        <?php else : ?>
-            <?php for ($i = 0; $i < count($a); $i++) : ?>
-                <a type="button" class="btn btn-outline-dark<?php if ($type == $i) echo "active" ?>" href="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
-            <?php endfor; ?>
-        <?php endif; ?>
-
-
-    </div>
+                </ul>
+            </div>
 
 
 
-    <p class="d-flex justify-content-end mt-2">
-        <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false" aria-controls="insert">新增商品</a>
-    </p>
 
-    <div class="row">
-        <div class="col">
-            <div class="collapse multi-collapse" id="insert">
-                <div class="container">
 
-                    <form class="row g-3 mt-2" name="insert" action="../product/goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
 
-                        <div class="col-md-6">
-                            <label for="product_name" class="form-label">商品名稱</label>
-                            <input type="text" class="form-control" name="product_name" id="product_name" placeholder="請輸入商品名稱">
+
+
+            <p class="d-flex justify-content-end mt-2">
+                <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false" aria-controls="insert">新增商品</a>
+            </p>
+
+            <div class="row">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="insert">
+                        <div class="container">
+
+                            <form class="row g-3 mt-2" name="insert" action="../product/goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
+
+                                <div class="col-md-6">
+                                    <label for="product_name" class="form-label">商品名稱</label>
+                                    <input type="text" class="form-control" name="product_name" id="product_name" placeholder="請輸入商品名稱">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="product_price" class="form-label">商品價格</label>
+                                    <input type="text" class="form-control" name="product_price" id="product_price" placeholder="請輸入商品價格">
+                                </div>
+
+                                <div class="col-8">
+                                    <div class="mb-3">
+                                        <label for="product_images" class="form-label">商品圖片</label>
+                                        <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="product_category_id" class="form-label">商品類別</label>
+                                    <select name="product_category_id" id="product_category_id" class="form-select">
+                                        <?php foreach ($product_category_rows as $product_category_row) : ?>
+                                            <option value="<?= $product_category_row["product_category_id"] ?>">
+                                                <?= $product_category_row["product_category_name"] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-end gap-2 mb-5">
+                                    <button type="submit" class="btn btn-dark">新增商品</button>
+                                    <button type="reset" class="btn btn-outline-dark">重新填寫</button>
+                                </div>
+
+                            </form>
+
                         </div>
-
-                        <div class="col-md-6">
-                            <label for="product_price" class="form-label">商品價格</label>
-                            <input type="text" class="form-control" name="product_price" id="product_price" placeholder="請輸入商品價格">
-                        </div>
-
-                        <div class="col-8">
-                            <div class="mb-3">
-                                <label for="product_images" class="form-label">商品圖片</label>
-                                <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="product_category_id" class="form-label">商品類別</label>
-                            <select name="product_category_id" id="product_category_id" class="form-select">
-                                <?php foreach ($product_category_rows as $product_category_row) : ?>
-                                    <option value="<?= $product_category_row["product_category_id"] ?>">
-                                        <?= $product_category_row["product_category_name"] ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="col-12 d-flex justify-content-end gap-2 mb-5">
-                            <button type="submit" class="btn btn-dark">新增商品</button>
-                            <button type="reset" class="btn btn-outline-dark">重新填寫</button>
-                        </div>
-
-                    </form>
-
+                    </div>
                 </div>
+
             </div>
         </div>
-
     </div>
-
-
     <div class="row">
         <?php if ($product_count > 0) : ?>
             <?php foreach ($rows as $row) : ?>
