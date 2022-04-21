@@ -4,7 +4,7 @@ require_once("../db-connect.php");
 // ------------------------------------------------------------------------------------------------
 $path = $_SERVER["REQUEST_URI"];
 
-echo $path;
+// echo $path;
 // // 透過路徑取得檔名
 // $file = basename($path);
 // // echo $file;
