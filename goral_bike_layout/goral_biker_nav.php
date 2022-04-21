@@ -28,10 +28,10 @@ $file = basename($path);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
-                    <?php if (strpos($file, "x") !== false) {
+                    <?php if (strpos($file, "course") !== false) {
                         echo ("active");
                     } ?>
-                    " href="goral_biker_product.php">課程</a>
+                    " href="goral_biker_course-list.php">課程</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
@@ -53,15 +53,15 @@ $file = basename($path);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
-                    <?php if (strpos($file, "x") !== false) {
+                    <?php if (strpos($file, "coupons") !== false) {
                         echo ("active");
-                    } ?>" href="goral_biker_product.php">優惠卷</a>
+                    } ?>" href="goral_biker_coupons.php">優惠卷</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
-                    <?php if (strpos($file, "x") !== false) {
+                    <?php if (strpos($file, "payment") !== false) {
                         echo ("active");
-                    } ?>" href="goral_biker_product.php">付款方式</a>
+                    } ?>" href="goral_biker_payment_method.php">付款方式</a>
                 </li>
             </ul>
             <form class="d-flex">
