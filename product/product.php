@@ -190,7 +190,7 @@ $conn->close();
                         <div class="py-2 text-end">
                             <a class="text-decoration-none fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
                             |
-                            <a class="text-danger text-decoration-none fw-bold" href="./goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
+                            <a class="text-danger text-decoration-none fw-bold" href="../product/goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
                         </div>
 
 
