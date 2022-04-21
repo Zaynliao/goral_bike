@@ -24,6 +24,6 @@ if ($conn->query($sql) === TRUE) {
     	echo "nein: " . $conn->error;
 }
 $conn->close();
-header("location: coupons_page.php");
+header("location: ../goral_bike_layout/goral_biker_coupons.php");
 }
 ?>

@@ -41,6 +41,7 @@ $conn -> close();
           <input type="date" name="date" id="date" class="form-control mt-2" value="<?=$date?>">
           <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
           <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
+          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary text-white">Return</a>
 
 
 

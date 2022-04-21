@@ -19,12 +19,12 @@
           <input type="text" name="code" id="name" class="form-control my-2" placeholder="Enter coupon code">
           <input type="text" name="content" id="name" class="form-control my-2" placeholder="Enter coupon content">
           <input type="date" name="date" id="name" class="form-control my-2" placeholder="Enter coupon expiry date">
-          <button type="submit" class="btn btn-success mt-2 my-2">Create Coupon</button>
+          <button type="submit" class="btn btn-success mt-2 my-2 text-white">Create Coupon</button>
           <button type="reset" class="btn btn-warning mt-2 my-2">Reset</button>
         </form>
         <form action="coupons_edit_get.php" method="get">
           <h5>Edit, Restore, and Delete coupons:</h5>
-          <a href="coupons_page.php" class="btn btn-info">Coupon page</a>
+          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-info text-white">Coupon page</a>
       </div>
       
 
