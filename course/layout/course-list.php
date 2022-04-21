@@ -152,15 +152,15 @@ $course_count = $result->num_rows;
         border-color: #000000;
     }
 
-    .page-link{
+    .page-link {
         color: #6c757d;
     }
 
-    .page-link:hover{
+    .page-link:hover {
         color: #000000;
     }
 
-    .btn-dark:hover{
+    .btn-dark:hover {
         background-color: #000000;
     }
     </style>
@@ -168,96 +168,106 @@ $course_count = $result->num_rows;
 
 <body>
     <div class="container mb-5 mt-4">
-      
+
         <!-- 每分頁顯示資料數量 -->
-        <span class="text-nowrap me-2">
-            顯示
-        </span>
-        <select class="me-2" aria-label="Default select example" id="pageCount">
-            <option value="5" <?php if ($per_page == 5) echo "selected" ?>>5</option>
-            <option value="10" <?php if ($per_page == 10) echo "selected" ?>>10</option>
-            <option value="15" <?php if ($per_page == 15) echo "selected" ?>>15</option>
-        </select>
-        <span class="text-nowrap">
-            筆數
-        </span>
-
-        <!-- 排序方式選擇 -->
-        <div class="mt-2">
-            <select name="" id="select" onchange="location.href=this.options[this.selectedIndex].value;">
-                <option
-                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                    <?php if ($type == 1) echo "selected" ?>>依序號正序</option>
-                <option
-                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                    <?php if ($type == 2) echo "selected" ?>>依序號反序</option>
-                <option
-                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                    <?php if ($type == 3) echo "selected" ?>>依課程時間正序</option>
-                <option
-                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                    <?php if ($type == 4) echo "selected" ?>>依課程時間反序</option>
-                <option
-                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=5&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                    <?php if ($type == 5) echo "selected" ?>>依課程價錢正序</option>
-                <option
-                    value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=6&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                    <?php if ($type == 6) echo "selected" ?>>依課程價錢反序</option>
-            </select>
-        </div>
-        <div class="text-end">
-            <a class="btn btn-dark text-white position-relative fw-bold"
-                href="../goral_bike_layout/goral_biker_course-insert.php"
-                <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?> <?php endif; ?>>新增課程</a>
-        </div>
-        
-        <div class="text-end">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>"
-                class="btn btn-dark text-white fw-bold" <?php if ($cate == 0) echo "active"?>
-                <?php if ($valid!=0) echo "hidden"?>>全部課程</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1"
-                class="btn btn-success text-white fw-bold" <?php if ($cate == 1) echo "active" ?>
-                <?php if ($valid!=0) echo "hidden"?>>入門課程</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2"
-                class="btn btn-danger text-white fw-bold" <?php if ($cate == 2) echo "active" ?>
-                <?php if ($valid!=0) echo "hidden"?>>進階課程</a>
-        </div>
-          <!-- 搜尋列 -->
-          <div class="my-2">
-            <form class="d-flex justify-content-end" action="goral_biker_course-list.php">
-                <div class="d-flex">
-                    <input type="hidden" name="valid" value="<?= $valid ?>">
-                    <input class="form-control me-2" type="search" placeholder="搜尋關鍵字" aria-label="Search"
-                        name="search">
-                    <button class="btn btn-outline-dark text-nowrap" type="submit">搜尋</button>
+        <div class="row align-items-end mb-3">
+            <div class="col-6">
+                <div class="d-flex flex-nowrap">
+                    <span class="text-nowrap me-2 pt-2">
+                        顯示
+                    </span>
+                    <select class="me-2 form-select w-auto" aria-label="Default select example" id="pageCount">
+                        <option value="5" <?php if ($per_page == 5) echo "selected" ?>>5</option>
+                        <option value="10" <?php if ($per_page == 10) echo "selected" ?>>10</option>
+                        <option value="15" <?php if ($per_page == 15) echo "selected" ?>>15</option>
+                    </select>
+                    <span class="text-nowrap pt-2">
+                        筆數
+                    </span>
                 </div>
-            </form>
-        </div>
-        <!-- 課程時間篩選 -->
-        <div class="">
-            <form action="">
-                <div class="row justify-content-end gx-2">
-                    <div class="col-auto">
-                        <input type="date" name="date1" <?php if(isset($_GET["date1"])): ?> value="<?=$_GET["date1"]?>"
-                            <?php endif; ?> class="form-control fw-bold">
-                    </div>
-                    <div class="col-auto">
-                        <label class="form-control-label" for="">~</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="date" name="date2" <?php if(isset($_GET["date2"])): ?> value="<?=$_GET["date2"]?>"
-                            <?php endif; ?> class="form-control fw-bold">
-                    </div>
-
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-secondary fw-bold">查詢</button>
-                    </div>
+                <!-- 排序方式選擇 -->
+                <div class="mt-2">
+                    <select class="form-select w-auto" name="" id="select"
+                        onchange="location.href=this.options[this.selectedIndex].value;">
+                        <option
+                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                            <?php if ($type == 1) echo "selected" ?>>依序號正序</option>
+                        <option
+                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                            <?php if ($type == 2) echo "selected" ?>>依序號反序</option>
+                        <option
+                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                            <?php if ($type == 3) echo "selected" ?>>依課程時間正序</option>
+                        <option
+                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                            <?php if ($type == 4) echo "selected" ?>>依課程時間反序</option>
+                        <option
+                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=5&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                            <?php if ($type == 5) echo "selected" ?>>依課程價錢正序</option>
+                        <option
+                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=6&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                            <?php if ($type == 6) echo "selected" ?>>依課程價錢反序</option>
+                    </select>
                 </div>
-            </form>
+            </div>
+            <div class="col-6">
+                <div class="text-end">
+                    <a class="btn btn-dark text-white position-relative fw-bold"
+                        href="../goral_bike_layout/goral_biker_course-insert.php"
+                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?>
+                        <?php endif; ?>>新增課程</a>
+                </div>
+
+                <div class="text-end">
+                    <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>"
+                        class="btn btn-dark text-white fw-bold" <?php if ($cate == 0) echo "active"?>
+                        <?php if ($valid!=0) echo "hidden"?>>全部課程</a>
+                    <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1"
+                        class="btn btn-success text-white fw-bold" <?php if ($cate == 1) echo "active" ?>
+                        <?php if ($valid!=0) echo "hidden"?>>入門課程</a>
+                    <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2"
+                        class="btn btn-danger text-white fw-bold" <?php if ($cate == 2) echo "active" ?>
+                        <?php if ($valid!=0) echo "hidden"?>>進階課程</a>
+                </div>
+                <!-- 搜尋列 -->
+                <div class="my-2">
+                    <form class="d-flex justify-content-end" action="goral_biker_course-list.php">
+                        <div class="d-flex">
+                            <input type="hidden" name="valid" value="<?= $valid ?>">
+                            <input class="form-control me-2" type="search" placeholder="搜尋關鍵字" aria-label="Search"
+                                name="search">
+                            <button class="btn btn-secondary fw-bold text-nowrap" type="submit">搜尋</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 課程時間篩選 -->
+                <div class="">
+                    <form action="">
+                        <div class="row justify-content-end gx-2">
+                            <div class="col-auto">
+                                <input type="date" name="date1" <?php if(isset($_GET["date1"])): ?>
+                                    value="<?=$_GET["date1"]?>" <?php endif; ?> class="form-control text-secondary">
+                            </div>
+                            <div class="col-auto">
+                                <label class="form-control-label" for="">~</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="date" name="date2" <?php if(isset($_GET["date2"])): ?>
+                                    value="<?=$_GET["date2"]?>" <?php endif; ?> class="form-control text-secondary">
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-secondary fw-bold">查詢</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <!-- 課程列表顯示 -->
         <div class="row">
-            <h2>COURSE LIST</h2>
+            <h1 class="fw-bold">COURSE LIST -</h1>
             <?php if ($course_count > 0) : ?>
             <?php foreach ($rows as $row) : ?>
             <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
