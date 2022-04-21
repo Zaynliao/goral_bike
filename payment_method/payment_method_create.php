@@ -1,5 +1,5 @@
 <?php
-require_once("db-connect.php");
+require_once("../db-connect.php");
 if((!isset($_GET["name"]))){
   header("404.php");
   exit;

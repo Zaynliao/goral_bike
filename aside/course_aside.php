@@ -1,43 +1,6 @@
 <?php
-
 $path = $_SERVER["REQUEST_URI"];
-
-// echo $path;
-// 透過路徑取得檔名
 $file = basename($path);
-// echo $file;
-// $a = array("所有商品", "登山車基礎車款", "單避震腳踏車", "全避震登山車", "管理下架商品");
-
-// if (!isset($_GET["p"])) {
-//     $p = 1;
-// } else {
-//     $p = $_GET["p"];
-// }
-// if (!isset($_GET["nav_name_id"])) {
-//     $nav_name_id = 0; 
-// } else {
-//     $nav_name_id = $_GET["nav_name_id"];
-// }
-
-// // ------type = ?↓
-// switch ($nav_name_id) {
-
-//     case "1":
-//         $path_name = "goral_biker_product.php?product_category_id=1";
-//         break;
-//     case "2":
-//         $path_name = "goral_biker_product.php?product_category_id=2";
-//         break;
-//     case "3":
-//         $path_name = "goral_biker_product.php?product_category_id=3";
-//         break;
-//     case "4":
-//         $path_name = "goral_biker_off_product.php";
-//         break;
-//     default:
-//         $path_name = "goral_biker_product.php";
-// }
-
 ?>
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100 w-100">
@@ -49,47 +12,41 @@ $file = basename($path);
 
 
         <li class="nav-item">
-            <a href="goral_biker_product.php" class="nav-link  fst-6 text-center text-wrap text-white
-               
-               <?php
-                if ((strpos($file, "product_category_id") === false) && (strpos($file, "goral_biker_off_product") === false)) echo "active" ?>
-
-                " aria-current="page">
-                所有課程
+            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1" class="nav-link  fst-6 text-center text-wrap text-white
+            <?php
+                if ((strpos($file, "valid=1") !== false) && (strpos($file, "cate") == false)): echo "active" ?>
+            <?php endif;?>
+            " aria-current="page">
+                所有商品
             </a>
         </li>
 
         <li class="nav-item">
-            <a href="goral_biker_product.php?product_category_id=1" class="nav-link  fst-6 text-center text-wrap  text-white
+            <a href="../goral_bike_layout/goral_biker_course-list.php?cate=1&valid=1" class="nav-link  fst-6 text-center text-wrap  text-white
             <?php
-            if (strpos($file, "product_category_id=1") !== false) {
-                echo ("active");
-            }
-            ?>
-
+                if ((strpos($file, "cate=1") !== false) && (strpos($file, "valid=1") !== false)): echo "active" ?>
+            <?php endif;?>
             " aria-current="page">
                 入門課程
             </a>
         </li>
 
         <li class="nav-item">
-            <a href="goral_biker_product.php?product_category_id=2" class="nav-link text-white fst-6 text-center text-wrap
+            <a href="../goral_bike_layout/goral_biker_course-list.php?cate=2&valid=1" class="nav-link text-white fst-6 text-center text-wrap
             <?php
-
-            if (strpos($file, "product_category_id=2") !== false) {
-                echo ("active");
-            }
-
-            ?>
-            ">
+                if ((strpos($file, "cate=2") !== false) && (strpos($file, "valid=1") !== false)): echo "active" ?>
+            <?php endif;?>
+            " aria-current="page">
                 進階課程
             </a>
         </li>
 
         <li class="nav-item">
-            <a href="goral_biker_off_product.php" class="nav-link text-white fst-6 text-center text-wrap
-            <?php if ($file === "goral_biker_off_product.php") echo "active" ?>
-            ">
+            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=0" class="nav-link text-white fst-6 text-center text-wrap
+            <?php
+                if ((strpos($file, "valid=0") !== false)): echo "active" ?>
+            <?php endif;?>
+            " aria-current="page">
                 管理下架商品
             </a>
         </li>

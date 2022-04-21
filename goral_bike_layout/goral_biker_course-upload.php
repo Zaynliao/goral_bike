@@ -22,7 +22,7 @@
         </header>
         <section class="row p-0 m-0 vh-100">
             <aside class="aside col-2 p-0">
-                <?php require("course_aside.php") ?>
+                <?php require("../aside/course_aside.php") ?>
             </aside>
             <article class="article col-10 ">
                 <?php

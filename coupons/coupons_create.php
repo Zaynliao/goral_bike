@@ -1,5 +1,5 @@
 <?php
-require_once("db-connect.php");
+require_once("../db-connect.php");
 if((!isset($_GET["name"])) || (!isset($_GET["code"])) || (!isset($_GET["content"])) || (!isset($_GET["date"]))){
   header("404.php");
   exit;
