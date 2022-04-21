@@ -80,7 +80,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <div class="mb-2">課程圖片
                         <input type="file" class="form-control" name="image" id="image"
                             accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <img src="../../goral_bike/course/images/<?=$rows["course_pictures"]?>" class="img-thumbnail" id="img-view">
+                        <img src="../../goral_bike_First/course/images/<?=$rows["course_pictures"]?>" class="img-thumbnail" id="img-view">
                     </div>
                     <div class="mb-2">
                         <label for="">課程時間</label>
