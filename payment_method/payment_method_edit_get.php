@@ -1,6 +1,6 @@
 <?php
 //Make a sorting thing
-require_once("db-connect.php"); 
+require_once("../db-connect.php"); 
 if((!isset($_GET["name"])) || (!isset($_GET["id"]))){
     echo "this ain't it chief";
 }

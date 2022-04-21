@@ -1,5 +1,5 @@
 <?php
-require_once("db-connect.php");
+require_once("../db-connect.php");
 
 $sql="SELECT * FROM product_category";
 $result=$conn->query($sql);
@@ -21,7 +21,7 @@ $conn->close();
   </head>
   <body>
       <div class="container">
-          <a href="product_category_alter.php" class="btn btn-secondary">Back to create product category</a>
+          <a href="../product_category/product_category_alter.php" class="btn btn-secondary">Back to create product category</a>
         <!-- <div class="row col-11 justify-content-between align-items-between"> -->
         <div class="row col-12 justify-content-between align-items-between">
         <?php foreach($rows as $row) : ?>
@@ -39,8 +39,8 @@ $conn->close();
                 </div>
               </div>
                 <div>
-                    <a href="product_category_edit_get.php?id=<?=$row["product_category_id"]?>&name=<?=$row["product_category_name"]?>" class="btn btn-info text-white">Edit product category</a>
-                    <a href="product_category_delete.php?id=<?=$row["product_category_id"]?>" class="btn btn-danger">Delete product category</a>
+                    <a href="../product_category/product_category_edit_get.php?id=<?=$row["product_category_id"]?>&name=<?=$row["product_category_name"]?>" class="btn btn-info text-white">Edit product category</a>
+                    <a href="../product_category/product_category_delete.php?id=<?=$row["product_category_id"]?>" class="btn btn-danger">Delete product category</a>
                 </div>
             </div>
         </div>
