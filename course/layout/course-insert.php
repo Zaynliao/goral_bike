@@ -34,105 +34,117 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
 
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-4">
-                <div class="pt-4 pb-2 text-end">
-                    <a class="btn btn-info text-white position-relative" href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
-                </div>
-                <h1>新增課程</h1>
+            <div>
+
+                <h1 class="fw-bold mt-4">新增課程</h1>
                 <form action="../course/api/course-doInsert.php" enctype="multipart/form-data" method="post">
                     <div class="mb-2">
-                        <label for="">課程類別</label>
+                        <label for="category">課程類別</label>
                         <select class="form-control" name="category" id="category">
                             <?php foreach ($rowsCate as $row) : ?>
-                                <option value="<?= $row["course_category_id"] ?>"><?= $row["course_category_name"] ?></option>
+                            <option value="<?= $row["course_category_id"] ?>"><?= $row["course_category_name"] ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label for="">課程名稱</label>
+                        <label for="name">課程名稱</label>
                         <input class="form-control" type="text" name="name" id="name">
                     </div>
-                    <div class="mb-2">課程圖片
-                        <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <div class="img-thumbnail text-center"> <img src="../../goral_bike_First/course/icon/no-image.png" class=" img-fluid" id="img-view"></div>
+                    <div class="mb-2">
+                        <label for="image">課程圖片</label>
+                        <input type="file" class="form-control" name="image" id="image"
+                            accept=".jpg, .jpeg, .png, .webp, .svg">
+                        <div class="img-thumbnail text-center"> <img
+                                src="../../goral_bike_First/course/icon/no-image.png" class=" img-fluid" id="img-view">
+                        </div>
                     </div>
                     <div class="mb-2">
-                        <label for="">課程時間</label>
+                        <label for="date">課程時間</label>
                         <input class="form-control" type="date" name="date" id="date">
                     </div>
                     <div class="mb-2">
-                        <label for="">課程地點</label>
+                        <label for="location">課程地點</label>
                         <select class="form-control" name="location" id="location">
                             <?php foreach ($rows as $row) : ?>
-                                <option value="<?= $row["course_location_id"] ?>"><?= $row["course_location_name"] ?></option>
+                            <option value="<?= $row["course_location_id"] ?>"><?= $row["course_location_name"] ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label for="">課程人數</label>
+                        <label for="enrollment">課程人數</label>
                         <input class="form-control" type="number" name="enrollment" id="enrollment">
                     </div>
                     <div class="mb-2">
-                        <label for="">課程報名開始時間</label>
+                        <label for="start_time">課程報名開始時間</label>
                         <input class="form-control" type="datetime-local" name="start_time" id="start_time">
                     </div>
                     <div class="mb-2">
-                        <label for="">課程報名結束時間</label>
+                        <label for="end_time">課程報名結束時間</label>
                         <input class="form-control" type="datetime-local" name="end_time" id="end_time">
                     </div>
                     <div class="mb-2">
-                        <label for="">課程報名狀態</label>
+                        <label for="statu">課程報名狀態</label>
                         <select class="form-control" name="statu" id="statu">
                             <?php foreach ($rowsStatu as $row) : ?>
-                                <option value="<?= $rowStatu["course_status_id"] ?>"><?= $row["course_status_name"] ?></option>
+                            <option value="<?= $rowStatu["course_status_id"] ?>"><?= $row["course_status_name"] ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label for="">課程費用</label>
+                        <label for="price">課程費用</label>
                         <input class="form-control" type="number" name="price" id="price">
                     </div>
                     <div class="mb-2">
-                        <label for="">課程內容</label>
+                        <label for="content">課程內容</label>
                         <textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
                     </div>
-                    <button id="send" class="btn btn-info text-white mb-2" type="submit">送出</button>
+                    <button class="btn btn-secondary text-white mb-2 me-2 fw-bold" type="reset" value="清除表單">清除</button>
+                    <button id="send" class="btn btn-dark text-white mb-2 fw-bold" type="submit">送出</button>
+                    <div class="text-end pb-4">
+                    <a class="btn btn-dark text-white position-relative fw-bold"
+                        href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
+                </div>
                 </form>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        $("#image").change(function() {
+    $("#image").change(function() {
 
-            readURL(this);
+        readURL(this);
 
-        });
+    });
 
-        function readURL(input) {
+    function readURL(input) {
 
-            if (input.files && input.files[0]) {
+        if (input.files && input.files[0]) {
 
-                var reader = new FileReader();
+            var reader = new FileReader();
 
-                reader.onload = function(e) {
+            reader.onload = function(e) {
 
-                    $("#img-view").attr('src', e.target.result);
-
-                }
-
-                reader.readAsDataURL(input.files[0]);
+                $("#img-view").attr('src', e.target.result);
 
             }
 
+            reader.readAsDataURL(input.files[0]);
+
         }
+
+    }
     </script>
 </body>
 

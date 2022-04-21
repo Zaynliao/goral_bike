@@ -124,32 +124,30 @@ $user_count = $result->num_rows;
     <div class="container mb-5 mt-4">
         <div class="text-end mb-2">
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>"
-                class="btn btn-dark text-white" <?php if ($cate == 0) echo "active"?> <?php if ($valid!=0) echo "hidden"?>>全部課程</a>
+                class="btn btn-dark text-white fw-bold" <?php if ($cate == 0) echo "active"?> <?php if ($valid!=0) echo "hidden"?>>全部課程</a>
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1"
-                class="btn btn-success text-white" <?php if ($cate == 1) echo "active" ?> <?php if ($valid!=0) echo "hidden"?>>入門課程</a>
+                class="btn btn-success text-white fw-bold" <?php if ($cate == 1) echo "active" ?> <?php if ($valid!=0) echo "hidden"?>>入門課程</a>
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2"
-                class="btn btn-danger text-white" <?php if ($cate == 2) echo "active" ?> <?php if ($valid!=0) echo "hidden"?>>進階課程</a>
+                class="btn btn-danger text-white fw-bold" <?php if ($cate == 2) echo "active" ?> <?php if ($valid!=0) echo "hidden"?>>進階課程</a>
         </div>
-
-
-        <div class="text-end">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 1) echo "active" ?>">依序號正序</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 2) echo "active" ?>">依序號反序</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 3) echo "active" ?>">依課程時間正序</a>
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
-                class="btn-sm btn-dark text-white text-decoration-none <?php if ($type == 4) echo "active" ?>">依課程時間反序</a>
-        </div>
-
-
 
         <div class="pt-4 pb-2 text-end">
-            <a class="btn btn-secondary text-white position-relative"
+            <a class="btn btn-dark text-white position-relative fw-bold"
                 href="../goral_bike_layout/goral_biker_course-insert.php"
                 <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?> <?php endif; ?>>新增課程</a>
         </div>
+
+        <div class="text-end">
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                class="btn-sm btn-secondary text-white text-decoration-none fw-bold <?php if ($type == 1) echo "active" ?>">依序號正序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                class="btn-sm btn-secondary text-white text-decoration-none fw-bold <?php if ($type == 2) echo "active" ?>">依序號反序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                class="btn-sm btn-secondary text-white text-decoration-none fw-bold<?php if ($type == 3) echo "active" ?>">依課程時間正序</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate == 0) : ?><?php else : echo "&cate=$cate" ?><?php endif; ?>"
+                class="btn-sm btn-secondary text-white text-decoration-none fw-bold<?php if ($type == 4) echo "active" ?>">依課程時間反序</a>
+        </div>
+
         <div class="row">
             <h2>COURSE LIST</h2>
             <?php if ($user_count > 0) : ?>
