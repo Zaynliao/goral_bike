@@ -42,7 +42,8 @@ if ($conn->query($sql) === TRUE) {
 
     $conn->close();
     // echo `<script>alert("刪除一筆資料成功");</script>`;
-    header("location:../goral_bike_layout/goral_biker_off_product.php");
+    // header("location:../goral_bike_layout/goral_biker_off_product.php");
+    echo "<script> location.href = document.referrer;</script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     exit;

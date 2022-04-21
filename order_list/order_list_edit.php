@@ -1,5 +1,5 @@
 <?php
-require_once("../goral_bike_php/db-connect.php");
+require_once("../db-connect.php");
 
 
 $order_id = $_GET["order_id"];

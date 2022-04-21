@@ -24,10 +24,11 @@ if ($conn->query($sql) === TRUE) {
     $conn->close();
     // echo `<script>alert("刪除一筆資料成功");</script>`;
     // header("location:../../goral_bike_layout/goral_biker_product.php");
-    echo "<script> history.go(-1); location.reload();</script>";
+    // echo "<script> history.go(-1); location.reload();</script>";
     // header("Refresh: 0;");
     // header("Refresh");
     // echo "<script> alert('下架成功');history.go(-1); </script>";
+    echo "<script> location.href = document.referrer;</script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     exit;

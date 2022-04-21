@@ -42,11 +42,11 @@ $conn->close();
                 <div class="card p-2">
 
                     <div class="py-2 text-end">
-                        <a class="text-decoration-none fw-bold" href="goral_biker_update.php?product_id=<?= $row["product_id"] ?>">更新資料</a>
+                        <a class="text-decoration-none fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
                         |
-                        <a class="text-success text-decoration-none fw-bold" href="../goral_bike_php/product_on_product.php?product_id=<?= $row["product_id"] ?>">上架商品</a>
+                        <a class="text-success text-decoration-none fw-bold" href="../product/goral_bike_php/product_on_product.php?product_id=<?= $row["product_id"] ?>">上架商品</a>
                         |
-                        <a class="text-danger text-decoration-none fw-bold" href="../goral_bike_php/product_DELETE_ALL.php?product_id=<?= $row["product_id"] ?>">刪除商品</a>
+                        <a class="text-danger text-decoration-none fw-bold" href="../product/goral_bike_php/product_DELETE_ALL.php?product_id=<?= $row["product_id"] ?>">刪除商品</a>
                     </div>
                     <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
                         <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">

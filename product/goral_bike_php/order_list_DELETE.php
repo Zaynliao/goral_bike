@@ -15,7 +15,8 @@ if ($conn->query($sql) === TRUE) {
 
     $conn->close();
 
-    header("location:../goral_bike_layout/goral_biker_order_list.php");
+    // header("location:../goral_bike_layout/goral_biker_order_list.php");
+    echo "<script> location.href = document.referrer;</script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     exit;
