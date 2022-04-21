@@ -1,5 +1,6 @@
 <?php
-require_once("../db-connect.php");
+require_once("../../goral_bike/goral_bike_php/db-connect.php");
+
 
 $sql = "SELECT * FROM course_location";
 $result = $conn->query($sql);
@@ -27,8 +28,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
 
@@ -44,8 +44,8 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <div class="mb-2">
                         <label for="">課程類別</label>
                         <select class="form-control" name="category" id="category">
-                            <?php foreach($rowsCate as $row): ?>
-                            <option value="<?=$row["course_category_id"]?>"><?=$row["course_category_name"]?></option>
+                            <?php foreach ($rowsCate as $row) : ?>
+                                <option value="<?= $row["course_category_id"] ?>"><?= $row["course_category_name"] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -54,9 +54,8 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                         <input class="form-control" type="text" name="name" id="name">
                     </div>
                     <div class="mb-2">課程圖片
-                        <input type="file" class="form-control" name="image" id="image"
-                            accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <div class="img-thumbnail text-center"> <img src="../icon/no-image.png" class=" img-fluid"id="img-view"></div>
+                        <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
+                        <div class="img-thumbnail text-center"> <img src="../icon/no-image.png" class=" img-fluid" id="img-view"></div>
                     </div>
                     <div class="mb-2">
                         <label for="">課程時間</label>
@@ -65,8 +64,8 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <div class="mb-2">
                         <label for="">課程地點</label>
                         <select class="form-control" name="location" id="location">
-                            <?php foreach($rows as $row): ?>
-                            <option value="<?=$row["course_location_id"]?>"><?=$row["course_location_name"]?></option>
+                            <?php foreach ($rows as $row) : ?>
+                                <option value="<?= $row["course_location_id"] ?>"><?= $row["course_location_name"] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -85,8 +84,8 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <div class="mb-2">
                         <label for="">課程報名狀態</label>
                         <select class="form-control" name="statu" id="statu">
-                            <?php foreach($rowsStatu as $row): ?>
-                            <option value="<?=$rowStatu["course_status_id"]?>"><?=$row["course_status_name"]?></option>
+                            <?php foreach ($rowsStatu as $row) : ?>
+                                <option value="<?= $rowStatu["course_status_id"] ?>"><?= $row["course_status_name"] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -103,32 +102,31 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-    $("#image").change(function() {
+        $("#image").change(function() {
 
-        readURL(this);
+            readURL(this);
 
-    });
+        });
 
-    function readURL(input) {
+        function readURL(input) {
 
-        if (input.files && input.files[0]) {
+            if (input.files && input.files[0]) {
 
-            var reader = new FileReader();
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
+                reader.onload = function(e) {
 
-                $("#img-view").attr('src', e.target.result);
+                    $("#img-view").attr('src', e.target.result);
+
+                }
+
+                reader.readAsDataURL(input.files[0]);
 
             }
 
-            reader.readAsDataURL(input.files[0]);
-
         }
-
-    }
     </script>
 </body>
 
