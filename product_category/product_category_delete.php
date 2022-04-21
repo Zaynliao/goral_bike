@@ -23,6 +23,6 @@ if ($conn->query($sql) === TRUE) {
     	echo "nein: " . $conn->error;
 }
 $conn->close();
-header("location: product_category_page.php");
+header("location: ../goral_bike_layout/goral_biker_product_category.php");
 }
 ?>
