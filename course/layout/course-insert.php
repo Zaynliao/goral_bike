@@ -1,6 +1,12 @@
 <?php
-require_once("../../goral_bike/goral_bike_php/db-connect.php");
 
+// $path = $_SERVER["REQUEST_URI"];
+// echo $path . "<br>";
+// // 透過路徑取得檔名
+// $file = basename($path);
+// echo $file;
+
+require_once("db-connect.php");
 
 $sql = "SELECT * FROM course_location";
 $result = $conn->query($sql);
@@ -37,10 +43,10 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
         <div class="row justify-content-center">
             <div class="col-lg-4">
                 <div class="pt-4 pb-2 text-end">
-                    <a class="btn btn-info text-white position-relative" href="./course-list.php">返回課程管理</a>
+                    <a class="btn btn-info text-white position-relative" href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
                 </div>
                 <h1>新增課程</h1>
-                <form action="../api/doInsert.php" enctype="multipart/form-data" method="post">
+                <form action="../course/api/course-doInsert.php" enctype="multipart/form-data" method="post">
                     <div class="mb-2">
                         <label for="">課程類別</label>
                         <select class="form-control" name="category" id="category">
@@ -55,7 +61,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     </div>
                     <div class="mb-2">課程圖片
                         <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
-                        <div class="img-thumbnail text-center"> <img src="../icon/no-image.png" class=" img-fluid" id="img-view"></div>
+                        <div class="img-thumbnail text-center"> <img src="../../goral_bike/course/icon/no-image.png" class=" img-fluid" id="img-view"></div>
                     </div>
                     <div class="mb-2">
                         <label for="">課程時間</label>
@@ -70,7 +76,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label for="">報名剩餘名額</label>
+                        <label for="">課程人數</label>
                         <input class="form-control" type="number" name="enrollment" id="enrollment">
                     </div>
                     <div class="mb-2">
