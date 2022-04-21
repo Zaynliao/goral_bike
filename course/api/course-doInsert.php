@@ -1,5 +1,5 @@
 <?php
-require_once("../../goral_bike/goral_bike_php/db-connect.php");
+require("db-connect.php");
 
 $category=$_POST["category"];
 $name=$_POST["name"];
@@ -33,7 +33,7 @@ $sql="INSERT INTO classes (course_category_id, course_title, course_pictures, co
 
 if ($conn->query($sql) === TRUE) {
     echo "<script>alert('新增課程完成')</script>";
-    echo "<script>location.href='../layout/course-insert.php'</script> ";
+    echo "<script>location.href='../../goral_bike_layout/goral_biker_course-list.php?type=2'</script> ";
     exit;
 
 } else {

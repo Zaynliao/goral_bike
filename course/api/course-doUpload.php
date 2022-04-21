@@ -1,5 +1,5 @@
 <?php
-require_once("../../goral_bike/goral_bike_php/db-connect.php");
+require("db-connect.php");
 
 $id=$_POST['id'];
 $category=$_POST["category"];
@@ -55,7 +55,7 @@ if($end_time < $start_time|| $dateNew < $dateEnd){
 
 if ($conn->query($sql) === TRUE) {
     echo "<script>alert('修改課程完成')</script>";
-    echo "<script>location.href='../layout/course-list.php'</script>";
+    echo "<script>location.href='../../goral_bike_layout/goral_biker_course-list.php'</script>";
     exit;
 
 } else {
