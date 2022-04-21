@@ -25,5 +25,5 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-header("location: product_category_page.php");
+header("location: ../goral_bike_layout/goral_biker_product_category.php");
 ?>

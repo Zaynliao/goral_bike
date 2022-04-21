@@ -1,5 +1,5 @@
 <?php
-require_once("db-connect.php");
+require_once("../db-connect.php");
 if((!isset($_GET["name"]))){
   header("404.php");
   exit;
@@ -24,6 +24,7 @@ if(mysqli_num_rows($select)) {
 $sql="INSERT INTO product_category (product_category_name) VALUES ('$name')";
 if ($conn->query($sql) === TRUE) {
   echo "You have created a Product category!";
+  header("location: product_category_alter.php");
 } else {
   echo "Error" . $conn->error;
 }
