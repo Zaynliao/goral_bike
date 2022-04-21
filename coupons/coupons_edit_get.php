@@ -34,22 +34,41 @@ $conn -> close();
         <form action="coupons_edit.php" method="get">
           <h5>Coupon: <?=$id?></h5>
 
+          <div>
           <input type="hidden" name="id" id="id" class="form-control my-2" value="<?=$id?>">
-          <input type="text" name="name" id="name" class="form-control my-2" value="<?=$name?>">
-          <input type="text" name="code" id="code" class="form-control my-2" value="<?=$code?>">
-          <input type="text" name="content" id="content" class="form-control my-2" value="<?=$content?>">
-          <input type="date" name="date" id="date" class="form-control mt-2" value="<?=$date?>">
-          <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
-          <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
-          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary text-white">Return</a>
-
-
-
-
-
-
-          <!-- <h5>New Method:</h5>
-          <input type="text" name="name2" id="name2" class="form-control"> -->
+            <table class="table-bordered w-100">
+              <tr>
+                <td>Coupon id</td>
+                <td>Coupon name</td>
+                <td>Coupon code</td>
+                <td>Coupon content</td>
+                <td>Coupon expiry date</td>
+                <td>Edit coupon</td>
+                <td>Delete</td>
+              </tr>
+              <td>
+                <?=$id?>
+              </td>
+              <td>
+              <input type="text" name="name" id="name" class="form-control my-2" value="<?=$name?>">
+              </td>
+              <td>
+              <input type="text" name="code" id="code" class="form-control my-2" value="<?=$code?>">
+              </td>
+              <td>
+              <input type="text" name="content" id="content" class="form-control my-2" value="<?=$content?>">
+              </td>
+              <td>
+              <input type="date" name="date" id="date" class="form-control mt-2" value="<?=$date?>">
+              </td>
+              <td>
+              <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
+              </td>
+                <td>
+                <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
+              </td>
+            </table>
+            <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary text-white">Return</a>
 
           </form>
       </div>
