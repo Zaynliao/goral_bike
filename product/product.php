@@ -138,7 +138,7 @@ $conn->close();
             <div class="collapse multi-collapse" id="insert">
                 <div class="container">
 
-                    <form class="row g-3 mt-2" name="insert" action="" method="post" enctype="multipart/form-data">
+                    <form class="row g-3 mt-2" name="insert" action="../product/goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
 
                         <div class="col-md-6">
                             <label for="product_name" class="form-label">商品名稱</label>
@@ -188,9 +188,9 @@ $conn->close();
                 <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
                     <div class="card p-2">
                         <div class="py-2 text-end">
-                            <a class="text-decoration-none fw-bold" href="goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
+                            <a class="text-decoration-none fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
                             |
-                            <a class="text-danger text-decoration-none fw-bold" href="../goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
+                            <a class="text-danger text-decoration-none fw-bold" href="./goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
                         </div>
 
 

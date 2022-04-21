@@ -22,10 +22,10 @@
         </header>
         <section class="row p-0 m-0 vh-100">
             <aside class="aside col-2 p-0">
-                <?php require("product_aside.php") ?>
+                <?php require("../aside/product_aside.php") ?>
             </aside>
             <article class="article col-10 ">
-                <?php require("product_update.php") ?>
+                <?php require("../product/product_update.php") ?>
             </article>
         </section>
         <footer class="footer bg-light">
