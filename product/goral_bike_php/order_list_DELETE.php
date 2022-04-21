@@ -1,6 +1,6 @@
 <?php
 
-require_once("db-connect.php");
+require_once("../../db-connect.php");
 
 if (!isset($_GET['order_id'])) {
     echo `<script>alert("請選取欲修改商品")</script>`;

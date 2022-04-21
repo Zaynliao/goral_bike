@@ -134,7 +134,7 @@ $user_count = $result->num_rows;
 
 
         <div class="text-end mb-2">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>" class="btn btn-dark text-white <?php if ($cate == 0) echo "active" ?>">全部課程</a>
+            <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>" class="btn btn-dark text-white <?php if ($cate == 0) echo "active"?>">全部課程</a>
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=1" class="btn btn-success text-white <?php if ($cate == 1) echo "active" ?>">入門課程</a>
             <a href="../goral_bike_layout/goral_biker_course-list.php?p=1&type=1&valid=<?= $valid ?>&cate=2" class="btn btn-danger text-white <?php if ($cate == 2) echo "active" ?>">進階課程</a>
         </div>

@@ -1,6 +1,5 @@
 <?php
-require_once("../goral_bike_php/db-connect.php");
-
+require_once("../db-connect.php");
 
 $product_valid = 0;
 if (!isset($_GET["product_category_id"])) {

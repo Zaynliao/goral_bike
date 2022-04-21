@@ -1,5 +1,5 @@
 <?php
-require_once("../goral_bike_php/db-connect.php");
+require_once("../db-connect.php");
 $sql = "SELECT * FROM product_category";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
