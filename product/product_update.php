@@ -40,12 +40,12 @@ $conn->close();
                     <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
                 </figure>
 
-                <!-- <div class="py-2 px-3">
-                    <label for="product_name" class="form-label">更改檔案圖片</label>
+                <div class="py-2 px-3">
+                    <label for="product_update" class="form-label">更改商品日期</label>
                     <div class="mb-3">
-                        <input class="form-control" type="file" name="product_images" id="product_images">
+                        <input class="form-control" type="date" name="product_update" id="product_update" value="<?= $row["product_update"] ?>">
                     </div>
-                </div> -->
+                </div>
 
                 <div class="py-2 px-3">
                     <label for="product_name" class="form-label">商品名稱</label>
