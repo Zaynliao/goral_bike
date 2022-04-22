@@ -5,7 +5,7 @@ require_once("../db-connect.php");
 $product_id = $_GET["product_id"];
 $product_category_id = $_GET["product_category_id"];
 
-$sql = "SELECT * FROM product,product_category WHERE product.product_id='$product_id'";
+$sql = "SELECT * FROM product,product_category WHERE `product`.`product_category_id`=`product_category`.`product_category_id` AND product.product_id='$product_id'";
 
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
