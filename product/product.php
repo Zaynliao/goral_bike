@@ -40,23 +40,30 @@ if (!isset($_GET["max_price"])) {
 } else {
     $max_price = $_GET["max_price"];
 }
-
-
-
+if (!isset($_GET["serch"])) {
+    $serch = "";
+} else {
+    $serch = $_GET["serch"];
+}
 
 if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
     $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
-
     $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=0&max_price=99999";
 } else {
-
     $product_category_id = $_GET["product_category_id"];
     $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
-
     $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=0&max_price=99999";
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -95,7 +102,7 @@ switch ($type) {
 
 $product_valid = 1;
 
-$sql_content = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price'";
+$sql_content = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%' ";
 
 
 if (!isset($_GET["product_category_id"])) {
@@ -123,7 +130,7 @@ $start = ($p - 1) * $per_page;
 
 
 
-$sql_content_limit = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price'";
+$sql_content_limit = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%'";
 
 if (!isset($_GET["product_category_id"])) {
 
@@ -251,11 +258,14 @@ $conn->close();
             <div class="card card-body">
 
                 <form action="" method="get">
-                    <?php if ($min_price <= $max_price) : echo $path_query; ?>
+                    <?php if ($min_price <= $max_price) : ?>
                         <div class="row justify-content-start align-items-center gx-2">
                             <h5 class="fw-bold mt-3">價格篩選</h5>
 
-                            <input type="hidden" name="product_category_id" id="product_category_id" value="<?= $product_category_id ?>">
+                            <input type="hidden" name="product_category_id" id="product_category_id" <?php if (!isset($_GET["product_category_id"])) : ?> disabled <?php endif; ?> value="<?= $product_category_id ?>">
+
+
+
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
 
@@ -268,12 +278,20 @@ $conn->close();
                                     <input type="number" class="form-control" value="<?= $max_price ?>" name="max_price" id="max_price" placeholder="max_price" aria-label="max_price">
                                 </div>
                             </div>
+
                             <h5 class="fw-bold mt-3">日期篩選</h5>
+
                             <div class="col-12 mt-2">
                                 <input type="date" name="date" value="<?= $date ?>" class="form-control">
                             </div>
 
-                            <div class="col-auto ms-auto mt-5">
+                            <h5 class="fw-bold mt-3">名稱篩選</h5>
+
+                            <div class="col my-2">
+                                <input type="text" class="form-control" value="<?= $serch ?>" name="serch" id="serch" placeholder="serch" aria-label="serch">
+                            </div>
+                            <p></p>
+                            <div class="col-auto ms-auto mt-1">
                                 <button type="submit" class="btn btn-secondary">查詢</button>
                                 <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
                             </div>
