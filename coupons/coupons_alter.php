@@ -12,13 +12,15 @@
   </head>
   <body>
     <div class="container">
-      <form action="coupons_create.php" method="get">
+      <form action="../coupons/coupons_create.php" method="get">
           <h5>Create coupon:</h5>
           <!-- Have 5 here without the id because the id should be on auto incrament -->
-          <input type="text" name="name" id="name" class="form-control my-2" placeholder="Enter coupon name">
-          <input type="text" name="code" id="name" class="form-control my-2" placeholder="Enter coupon code">
-          <input type="text" name="content" id="name" class="form-control my-2" placeholder="Enter coupon content">
-          <input type="date" name="date" id="name" class="form-control my-2" placeholder="Enter coupon expiry date">
+          <input type="text" name="name" class="form-control my-2" placeholder="Enter coupon name">
+          <input type="text" name="code"  class="form-control my-2" placeholder="Enter coupon code">
+          <input type="text" name="content" class="form-control my-2" placeholder="Enter coupon content">
+          <input type="date" name="date" class="form-control my-2" placeholder="Enter coupon expiry date">
+          <input type="number" name="discount" class="form-control my-2" placeholder="Enter coupon discount">
+
           <button type="submit" class="btn btn-success mt-2 my-2 text-white">Create Coupon</button>
           <button type="reset" class="btn btn-warning mt-2 my-2">Reset</button>
         </form>

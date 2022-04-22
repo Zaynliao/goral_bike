@@ -18,7 +18,7 @@ $sql="UPDATE payment_method SET valid=1 WHERE id='$id'";
 
 
 if ($conn->query($sql) === TRUE) {
-    header("location: payment_method_restore_page.php");
+    header("location: ../goral_bike_layout/goral_biker_payment_method_restore.php");
 } else {
     echo "Error" . $conn->error;
 }

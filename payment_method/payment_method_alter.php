@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-      <form action="payment_method_create.php" method="get">
+      <form action="../payment_method/payment_method_create.php" method="get">
           <h5>Create payment method:</h5>
           <!-- Have 5 here without the id because the id should be on auto incrament -->
           <input type="text" name="name" id="name" class="form-control my-2" placeholder="Enter payment method name">

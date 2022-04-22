@@ -24,7 +24,7 @@ if(mysqli_num_rows($select)) {
 $sql="INSERT INTO payment_method (payment_method_name) VALUES ('$name')";
 if ($conn->query($sql) === TRUE) {
   echo "You have created a Payment method!";
-  header("location: payment_method_alter.php");
+  header("location: ../goral_bike_layout/goral_biker_payment_method_create.php");
 } else {
   echo "Error" . $conn->error;
 }
