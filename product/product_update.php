@@ -36,16 +36,19 @@ $conn->close();
                     <h3 for="product_img" class="form-label text-center fw-bolder">商品圖片</h3>
                 </div>
 
+
+
                 <figure class=" figure d-flex justify-content-center align-items-center">
-                    <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+                    <!-- <input type="file" class="form-control" name="product_images" id="product_images" accept=".jpg, .jpeg, .png, .webp, .svg"> -->
+                    <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>" class="img-fluid" id="img-view">
                 </figure>
 
-                <!-- <div class="py-2 px-3">
-                    <label for="product_name" class="form-label">更改檔案圖片</label>
+                <div class="py-2 px-3">
+                    <label for="product_update" class="form-label">更改商品日期</label>
                     <div class="mb-3">
-                        <input class="form-control" type="file" name="product_images" id="product_images">
+                        <input class="form-control" type="date" name="product_update" id="product_update" value="<?= $row["product_update"] ?>">
                     </div>
-                </div> -->
+                </div>
 
                 <div class="py-2 px-3">
                     <label for="product_name" class="form-label">商品名稱</label>

@@ -16,11 +16,17 @@ $product_name = $_POST['product_name'];
 $product_images = $_FILES["product_images"]["name"];
 $product_price = $_POST['product_price'];
 $product_category_id = $_POST['product_category_id'];
-
+$product_update =  $_POST['product_update'];
+$today = date("Y-m-d");
 if (empty($product_name) || empty($product_images) || empty($product_price)) {
     echo "欄位為空";
     return;
 }
+
+if (empty($product_update)) {
+    $product_update = $today;
+}
+
 
 // if ($_FILES["product_images"]["error"] == 0) {
 
@@ -32,7 +38,7 @@ if ($_FILES["product_images"]["error"] == 0) {
     } else {
         if (move_uploaded_file($_FILES["product_images"]["tmp_name"], "../goral_bike_pic/" . $_FILES["product_images"]["name"])) {
 
-            $sql = "INSERT INTO `product` ( `product_name`, `product_images`, `product_price`, `product_category_id`) VALUES ('$product_name', '$product_images', '$product_price', '$product_category_id');";
+            $sql = "INSERT INTO `product` ( `product_name`, `product_images`, `product_price`, `product_category_id`,`product_update`) VALUES ('$product_name', '$product_images', '$product_price', '$product_category_id','$product_update');";
 
             if ($conn->query($sql) === TRUE) {
 
@@ -41,7 +47,7 @@ if ($_FILES["product_images"]["error"] == 0) {
                 $conn->close();
 
                 // header("location:../../goral_bike_layout/goral_biker_product.php");
-                
+
                 echo "<script> location.href = document.referrer;</script>";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;

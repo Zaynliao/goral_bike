@@ -11,6 +11,7 @@ $product_name = $_POST['product_name'];
 // $product_images = $_FILES["product_images"]["name"];
 $product_price = $_POST['product_price'];
 $product_category_id = $_POST['product_category_id'];
+$product_update = $_POST['product_update'];
 
 if (empty($product_name) || empty($product_price) || empty($product_category_id)) {
     echo "EMPTY ERROR";
@@ -20,7 +21,7 @@ if (empty($product_name) || empty($product_price) || empty($product_category_id)
 
 
 
-$sql = "UPDATE `product` SET `product_name` = '$product_name ', `product_price` = '$product_price', `product_category_id` = '$product_category_id' WHERE `product`.`product_id` = '$product_id';";
+$sql = "UPDATE `product` SET `product_name` = '$product_name ', `product_price` = '$product_price', `product_category_id` = '$product_category_id',`product_update` ='$product_update' WHERE `product`.`product_id` = '$product_id';";
 
 if ($conn->query($sql) === TRUE) {
 
