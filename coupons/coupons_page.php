@@ -12,7 +12,7 @@ $conn->close();
 <html lang="en">
 
 <head>
-  <title>Coupon page</title>
+  <title>Product category page</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,7 +39,7 @@ $conn->close();
                 <td>Delete</td>
               </tr>
               <?php foreach($rows as $row) : 
-            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_name"]. '</td><td>'.$row["coupon_discount"].'</td><td>'?>
+            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_name"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_discount"].'</td><td>'?>
 
           <a href="goral_biker_coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>&discount=<?= $row["coupon_discount"]?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td>
 

@@ -1,10 +1,14 @@
 <?php
+
 require_once("../db-connect.php");
 
 // ------------------------------------------------------------------------------------------------
 $path = $_SERVER["REQUEST_URI"];
 
 // echo $path;
+$today = date('Y-m-d');
+
+
 // // 透過路徑取得檔名
 // $file = basename($path);
 // // echo $file;
@@ -14,11 +18,47 @@ if (!isset($_GET["p"])) {
 } else {
     $p = $_GET["p"];
 }
+
 if (!isset($_GET["type"])) {
     $type = 0;
 } else {
     $type = $_GET["type"];
 }
+
+if (!isset($_GET["date"])) {
+    $date = "";
+} else {
+    $date = $_GET["date"];
+}
+if (!isset($_GET["min_price"])) {
+    $min_price = 0;
+} else {
+    $min_price = $_GET["min_price"];
+}
+if (!isset($_GET["max_price"])) {
+    $max_price = 999999;
+} else {
+    $max_price = $_GET["max_price"];
+}
+
+
+
+
+if (!isset($_GET["product_category_id"])) {
+
+    $product_category_id = "";
+    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
+
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=0&max_price=99999";
+} else {
+
+    $product_category_id = $_GET["product_category_id"];
+    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
+
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=0&max_price=99999";
+}
+
+
 
 // ------type = ?↓
 switch ($type) {
@@ -41,6 +81,12 @@ switch ($type) {
     case "5":
         $order = "product.product_price DESC";
         break;
+    case "6":
+        $order = "`product`.`product_update` ASC";
+        break;
+    case "7":
+        $order = "`product`.`product_update` DESC";
+        break;
     default:
         $order = "product.product_id ASC";
 }
@@ -49,14 +95,17 @@ switch ($type) {
 
 $product_valid = 1;
 
+$sql_content = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price'";
+
+
 if (!isset($_GET["product_category_id"])) {
 
-    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id";
+    $sql_conunt = $sql_content;
 } else {
 
     $product_category_id = $_GET["product_category_id"];
 
-    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id'";
+    $sql_conunt = $sql_content . "AND product.product_category_id='$product_category_id'";
 }
 
 $count_result = $conn->query($sql_conunt);
@@ -73,13 +122,17 @@ $start = ($p - 1) * $per_page;
 // ------------------------------------------------------------------------------------------------
 
 
+
+$sql_content_limit = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price'";
+
 if (!isset($_GET["product_category_id"])) {
 
-    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id ORDER BY $order LIMIT $start,$per_page";
+    $sql = $sql_content_limit . "ORDER BY $order LIMIT $start,$per_page";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
-    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' ORDER BY $order LIMIT $start,$per_page";
+
+    $sql = $sql_content_limit . "AND product.product_category_id='$product_category_id' ORDER BY $order LIMIT $start,$per_page";
 }
 
 
@@ -108,7 +161,7 @@ $conn->close();
     <div class="row justify-content-end">
         <div class="py-2 text-end ">
 
-            <?php $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
+            <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
 
 
 
@@ -118,21 +171,13 @@ $conn->close();
 
                 <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
-                    <?php if (strpos($file, "product_category_id") === false) : ?>
-                        <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                            <option value="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                    <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                            </option>
-                        <?php endfor; ?>
-                    <?php else : ?>
-                        <?php for ($i = 0; $i < count($a); $i++) : ?>
+                        <option value="<?= $path_query ?>&type=<?= $i ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
-                            <option value="../goral_bike_layout/goral_biker_product.php?p=<?= $p ?>&type=<?= $i ?>&product_category_id=<?= $product_category_id ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
-
-                            </option>
-                        <?php endfor; ?>
-                    <?php endif; ?>
+                        </option>
+                    <?php endfor; ?>
 
                 </select>
 
@@ -157,18 +202,9 @@ $conn->close();
 
                                 <div class="col-8">
                                     <div class="mb-3">
-
                                         <label for="product_images" class="form-label">商品圖片</label>
-
-
-                                        <input type="file" class="form-control" name="product_images" id="product_images" accept=".jpg, .jpeg, .png, .webp, .svg">
-                                        <div class="img-thumbnail text-center">
-                                            <img src="" class="img-fluid" id="img-view">
-                                        </div>
-
+                                        <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
                                     </div>
-
-
                                 </div>
 
                                 <div class="col-md-6">
@@ -202,28 +238,59 @@ $conn->close();
         </div>
     </div>
 
-    <!-- 時間篩選 -->
+    <!-- 篩選 -->
     <div class="py-2">
-        <form action="">
-            <div class="row justify-content-end gx-2">
-                <div class="col-auto">
-                    <input type="date" name="date1" <?php if (isset($_GET["date1"])) : ?> value="<?= $_GET["date1"] ?>" <?php endif; ?> class="form-control">
-                </div>
-                <div class="col-auto">
-                    <label class="form-control-label" for="">~</label>
-                </div>
-                <div class="col-auto">
-                    <input type="date" name="date2" <?php if (isset($_GET["date2"])) : ?> value="<?= $_GET["date2"] ?>" <?php endif; ?> class="form-control">
-                </div>
 
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-secondary">查詢</button>
-                </div>
+        <p class="text-end">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                篩選
+            </button>
+        </p>
+
+        <div class="collapse show" id="collapseExample">
+            <div class="card card-body">
+
+                <form action="" method="get">
+                    <?php if ($min_price <= $max_price) : echo $path_query; ?>
+                        <div class="row justify-content-start align-items-center gx-2">
+                            <h5 class="fw-bold mt-3">價格篩選</h5>
+
+                            <input type="hidden" name="product_category_id" id="product_category_id" value="<?= $product_category_id ?>">
+                            <input type="hidden" name="p" id="p" value="<?= $p ?>">
+                            <input type="hidden" name="type" id="type" value="<?= $type ?>">
+
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <input type="number" class="form-control" value="<?= $min_price ?>" name="min_price" id="min_price" placeholder="min_price" aria-label="min_price">
+                                </div>
+
+                                <div class="col">
+                                    <input type="number" class="form-control" value="<?= $max_price ?>" name="max_price" id="max_price" placeholder="max_price" aria-label="max_price">
+                                </div>
+                            </div>
+                            <h5 class="fw-bold mt-3">日期篩選</h5>
+                            <div class="col-12 mt-2">
+                                <input type="date" name="date" value="<?= $date ?>" class="form-control">
+                            </div>
+
+                            <div class="col-auto ms-auto mt-5">
+                                <button type="submit" class="btn btn-secondary">查詢</button>
+                                <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
+                            最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                        </div>
+                    <?php endif; ?>
+                </form>
+
             </div>
-        </form>
+        </div>
+
     </div>
 
-    <div class="row">
+    <div class="row mt-2">
         <h2 class="h2">商品列表</h2>
         <?php if ($product_count > 0) : ?>
             <?php foreach ($rows as $row) : ?>
@@ -255,6 +322,13 @@ $conn->close();
                     </div>
                 </div>
             <?php endforeach; ?>
+        <?php else : ?>
+            <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
+
+                <div>
+                    <h6>NO DATA!</h6>
+                </div>
+            </div>
         <?php endif; ?>
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
@@ -267,16 +341,12 @@ $conn->close();
 
 
 
-            <?php if (strpos($file, "product_category_id") === false) : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
-            <?php else : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a>
-                    </li>
-                <?php endfor; ?>
-            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="<?= $path_query ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
+
 
 
 

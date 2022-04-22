@@ -21,19 +21,22 @@ $conn->close();
   </head>
   <body>
       <div class="container">
-          <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary my-3">Back to payment list</a>
-        <div class="row col-11 justify-content-between align-items-between">
-        <?php foreach($rows as $row) : ?>
-        <div class="bg-light w-50 border col-4">
-            <div class="d-flex justify-content-between mt-2">
-                <p>Coupon id: <?=$row["id"]?></p>
-                <div>
-                    <a href="payment_method_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a>
-                </div>
-            </div>
-            <p>Payment method name: <?=$row["payment_method_name"]?></p>
-        </div>
-        <?php endforeach;?>
+      <a href="goral_biker_payment_method.php" class="btn btn-secondary my-3">Back to payment list</a>
+          <div class="row col-11 justify-content-between align-items-between">
+            <table class="table-bordered">
+              <tr>
+                <td>Coupon id</td>
+                <td>Payment method name</td>
+                <td>Restore coupon</td>
+                <td>Delete</td>
+              </tr>
+              <?php foreach($rows as $row) : 
+            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["payment_method_name"].'</td><td>'?>
+
+          <a href="../payment_method/payment_method_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a></td><td>
+          <a href="../payment_method/payment_method_hard_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td></tr>
+          <?php endforeach;?>
+        </table>
         </div>  
       </div>
     <!-- Bootstrap JavaScript Libraries -->

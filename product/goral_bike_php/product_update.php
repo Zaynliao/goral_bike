@@ -13,6 +13,8 @@ $product_price = $_POST['product_price'];
 $product_category_id = $_POST['product_category_id'];
 $product_update = $_POST['product_update'];
 
+
+
 if (empty($product_name) || empty($product_price) || empty($product_category_id)) {
     echo "EMPTY ERROR";
     return;

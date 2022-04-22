@@ -27,15 +27,33 @@ $conn -> close();
 
   </head>
   <body>
-      <div class="container">
-        <form action="payment_method_edit.php" method="get">
-          <h5>Payment method: <?=$name?></h5>
-          <input type="hidden" name="id" id="id" value="<?=$id?>">
-          <input type="text" name="name" id="name" class="form-control my-2" value="<?=$name?>">
-          <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
-          <button type="reset" class="btn btn-warning mt-2 my-2">Reset</button>
-          <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary mt-2 my-2">Return to edit page</a>
-
+      <div class="container-fluid">
+        <form action="../payment_method/payment_method_edit.php" method="get">
+        <h5>Coupon: <?=$id?></h5>
+          <table class="table-bordered w-100">
+              <tr>
+                <td>Payment method id</td>
+                <td>Payment method name</td>
+                <td>Edit coupon</td>
+                <td>Delete</td>
+              </tr>
+              <td>
+                <?=$id?>
+              </td>
+              <td>
+              <input type="text" name="name" class="form-control my-2" value="<?=$name?>">
+              </td>
+              </td>
+              <input type="hidden" name="id" class="form-control my-2" value="<?=$id?>">
+              <input type="hidden" name="name2" class="form-control my-2" value="<?=$name?>">
+              <td>
+              <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
+              </td>
+                <td>
+                <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
+              </td>
+            </table>
+            <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary text-white">Return</a>
 
 
 

@@ -7,21 +7,22 @@ if(!isset($_GET["id"])){
 
 $id=$_GET["id"];
 // echo $id;
-$select = mysqli_query($conn, "SELECT * FROM payment_method WHERE id = '".$_GET["id"]."'");
+
+$select = mysqli_query($conn, "SELECT * FROM coupons WHERE id = '".$_GET["id"]."'");
 if(mysqli_num_rows($select) == 0) {
     exit('This Method Does Not Exist');
-}
-//SOFT DELETE jk lol
-$sql="UPDATE payment_method SET valid=1 WHERE id='$id'";
-
+}else{
+//SOFT DELETE
+$sql="DELETE FROM coupons WHERE id ='$id'";
 
 
 
 if ($conn->query($sql) === TRUE) {
-    header("location: ../goral_bike_layout/goral_biker_payment_method_restore.php");
+    	echo "ja";
 } else {
-    echo "Error" . $conn->error;
+    	echo "nein: " . $conn->error;
 }
-
 $conn->close();
+header("location: ../goral_bike_layout/goral_biker_coupons.php");
+}
 ?>

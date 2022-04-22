@@ -19,8 +19,8 @@ $date2 = $_GET["date2"];
 
 $today = date("Y-m-d");
 
-if(empty($name) || empty($code) || empty($content) || empty($date) || empty($discount)){
-    exit("one or more boxes are empty or the discount is 0");
+if(empty($name) || empty($code) || empty($content) || empty($date) || !isset($discount)){
+    exit("one or more boxes are emptyx");
 }
 
 if($date < $today){
