@@ -4,10 +4,11 @@ require_once("../db-connect.php");
 // ------------------------------------------------------------------------------------------------
 $path = $_SERVER["REQUEST_URI"];
 
-echo $path;
+// echo $path;
 // 透過路徑取得檔名
 // $file = basename($path);
 // echo $file;
+
 $today = date('Y-m-d');
 
 
@@ -138,7 +139,6 @@ $sql = "SELECT * FROM product_category";
 $product_category_result = $conn->query($sql);
 $product_category_rows = $product_category_result->fetch_all(MYSQLI_ASSOC);
 
-
 // var_dump($rows);
 // echo json_encode($rows);
 $conn->close();
@@ -151,27 +151,17 @@ $conn->close();
 
             <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
 
-
-
             <div class="d-flex justify-content-end mt-2 gap-3">
 
                 <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
-                    <?php if (strpos($file, "product_category_id") === false) : ?>
-                        <?php for ($i = 0; $i < count($a); $i++) : ?>
+                    <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                            <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
-
-
-                        <?php endfor; ?>
-                    <?php else : ?>
-                        <?php for ($i = 0; $i < count($a); $i++) : ?>
-
-                            <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&product_category_id=<?= $product_category_id ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                        <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&min_price=<?= $min_price ?>0&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&serch=<?= $serch ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
 
-                        <?php endfor; ?>
-                    <?php endif; ?>
+                    <?php endfor; ?>
+
 
                 </select>
             </div>
@@ -195,8 +185,20 @@ $conn->close();
                         <div class="row justify-content-start align-items-center gx-2">
                             <h5 class="fw-bold mt-3">價格篩選</h5>
 
-                            <input type="hidden" name="product_category_id" id="product_category_id" <?php if (!isset($_GET["product_category_id"])) : ?> disabled <?php endif; ?> value="<?= $product_category_id ?>">
 
+
+                            <select class="form-select w-25 mx-4 my-3 ms-auto" aria-label="Default select example">
+
+                                <?php foreach ($product_category_rows as $p_c_r) : ?>
+
+                                    <option name="product_category_id" id="product_category_id" value="<?= $p_c_r["product_category_id"] ?>" ?><?= $p_c_r["product_category_name"] ?></option>
+
+
+                                <?php endforeach; ?>
+
+
+
+                            </select>
 
 
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
