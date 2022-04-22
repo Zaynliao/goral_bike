@@ -14,42 +14,21 @@ if (!isset($_GET["p"])) {
 } else {
     $p = $_GET["p"];
 }
-
 if (!isset($_GET["type"])) {
     $type = 0;
 } else {
     $type = $_GET["type"];
 }
 
-if (!isset($_GET["date"])) {
-    $date = "";
-} else {
-    $date = $_GET["date"];
-}
-if (!isset($_GET["min_price"])) {
-    $min_price = 0;
-} else {
-    $min_price = $_GET["min_price"];
-}
-if (!isset($_GET["max_price"])) {
-    $max_price = 999999;
-} else {
-    $max_price = $_GET["max_price"];
-}
-if (!isset($_GET["serch"])) {
-    $serch = "";
-} else {
-    $serch = $_GET["serch"];
-}
-if (!isset($_GET["product_category_id"])) {
+if (isset($_GET["date1"])) {
 
-    $product_category_id = "";
-    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=0&max_price=99999";
+    $date1 = $_GET["date1"];
+}
+if (isset($_GET["date2"])) {
+
+    $date2 = $_GET["date2"];
 } else {
-    $product_category_id = $_GET["product_category_id"];
-    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=0&max_price=99999";
+    $date2 = $date;
 }
 
 // ------type = ?↓
@@ -183,67 +162,26 @@ $conn->close();
         </div>
     </div>
 
-    <!-- 篩選 -->
+    <!-- 時間篩選 -->
     <div class="py-2">
 
-        <p class="text-end">
-            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                篩選
-            </button>
-        </p>
+        <form action="">
+            <div class="row justify-content-end gx-2">
+                <div class="col-auto">
+                    <input type="date" name="date1" value="<?= $date1 ?>" class="form-control">
+                </div>
+                <div class="col-auto">
+                    <label class="form-control-label" for="">~</label>
+                </div>
+                <div class="col-auto">
+                    <input type="date" name="date2" value="<?= $date2 ?>" class=" form-control">
+                </div>
 
-        <div class="collapse show" id="collapseExample">
-            <div class="card card-body">
-
-                <form action="" method="get">
-                    <?php if ($min_price <= $max_price) : ?>
-                        <div class="row justify-content-start align-items-center gx-2">
-                            <h5 class="fw-bold mt-3">價格篩選</h5>
-
-                            <input type="hidden" name="product_category_id" id="product_category_id" <?php if (!isset($_GET["product_category_id"])) : ?> disabled <?php endif; ?> value="<?= $product_category_id ?>">
-
-
-
-                            <input type="hidden" name="p" id="p" value="<?= $p ?>">
-                            <input type="hidden" name="type" id="type" value="<?= $type ?>">
-
-                            <div class="row mt-2">
-                                <div class="col">
-                                    <input type="number" class="form-control" value="<?= $min_price ?>" name="min_price" id="min_price" placeholder="min_price" aria-label="min_price">
-                                </div>
-
-                                <div class="col">
-                                    <input type="number" class="form-control" value="<?= $max_price ?>" name="max_price" id="max_price" placeholder="max_price" aria-label="max_price">
-                                </div>
-                            </div>
-
-                            <h5 class="fw-bold mt-3">日期篩選</h5>
-
-                            <div class="col-12 mt-2">
-                                <input type="date" name="date" value="<?= $date ?>" class="form-control">
-                            </div>
-
-                            <h5 class="fw-bold mt-3">名稱篩選</h5>
-
-                            <div class="col my-2">
-                                <input type="text" class="form-control" value="<?= $serch ?>" name="serch" id="serch" placeholder="serch" aria-label="serch">
-                            </div>
-                            <p></p>
-                            <div class="col-auto ms-auto mt-1">
-                                <button type="submit" class="btn btn-secondary">查詢</button>
-                                <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
-                            </div>
-                        </div>
-                    <?php else : ?>
-                        <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
-                        </div>
-                    <?php endif; ?>
-                </form>
-
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary">查詢</button>
+                </div>
             </div>
-        </div>
-
+        </form>
     </div>
 
     <div class="row">

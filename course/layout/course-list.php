@@ -9,31 +9,39 @@ if (isset($_GET["valid"])) {
 
 if (!isset($_GET["p"])) {
     $p = 1;
+    $pURL = "";
 } else {
     $p = $_GET["p"];
+    $pURL = "&p=$p";
 }
 
 if (!isset($_GET["type"])) {
     $type = 1;
+    $typeURL ="";
 } else {
     $type = $_GET["type"];
+    $typeURL = "&p=$type";
 }
+
+$typeNames=["依序號正序","依序號反序","依課程時間正序","依課程時間反序","依課程價錢正序","依課程價錢反序"];
 
 if(isset($_GET["date1"]) && isset($_GET["date2"])){
     $date1=$_GET["date1"];
     $date2=$_GET["date2"];
     $dateorder="AND classes.course_date BETWEEN '$date1' AND '$date2'";
-    $dateget="&date1=$date1&date2=$date2";
+    $dateURL="&date1=$date1&date2=$date2";
 } else{
     $dateorder="";
-    $dateget="";
+    $dateURL="";
 }
 
 // for 每頁幾筆
 if (!isset($_GET["per_page"])) {
-    $per_page = 10;
+    $per_page = 5;
+    $pageURL ="";
 } else {
     $per_page = $_GET["per_page"];
+    $perpageURL ="&per_page=$per_page";
 }
 
 if (isset($_GET["search"])) {
@@ -48,17 +56,17 @@ if (isset($_GET["search"])) {
 else {
     $search="";
     $searchs ="";
-    $searchurl="";
+    $searchURL="";
 }
 
 if (!isset($_GET["cate"])) {
     $cate = 0;
     $cates = "";
-    $cateurl ="";
+    $cateURL ="";
 } else {
     $cate = $_GET["cate"];
     $cates = "AND classes.course_category_id=$cate";
-    $cateurl ="&cate=$cate";
+    $cateURL ="&cate=$cate";
 }
 
 switch ($type) {
@@ -183,9 +191,12 @@ $course_count = $result->num_rows;
                         顯示
                     </span>
                     <select class="me-2 form-select w-auto" aria-label="Default select example" id="pageCount">
-                        <option value="5" <?php if ($per_page == 5) echo "selected" ?>>5</option>
-                        <option value="10" <?php if ($per_page == 10) echo "selected" ?>>10</option>
-                        <option value="15" <?php if ($per_page == 15) echo "selected" ?>>15</option>
+                        <?php for($i=1;$i<=3;$i++): 
+                            $perPageVal=$i*5;?>
+                        <option value="<?=$perPageVal?>" <?php if ($per_page == $perPageVal) echo "selected" ?>>
+                            <?=$perPageVal?>
+                        </option>
+                        <?php endfor;?>
                     </select>
                     <span class="text-nowrap pt-2">
                         筆數
@@ -195,24 +206,11 @@ $course_count = $result->num_rows;
                 <div class="mt-2">
                     <select class="form-select w-auto" name="" id="select"
                         onchange="location.href=this.options[this.selectedIndex].value;">
+                        <?php for($i=0;$i<=5;$i++): ?>      
                         <option
-                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=1&valid=<?= $valid ?><?php if ($cate !== 0) echo "&cate=$cate"?><?=$dateget?><?=$searchurl?>"
-                            <?php if ($type == 1) echo "selected" ?>>依序號正序</option>
-                        <option
-                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=2&valid=<?= $valid ?><?php if ($cate !== 0) echo "&cate=$cate"?><?=$dateget?><?=$searchurl?>"
-                            <?php if ($type == 2) echo "selected" ?>>依序號反序</option>
-                        <option
-                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=3&valid=<?= $valid ?><?php if ($cate !== 0) echo "&cate=$cate"?><?=$dateget?><?=$searchurl?>"
-                            <?php if ($type == 3) echo "selected" ?>>依課程時間正序</option>
-                        <option
-                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=4&valid=<?= $valid ?><?php if ($cate !== 0) echo "&cate=$cate"?><?=$dateget?><?=$searchurl?>"
-                            <?php if ($type == 4) echo "selected" ?>>依課程時間反序</option>
-                        <option
-                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=5&valid=<?= $valid ?><?php if ($cate !== 0) echo "&cate=$cate"?><?=$dateget?><?=$searchurl?>"
-                            <?php if ($type == 5) echo "selected" ?>>依課程價錢正序</option>
-                        <option
-                            value="../goral_bike_layout/goral_biker_course-list.php?p=<?= $p ?>&type=6&valid=<?= $valid ?><?php if ($cate !== 0) echo "&cate=$cate"?><?=$dateget?><?=$searchurl?>"
-                            <?php if ($type == 6) echo "selected" ?>>依課程價錢反序</option>
+                            value="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?><?=$pURL?>&type=<?=$i+1?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>"
+                            <?php if ($type == $i+1) echo "selected" ?>><?=$typeNames[$i]?></option>
+                        <?php endfor;?>
                     </select>
                 </div>
             </div>
@@ -240,12 +238,12 @@ $course_count = $result->num_rows;
                         <div class="d-flex">
                             <input type="hidden" name="valid" id="valid" value="<?= $valid ?>">
                             <input type="hidden" name="cate" id="cate" value="<?= $cate ?>"
-                            <?php if(!$cate) echo "disabled"?>>
+                                <?php if(!$cate) echo "disabled"?>>
                             <?php if(isset($_GET["date1"]) && isset($_GET["date2"])):?>
-                            <input type="hidden" name="date1" id="date1" value="<?=$_GET["date1"]?>" 
-                            <?php if(!$date1) echo "disabled"?>>
-                            <input type="hidden" name="date2" id="date2" value="<?=$_GET["date2"]?>" 
-                            <?php if(!$date2) echo "disabled"?>>
+                            <input type="hidden" name="date1" id="date1" value="<?=$_GET["date1"]?>"
+                                <?php if(!$date1) echo "disabled"?>>
+                            <input type="hidden" name="date2" id="date2" value="<?=$_GET["date2"]?>"
+                                <?php if(!$date2) echo "disabled"?>>
                             <?php endif;?>
                             <input class="form-control me-2" type="search" placeholder="搜尋關鍵字" aria-label="Search"
                                 name="search" value="<?=$search?>">
@@ -355,7 +353,7 @@ $course_count = $result->num_rows;
                         <?php if ($p != 1) : ?>
                         <li class="page-item">
                             <a class="page-link"
-                                href="goral_biker_course-list.php?p=<?= $p - 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&evalid=<?= $valid ?>&search=<?= $search ?><?=$dateget?><?=$cateurl?>"
+                                href="goral_biker_course-list.php?p=<?= $p - 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&evalid=<?= $valid ?>&search=<?= $search ?><?=$dateURL?><?=$cateURL?>"
                                 aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
@@ -363,13 +361,13 @@ $course_count = $result->num_rows;
                         <?php endif; ?>
                         <li class="page-item active">
                             <a class="page-link"
-                                href="goral_biker_course-list.php?p=<?= $p ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?><?=$dateget?><?=$cateurl?>"><?= $p ?>
+                                href="goral_biker_course-list.php?p=<?= $p ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?><?=$dateURL?><?=$cateURL?>"><?= $p ?>
                             </a>
                         </li>
                         <?php if ($p < $page_count) : ?>
                         <li class="page-item">
                             <a class="page-link"
-                                href="goral_biker_course-list.php?p=<?= $p + 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?><?=$dateget?><?=$cateurl?>"
+                                href="goral_biker_course-list.php?p=<?= $p + 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?><?=$dateURL?><?=$cateURL?>"
                                 aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -518,7 +516,7 @@ $course_count = $result->num_rows;
             pageCount.addEventListener("change", function(e) {
                 console.log(e.target.value);
                 location.href =
-                    `goral_biker_course-list.php?per_page=${e.target.value}&valid=<?= $valid ?>&type=<?= $type ?>&search=<?= $search ?>`;
+                    `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=<?$per_page?><?=$dateURL?>`;
             })
 
             function toVaild() {
@@ -528,7 +526,7 @@ $course_count = $result->num_rows;
                 if (date1Val !== "" && date2Val !== "") {
                     return true;
                 } else {
-                    location.href = "goral_biker_course-list.php?valid=<?=$valid?><?=$cateurl?>";
+                    location.href = "goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>";
                     return false;
                 }
             }
