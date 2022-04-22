@@ -359,13 +359,20 @@ $conn->close();
 
 
 
+            <?php if (!isset($_GET["product_category_id"])) : ?>
+                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>">
+                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
 
-            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="<?= $path_query ?>"><?= $i ?></a>
-                </li>
-            <?php endfor; ?>
-
-
+            <?php else : ?>
+                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>">
+                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&product_category_id=<?= $product_category_id ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+            <?php endif; ?>
 
 
             <li class="page-item">
