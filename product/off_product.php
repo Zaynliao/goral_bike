@@ -12,9 +12,12 @@ $path = $_SERVER["REQUEST_URI"];
 $today = date('Y-m-d');
 
 
+
 // // 透過路徑取得檔名
 // $file = basename($path);
 // // echo $file;
+
+
 
 if (!isset($_GET["p"])) {
     $p = 1;
@@ -33,8 +36,8 @@ if (!isset($_GET["date1"])) {
 } else {
     $date1 = $_GET["date1"];
 }
-if (!isset($_GET["date2"])) {
-    $date2 = "9999-12-31";
+if (!isset($_GET["date2"])) {   
+    $date2 = "";
 } else {
     $date2 = $_GET["date2"];
 }
@@ -170,7 +173,7 @@ $conn->close();
 
                     <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                        <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&min_price=<?= $min_price ?>0&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&serch=<?= $serch ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                        <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&serch=<?= $serch ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
 
                     <?php endfor; ?>
