@@ -1,6 +1,6 @@
 <?php
 require_once("../db-connect.php");
-if((!isset($_GET["name"])) || (!isset($_GET["code"])) || (!isset($_GET["content"])) || (!isset($_GET["date"]))){
+if((!isset($_GET["name"])) || (!isset($_GET["code"])) || (!isset($_GET["content"])) || (!isset($_GET["date"])) || (!isset($_GET["discount"]))){
   header("404.php");
   exit;
 }
@@ -10,10 +10,11 @@ $name=$_GET["name"];
 $code=$_GET["code"];
 $content=$_GET["content"];
 $date=$_GET["date"];
-$today=date("Y-m-d");
+$discount=$_GET["discount"];
+$today=date("Y-m-d"); 
 
 
-if(empty($name) || empty($code) || empty($content) || empty($date)){
+if(empty($name) || empty($code) || empty($content) || empty($date) || empty($discount)){
   exit("one or more boxes are empty");
 }
 
@@ -29,10 +30,10 @@ if(mysqli_num_rows($select)) {
 }else{
 
 
-$sql="INSERT INTO coupons (coupon_name, coupon_code, coupon_content, coupon_expiry_date) VALUES ('$name', '$code', '$content', '$date')";
+$sql="INSERT INTO coupons (coupon_name, coupon_code, coupon_content, coupon_expiry_date, coupon_discount) VALUES ('$name', '$code', '$content', '$date', '$discount')";
 if ($conn->query($sql) === TRUE) {
   echo "You have created a coupon!";
-  header("location: coupons_alter.php");
+  header("location: ../goral_bike_layout/goral_biker_coupons_create.php");
 } else {
   echo "Error" . $conn->error;
 }

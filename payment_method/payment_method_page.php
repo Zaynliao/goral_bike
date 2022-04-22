@@ -24,8 +24,8 @@ $conn->close();
 
 <body>
   <div class="container">
-    <a href="../payment_method/payment_method_restore_page.php" class="btn btn-dark my-3">Restore deleted payment method</a>
-    <a href="../payment_method/payment_method_alter.php" class="btn btn-success">Create payment method</a>
+    <a href="goral_biker_payment_method_restore.php" class="btn btn-dark my-3">Restore deleted payment method</a>
+    <a href="goral_biker_payment_method_create.php" class="btn btn-success">Create payment method</a>
     <!-- <div class="row col-11 justify-content-between align-items-between"> -->
     <div>
             <table class="table-bordered w-100">
@@ -37,7 +37,7 @@ $conn->close();
               </tr>
               <?php foreach($rows as $row) : 
             echo '<tr><td>' .$row["id"].'</td><td>'.$row["payment_method_name"].'</td><td class="m-auto">'?>
-          <a href="../payment_method/payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a></td><td>
+          <a href="goral_biker_payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a></td><td>
           <a href="../payment_method/payment_method_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete payment method</a></td></tr>
           <?php endforeach;?>
         </table>
