@@ -20,25 +20,25 @@ $type=$_GET["type"];
 
 switch($type){
 case "1":
-    $order="id ASC";
+    $order="product_category_id ASC";
     break;
 
 case"2":
-    $order="id DESC";
+    $order="product_category_id DESC";
     break;
 case "3":
-    $order="name ASC";
+    $order="product_category_name ASC";
     break;
 case "4":
-    $order="name DESC";
+    $order="product_category_name DESC";
     break;
 default:
-      $order="id ASC";
+      $order="product_category_id ASC";
 }
 
-$sql = "SELECT * FROM product_category valid=1";
+$sql = "SELECT * FROM product_category";
 $per_page=4;
-// $result = $conn->query($sql);
+$result = $conn->query($sql);
 $total=$result->num_rows;
 
 $page_count=ceil($total/$per_page);
@@ -48,7 +48,7 @@ $page_count=ceil($total/$per_page);
 $start=($p-1)*$per_page;
 $sql="SELECT * FROM product_category ORDER BY $order
 LIMIT $start,$per_page";
-// $result = $conn->query($sql);
+$result = $conn->query($sql);
 
 
 
@@ -107,7 +107,7 @@ $conn->close();
 
 
             <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_product_category.php?p=<?=$i?>"><?= $i ?></a>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_product_category.php?p=<?=$i?>"<?=$i?>><?=$i?></a>
                 </li>
             <?php endfor; ?>
 
@@ -125,7 +125,7 @@ $conn->close();
     <div class="py-2 text-center">
         第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
     </div>
-      </div>
+  </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
