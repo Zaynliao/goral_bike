@@ -23,9 +23,11 @@ if(isset($_GET["date1"]) && isset($_GET["date2"])){
     $date1=$_GET["date1"];
     $date2=$_GET["date2"];
     $dateorder="AND classes.course_date BETWEEN '$date1' AND '$date2'";
+    $dateget="&date1=$date1&date2=$date2";
 } else{
 
     $dateorder="";
+    $dateget="";
 }
 
 // for 每頁幾筆
@@ -136,6 +138,7 @@ $course_count = $result->num_rows;
     <!-- Bootstrap CSS v5.0.2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <style>
     .product-img {
         width: 100%;
@@ -170,8 +173,8 @@ $course_count = $result->num_rows;
     <div class="container mb-5 mt-4">
 
         <!-- 每分頁顯示資料數量 -->
-        <div class="row align-items-end mb-3">
-            <div class="col-6">
+        <div class="d-flex align-items-end mb-3 flex-column-reverse flex-sm-row">
+            <div class="col-sm-6 col-12">
                 <div class="d-flex flex-nowrap">
                     <span class="text-nowrap me-2 pt-2">
                         顯示
@@ -210,7 +213,7 @@ $course_count = $result->num_rows;
                     </select>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-sm-6 col-12 mb-2 mb-sm-0">
                 <div class="text-end">
                     <a class="btn btn-dark text-white position-relative fw-bold"
                         href="../goral_bike_layout/goral_biker_course-insert.php"
@@ -245,6 +248,9 @@ $course_count = $result->num_rows;
                 <div class="">
                     <form action="">
                         <div class="row justify-content-end gx-2">
+                        <input type="hidden" name="cate" value="<?= $cate ?>">
+                        <input type="hidden" name="search" value="<?= $search ?>">
+                        <input type="hidden" name="valid" value="<?= $valid ?>">
                             <div class="col-auto">
                                 <input type="date" name="date1" <?php if(isset($_GET["date1"])): ?>
                                     value="<?=$_GET["date1"]?>" <?php endif; ?> class="form-control text-secondary">
@@ -256,7 +262,6 @@ $course_count = $result->num_rows;
                                 <input type="date" name="date2" <?php if(isset($_GET["date2"])): ?>
                                     value="<?=$_GET["date2"]?>" <?php endif; ?> class="form-control text-secondary">
                             </div>
-
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-secondary fw-bold">查詢</button>
                             </div>
@@ -335,7 +340,7 @@ $course_count = $result->num_rows;
                         <?php if ($p != 1) : ?>
                         <li class="page-item">
                             <a class="page-link"
-                                href="goral_biker_course-list.php?p=<?= $p - 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&evalid=<?= $valid ?>&search=<?= $search ?>"
+                                href="goral_biker_course-list.php?p=<?= $p - 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&evalid=<?= $valid ?>&search=<?= $search ?><?=$dateget?>"
                                 aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
@@ -343,13 +348,13 @@ $course_count = $result->num_rows;
                         <?php endif; ?>
                         <li class="page-item active">
                             <a class="page-link"
-                                href="goral_biker_course-list.php?p=<?= $p ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?>"><?= $p ?>
+                                href="goral_biker_course-list.php?p=<?= $p ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?><?=$dateget?>"><?= $p ?>
                             </a>
                         </li>
                         <?php if ($p < $page_count) : ?>
                         <li class="page-item">
                             <a class="page-link"
-                                href="goral_biker_course-list.php?p=<?= $p + 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?>"
+                                href="goral_biker_course-list.php?p=<?= $p + 1 ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&valid=<?= $valid ?>&search=<?= $search ?><?=$dateget?>"
                                 aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
