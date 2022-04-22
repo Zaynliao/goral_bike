@@ -5,7 +5,7 @@ require_once("../db-connect.php");
 
 // // echo $path;
 // // 透過路徑取得檔名
-$file = basename($path);
+// $file = basename($path);
 // echo $file;
 // $a = array("所有商品", "登山車基礎車款", "單避震腳踏車", "全避震登山車", "管理下架商品");
 
