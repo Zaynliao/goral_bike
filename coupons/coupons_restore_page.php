@@ -36,8 +36,8 @@ $conn->close();
               <?php foreach($rows as $row) : 
             echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_name"].'</td><td>'?>
 
-          <a href="coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a></td><td>
-          <a href="coupons_hard_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td></tr>
+          <a href="../coupons/coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a></td><td>
+          <a href="../coupons/coupons_hard_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td></tr>
           <?php endforeach;?>
         </table>
         </div>  

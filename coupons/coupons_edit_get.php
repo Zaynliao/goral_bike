@@ -9,6 +9,7 @@ $name = $_GET["name"];
 $code = $_GET["code"];
 $content = $_GET["content"];
 $date = $_GET["date"];
+$discount = $_GET["discount"];
 //prepare the statement
 $sql="SELECT id, coupon_name, coupon_code, coupon_content, coupon_expiry_date FROM coupons WHERE valid=1";
 $select = mysqli_query($conn, "SELECT * FROM coupons WHERE id = '".$_GET["id"]."'");
@@ -30,8 +31,10 @@ $conn -> close();
 
   </head>
   <body>
-      <div class="container">
-        <form action="coupons_edit.php" method="get">
+      <div class="container-fluid">
+
+        
+        <form action="../coupons/coupons_edit.php?name2=" method="get">
           <h5>Coupon: <?=$id?></h5>
 
           <div>
@@ -43,6 +46,7 @@ $conn -> close();
                 <td>Coupon code</td>
                 <td>Coupon content</td>
                 <td>Coupon expiry date</td>
+                <td>Coupon discount</td>
                 <td>Edit coupon</td>
                 <td>Delete</td>
               </tr>
@@ -61,6 +65,15 @@ $conn -> close();
               <td>
               <input type="date" name="date" id="date" class="form-control mt-2" value="<?=$date?>">
               </td>
+              <td>
+              <input type="number" name="discount" id="discount" class="form-control mt-2" value="<?=$discount?>">
+              </td>
+
+              <input type="hidden" name="name2" id="name" class="form-control my-2" value="<?=$name?>">
+              <input type="hidden" name="code2" id="code" class="form-control my-2" value="<?=$code?>">
+              <input type="hidden" name="content2" id="content" class="form-control my-2" value="<?=$content?>">
+              <input type="hidden" name="date2" id="date" class="form-control mt-2" value="<?=$date?>">
+              <input type="hidden" name="discount2" id="discount" class="form-control mt-2" value="<?=$discount?>">
               <td>
               <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
               </td>

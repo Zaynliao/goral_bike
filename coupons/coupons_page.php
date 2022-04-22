@@ -24,8 +24,8 @@ $conn->close();
 
 <body>
   <div class="container">
-    <a href="../coupons/coupons_restore_page.php" class="btn btn-dark my-3">Restore deleted coupons</a>
-    <a href="../coupons/coupons_alter.php" class="btn btn-success">Create coupons</a>
+    <a href="goral_biker_coupons_restore.php" class="btn btn-dark my-3">Restore deleted coupons</a>
+    <a href="goral_biker_coupons_create.php" class="btn btn-success">Create coupons</a>
     <div>
             <table class="table-bordered w-100">
               <tr>
@@ -34,12 +34,15 @@ $conn->close();
                 <td>Coupon code</td>
                 <td>Coupon content</td>
                 <td>Coupon expiry date</td>
+                <td>Coupon discount</td>
                 <td>Edit coupon</td>
                 <td>Delete</td>
               </tr>
               <?php foreach($rows as $row) : 
-            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_name"].'</td><td class="m-auto">'?>
-          <a href="../coupons/coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td class="">
+            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_name"]. '</td><td>'.$row["coupon_discount"].'</td><td>'?>
+
+          <a href="goral_biker_coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>&discount=<?= $row["coupon_discount"]?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td>
+
           <a href="../coupons/coupons_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger m-auto">Delete coupon</a></td></tr>
           <?php endforeach;?>
         </table>
