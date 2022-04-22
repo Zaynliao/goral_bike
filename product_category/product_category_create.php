@@ -24,7 +24,7 @@ if(mysqli_num_rows($select)) {
 $sql="INSERT INTO product_category (product_category_name) VALUES ('$name')";
 if ($conn->query($sql) === TRUE) {
   echo "You have created a Product category!";
-  header("location: product_category_alter.php");
+  header("location: ../goral_bike_layout/goral_biker_product_category_create.php");
 } else {
   echo "Error" . $conn->error;
 }
