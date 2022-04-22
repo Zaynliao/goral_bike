@@ -33,7 +33,9 @@ if (!isset($_GET['product_id'])) {
 $product_id = $_GET["product_id"];
 $state = 1;
 
-$sql = "UPDATE `product` SET `valid` = '$state' WHERE `product`.`product_id` = '$product_id'";
+$DATE = date('Y-m-d');
+
+$sql = "UPDATE `product` SET `valid` = '$state' ,`product_update` ='$DATE' WHERE `product`.`product_id` = '$product_id'";
 
 // test
 // $sql = "DELETE FROM `general_product` WHERE `general_product`.`$typename` = $typename";

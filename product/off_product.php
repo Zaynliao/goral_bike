@@ -4,11 +4,11 @@ require_once("../db-connect.php");
 // ------------------------------------------------------------------------------------------------
 $path = $_SERVER["REQUEST_URI"];
 
-// echo $path;
-// // 透過路徑取得檔名
+echo $path;
+// 透過路徑取得檔名
 // $file = basename($path);
-// // echo $file;
-
+// echo $file;
+$date = date('Y-m-d');
 if (!isset($_GET["p"])) {
     $p = 1;
 } else {
@@ -18,6 +18,17 @@ if (!isset($_GET["type"])) {
     $type = 0;
 } else {
     $type = $_GET["type"];
+}
+
+if (isset($_GET["date1"])) {
+
+    $date1 = $_GET["date1"];
+}
+if (isset($_GET["date2"])) {
+
+    $date2 = $_GET["date2"];
+} else {
+    $date2 = $date;
 }
 
 // ------type = ?↓
@@ -41,22 +52,30 @@ switch ($type) {
     case "5":
         $order = "product.product_price DESC";
         break;
+    case "6":
+        $order = "`product`.`product_update` ASC";
+        break;
+    case "7":
+        $order = "`product`.`product_update` DESC";
+        break;
     default:
         $order = "product.product_id ASC";
 }
 
+
 // ------------------------------------------------------------------------------------------------
 
 $product_valid = 0;
+$product_valid_Date = 1;
 
 if (!isset($_GET["product_category_id"])) {
 
-    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id";
+    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` > '$date'";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
 
-    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id'";
+    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' AND`product`.`product_update` > '$date'";
 }
 
 $count_result = $conn->query($sql_conunt);
@@ -75,11 +94,11 @@ $start = ($p - 1) * $per_page;
 
 if (!isset($_GET["product_category_id"])) {
 
-    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id ORDER BY $order LIMIT $start,$per_page";
+    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` > '$date' ORDER BY $order LIMIT $start,$per_page";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
-    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' ORDER BY $order LIMIT $start,$per_page";
+    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' AND`product`.`product_update` > '$date' ORDER BY $order LIMIT $start,$per_page";
 }
 
 
@@ -108,30 +127,31 @@ $conn->close();
     <div class="row justify-content-end">
         <div class="py-2 text-end ">
 
-            <?php $a = array("依正序排列", "依反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列"); ?>
+            <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
 
 
 
             <div class="d-flex justify-content-end mt-2 gap-3">
 
-
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
                     <?php if (strpos($file, "product_category_id") === false) : ?>
                         <?php for ($i = 0; $i < count($a); $i++) : ?>
-                            <option><a type="" class="dropdown-item <?php if ($type == $i) echo "selected" ?>" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
+
+                            <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+
                             </option>
                         <?php endfor; ?>
                     <?php else : ?>
                         <?php for ($i = 0; $i < count($a); $i++) : ?>
-                            <option><a type="button" class="dropdown-item <?php if ($type == $i) echo "selected" ?>" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&product_category_id=<?= $product_category_id ?>&type=<?= $i ?>"><?= $a[$i] ?></a>
+
+                            <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&product_category_id=<?= $product_category_id ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+
                             </option>
                         <?php endfor; ?>
                     <?php endif; ?>
 
                 </select>
-
-
 
 
 
@@ -144,16 +164,17 @@ $conn->close();
 
     <!-- 時間篩選 -->
     <div class="py-2">
+
         <form action="">
             <div class="row justify-content-end gx-2">
                 <div class="col-auto">
-                    <input type="date" name="date1" <?php if (isset($_GET["date1"])) : ?> value="<?= $_GET["date1"] ?>" <?php endif; ?> class="form-control">
+                    <input type="date" name="date1" value="<?= $date1 ?>" class="form-control">
                 </div>
                 <div class="col-auto">
                     <label class="form-control-label" for="">~</label>
                 </div>
                 <div class="col-auto">
-                    <input type="date" name="date2" <?php if (isset($_GET["date2"])) : ?> value="<?= $_GET["date2"] ?>" <?php endif; ?> class="form-control">
+                    <input type="date" name="date2" value="<?= $date2 ?>" class=" form-control">
                 </div>
 
                 <div class="col-auto">
@@ -164,25 +185,28 @@ $conn->close();
     </div>
 
     <div class="row">
-
+        <h2 class="h2">下架商品列表</h2>
         <?php foreach ($rows as $row) : ?>
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
 
                 <div class="card px-3">
+                    <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
+                    <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
 
-
-                    <figure class=" figure d-flex justify-content-center align-items-center" style="height: 240px;">
                         <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
+
                     </figure>
-                    <div class="mb-3">
+
+                    <div class="mb-3 ">
+                        <span class="badge rounded-pill bg-danger" <?php if (!$row["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
+                            <?= $row["product_category_name"] ?>
+                        </span>
                         <span class="badge bg-dark rounded-pill" <?php if (!$row["product_price"]) : echo "hidden" ?> <?php endif; ?>>
                             $ <?= $row["product_price"] ?>
                         </span>
-                        <span class="badge bg-dark rounded-pill" <?php if (!$row["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
-                            <?= $row["product_category_name"] ?>
-                        </span>
                     </div>
-                    <h1 class="h4 fw-bold"><?= $row["product_name"] ?></h1>
+
+                    <h1 class="h4 fw-bold my-3 text-center"><?= $row["product_name"] ?></h1>
                     <div class="py-2 d-grid">
                         <a class="delete-btn btn btn-dark text-white mb-2 fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
                         <a class="delete-btn btn btn-info text-white mb-2 fw-bold" href="../product/goral_bike_php/product_on_product.php?product_id=<?= $row["product_id"] ?>">上架商品</a>
@@ -204,11 +228,11 @@ $conn->close();
 
             <?php if (strpos($file, "product_category_id") === false) : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
             <?php else : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             <?php endif; ?>
