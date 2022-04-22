@@ -1,5 +1,5 @@
 <?php
-require_once("../db-connect.php");
+require_once("../../db-connect.php");
 
 $status_sql = "SELECT * FROM activity_status";
 $result_status = $conn->query($status_sql);
