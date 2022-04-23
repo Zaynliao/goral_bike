@@ -16,11 +16,11 @@ $product_update = $_POST['product_update'];
 
 
 if (empty($product_name) || empty($product_price) || empty($product_category_id)) {
-    echo "EMPTY ERROR";
+    echo "<script> alert('欄位為空'); </script>";
     return;
 }
 
-
+// echo "$product_id$product_name$product_price$product_category_id$product_update";
 
 
 $sql = "UPDATE `product` SET `product_name` = '$product_name ', `product_price` = '$product_price', `product_category_id` = '$product_category_id',`product_update` ='$product_update' WHERE `product`.`product_id` = '$product_id';";

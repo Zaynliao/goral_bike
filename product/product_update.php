@@ -27,19 +27,21 @@ $conn->close();
             </a>
         </div>
 
-        <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert"
-            action="../product/goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
+        <form class="row g-3 mt-1 justify-content-center align-items-center"
+            action=" ../product/goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
             <h1>商品編號：<?= $row["product_id"] ?></h1>
-            <div class="card mb-3 bg-light">
+            <div class="card mb-3 bg-light px-5 py-4">
                 <div class="row g-0">
 
                     <div class="col-md-4 my-auto">
                         <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>"
                             class="img-fluid rounded-start" alt="<?= $row["product_name"] ?>">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 my-auto">
                         <div class="card-body">
 
+                            <input type="hidden" name="product_id" id="product_id" value="<?= $row["product_id"] ?>"
+                                class=" form-control">
                             <div class="py-2 px-3">
                                 <h5 class="card-title">更改商品名稱</h5>
                                 <div class=" text-end">
@@ -48,9 +50,16 @@ $conn->close();
                                 </div>
                             </div>
                             <div class="py-2 px-3">
+                                <h5 class="card-title">更改商品日期</h5>
+                                <div class=" text-end">
+                                    <input type="date" name="product_update" id="product_update"
+                                        value="<?= $row["product_update"] ?>" class=" form-control">
+                                </div>
+                            </div>
+                            <div class="py-2 px-3">
                                 <label for="product_price" class="form-label">商品價格 $</label>
                                 <div class=" text-end">
-                                    <input type="text" name="product_price" id="product_price"
+                                    <input type="number" name="product_price" id="product_price"
                                         value="<?= $row["product_price"] ?>" class=" form-control">
                                 </div>
                             </div>
@@ -70,12 +79,12 @@ $conn->close();
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="col-12 d-flex justify-content-end gap-2 mt-3">
-                                <button type="submit" class="btn btn-dark">修改商品</button>
-                                <button type="reset" class="btn btn-outline-dark">重新填寫</button>
-                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                    <button type="submit" class="btn btn-dark">修改商品</button>
+                    <button type="reset" class="btn btn-outline-dark">重新填寫</button>
                 </div>
             </div>
 
