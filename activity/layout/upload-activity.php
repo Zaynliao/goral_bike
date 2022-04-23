@@ -1,5 +1,5 @@
 <?php
-require_once("../../db-connect.php");
+require_once("../db-connect.php");
 
 $id = $_GET['id'];
 $idStatus = $_GET['status'];
@@ -103,7 +103,7 @@ $rowsVenue = $resultVenue->fetch_all(MYSQLI_ASSOC);
             <div class="col-4">
                 <label for="" class="form-label">活動圖片</label>
                 <div class="img-thumbnail text-center">
-                    <img src="../images/<?= $rows["activity_pictures"]?>" class="img-fluid" id="img-view">
+                    <img src="../icon/no-image.png<?= $rows["activity_pictures"]?>" class="img-fluid" id="img-view">
                 </div>
                 <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
             </div>
