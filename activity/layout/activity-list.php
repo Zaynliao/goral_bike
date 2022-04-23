@@ -1,5 +1,5 @@
 <?php
-require_once("../../db-connect.php");
+require_once("../db-connect.php");
 
 if (!isset($_GET["p"])) {
     $p = 1;
@@ -105,7 +105,7 @@ $start = ($p - 1) * $per_page;
             <div class="card mb-3 mt-3">
                 <div class="row g-0">
                     <div class="col-md-3 d-flex align-items-center">
-                        <img class="object-cover" src="../images/<?= $row["activity_pictures"] ?>" alt="...">
+                        <img class="object-cover" src="../activity/images/<?= $row["activity_pictures"] ?>" alt="...">
                     </div>
                     <div class="col-md-2">
                         <div class="card-body">
