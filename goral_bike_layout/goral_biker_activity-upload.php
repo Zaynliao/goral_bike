@@ -31,8 +31,6 @@
                 require("../activity/layout/activity-upload.php");
 
 
-
-
                 ?>
             </article>
         </section>
