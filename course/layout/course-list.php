@@ -278,21 +278,14 @@ $course_count = $result->num_rows;
             <h1 class="fw-bold">COURSE LIST -</h1>
             <?php if ($course_count > 0) : ?>
             <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post">
-                <div class="d-flex align-items-center gap-3 mb-3 ms-3">
-                    <button type="submit" id="batchDel" name="batchDel"
-                        class="batch-delete-btn btn btn-secondary fw-bold"
-                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
-                    <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
-                        formaction="../course/api/course-doBatchValid.php"
-                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
-                    <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
-                        formaction="../course/api/course-doBatchIsDoDelete.php"
-                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
-                    <span class="">
-                        <input class="ms-1 me-2" type="checkbox" name="checkall" id="checkall"
-                            onclick="CheckedAll()" />全選
-                    </span>
-                </div>
+                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
+                    <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
+                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
+                    formaction="../course/api/course-doBatchValid.php"
+                    <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
+                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-2"
+                    formaction="../course/api/course-doBatchIsDoDelete.php"
+                    <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
                 <div class="d-flex flex-wrap">
                     <?php foreach ($rows as $row) : ?>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
@@ -300,7 +293,7 @@ $course_count = $result->num_rows;
                             <figure class="product-img text-center">
                                 <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
                                 <div class="text-start">
-                                    <input class="checkbox form-check-input ms-2 mt-2 position-absolute top-0 start-0"
+                                    <input class="check_0 form-check-input ms-2 mt-2 position-absolute top-0 start-0"
                                         name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
                                         aria-label="">
                                 </div>
@@ -432,7 +425,6 @@ $course_count = $result->num_rows;
                 })
             }
 
-
             function deleteCourse(id) {
                 $.ajax({
                         method: "POST",
@@ -522,7 +514,6 @@ $course_count = $result->num_rows;
                         console.log("Request failed: " + textStatus);
                     });
             }
-
 
             $(function() {
                 $("#select").change(function() {

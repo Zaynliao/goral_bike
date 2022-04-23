@@ -35,9 +35,9 @@ $file = basename($path);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
-                    <?php if (strpos($file, "activity") !== false) {
+                    <?php if (strpos($file, "z") !== false) {
                         echo ("active");
-                    } ?>" href="goral_biker_activity-list.php">活動</a>
+                    } ?>" href="goral_biker_product.php">活動</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
