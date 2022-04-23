@@ -9,7 +9,7 @@ foreach($id as $value){
     $sql="UPDATE classes SET course_valid=0 WHERE course_id=$value";
     if ($conn->query($sql) === TRUE) {
 
-        echo "<script>alert('下架課程完成$value')</script>";
+        echo "<script>alert('下架課程完成')</script>";
         echo "<script>self.location=document.referrer;</script>";
 
       

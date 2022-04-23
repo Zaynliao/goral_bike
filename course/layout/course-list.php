@@ -286,6 +286,9 @@ $course_count = $result->num_rows;
                 <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-2"
                     formaction="../course/api/course-doBatchIsDoDelete.php"
                     <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
+                    <div>
+                        <input type="checkbox" name="checkall" id="checkall" onclick="CheckedAll()">全選
+                    </div>
                 <div class="d-flex flex-wrap">
                     <?php foreach ($rows as $row) : ?>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
@@ -293,7 +296,7 @@ $course_count = $result->num_rows;
                             <figure class="product-img text-center">
                                 <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
                                 <div class="text-start">
-                                    <input class="check_0 form-check-input ms-2 mt-2 position-absolute top-0 start-0"
+                                    <input class="checkbox form-check-input ms-2 mt-2 position-absolute top-0 start-0"
                                         name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
                                         aria-label="">
                                 </div>
