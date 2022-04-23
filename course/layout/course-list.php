@@ -554,7 +554,6 @@ $course_count = $result->num_rows;
                 var checkall = $('#checkall')[0].checked;
                 $('input:checkbox.checkbox').each(function() {
                     this.checked = checkall;
-                    alert($("input[type='checkbox']").val())
                 });
             }
             </script>
