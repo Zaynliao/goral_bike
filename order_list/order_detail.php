@@ -51,10 +51,10 @@ $conn->close();
 
 // echo json_encode($row);
 
-if($row["order_status"]==1){
-    $statusName="已付款";
-}else{
-    $statusName="未付款";
+if ($row["order_status"] == 1) {
+    $statusName = "已付款";
+} else {
+    $statusName = "未付款";
 }
 
 ?>
@@ -96,17 +96,16 @@ if($row["order_status"]==1){
                             <p class="mb-0">訂單商品</p>
                         </div>
                         <?php foreach ($rows as $row_product) : ?>
-                        <div class="row align-items-center justify-content-evenly mt-4 ms-3">
-                            <img class="w-25 col-12 col-lg-3" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>"
-                                alt="">
-                            <p class="col-12 col-xl-3"><?= $row_product["product_name"] ?></p>
-                            <p class="col-12 col-xl-3"><?= $row_product["product_category_name"] ?></p>
-                            <p class="col-12 col-xl-3">$<?= $row_product["product_price"] ?></p>
-                        </div>
-                        <hr>
+                            <div class="row align-items-center justify-content-evenly mt-4 ms-3">
+                                <img class="w-25 col-12 col-lg-3" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
+                                <p class="col-12 col-xl-3"><?= $row_product["product_name"] ?></p>
+                                <p class="col-12 col-xl-3"><?= $row_product["product_category_name"] ?></p>
+                                <p class="col-12 col-xl-3">$<?= $row_product["product_price"] ?></p>
+                            </div>
+                            <hr>
                         <?php endforeach; ?>
                         <span class="text-end fw-bold d-flex flex-wrap justify-content-between">
-                            <p class="text-nowrap">總額 - </p> 
+                            <p class="text-nowrap">總額 - </p>
                             <p class="text-nowrap">$ <?= $row["total_amount"] ?></p>
                         </span>
                     </li>

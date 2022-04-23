@@ -10,7 +10,7 @@ $path = $_SERVER["REQUEST_URI"];
 // echo $file;
 
 $today = date('Y-m-d');
-
+$a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列");
 
 
 // // 透過路徑取得檔名
@@ -63,20 +63,28 @@ if (!isset($_GET["search"])) {
     $search = $_GET["search"];
 }
 
+$path_query_all = "../goral_bike_layout/goral_biker_off_product.php?date1=$date1&date2=$date2&min_price=$min_price&max_price=$max_price&search=$search";
+
+
 if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
 
     $path_query = "../goral_bike_layout/goral_biker_off_product.php?date1=$date1&date2=$date2&min_price=$min_price&max_price=$max_price&search=$search";
 
-    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?date1=$date1&date2=$date2&search=$search&min_price=0&max_price=99999999";
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?date1=&date2=$date2&search=$search&min_price=0&max_price=99999999";
 } else {
+
     $product_category_id = $_GET["product_category_id"];
 
-    $path_query = "../goral_bike_layout/goral_biker_off_product.php?product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?date1=$date1&date2=$date2&min_price=$min_price&max_price=$max_price&search=$search&product_category_id=$product_category_id";
 
-    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?product_category_id=$product_category_id&date1=$date1&date2=$date2&min_price=0&max_price=99999999&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?date1=&date2=$date2&search=$search&min_price=0&max_price=99999999&product_category_id=$product_category_id";
 }
+
+
+
+
 
 // ------type = ?↓
 switch ($type) {
@@ -230,25 +238,19 @@ $conn->close();
     <div class="row justify-content-end">
         <div class="py-2 text-end ">
 
-            <div class="py-2 text-end">
-                <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>&per_page=<?= $per_page ?>">全部商品</a>
+            <div>
+                <a class="btn btn-dark" href="<?= $path_query_all ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">所有商品</a>
+
 
                 <?php foreach ($product_category_rows as $p_c_r) : ?>
 
-                    <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&product_category_id=<?= $p_c_r["product_category_id"] ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>&per_page=<?= $per_page ?>"><?= $p_c_r["product_category_name"] ?></a>
+                    <a class="btn btn-dark" href="../goral_bike_layout/goral_biker_off_product.php?product_category_id=<?= $p_c_r["product_category_id"] ?>"><?= $p_c_r["product_category_name"] ?></a>
 
                 <?php endforeach; ?>
-
-
             </div>
-
-            <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
-
-            <div class="d-flex justify-content-end mt-2 gap-3">
+            <div class="d-flex justify-content-end mt-4 gap-3">
 
                 <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
-
-
 
                     <?php for ($i = 0; $i < count($a); $i++) : ?>
 
@@ -259,7 +261,7 @@ $conn->close();
                 </select>
 
 
-                </select>
+
 
                 <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
@@ -293,6 +295,7 @@ $conn->close();
 
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
+                            <input type="hidden" name="product_category_id" id="product_category_id" value="<?= $product_category_id ?>">
 
                             <div class="row mt-2">
                                 <div class="col">
@@ -340,7 +343,7 @@ $conn->close();
     </div>
 
     <div class="row">
-        <h2 class="h2">下架商品列表</h2>
+        <h2 class="h2 mt-5">下架商品列表</h2>
         <p class="text-end">今日日期：<?= $today ?></p>
         <?php foreach ($rows as $row) : ?>
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
