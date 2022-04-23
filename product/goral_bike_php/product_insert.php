@@ -48,7 +48,7 @@ if ($_FILES["product_images"]["error"] == 0) {
 
                 // header("location:../../goral_bike_layout/goral_biker_product.php");
 
-                echo "<script> location.href = document.referrer;</script>";
+                echo "<script>alert('新增成功');location.href = document.referrer;</script>";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
                 exit;

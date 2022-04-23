@@ -20,7 +20,7 @@ $conn->close();
 <div class="container">
 
     <div class="col-12 d-flex justify-content-end mt-3">
-        <a href="goral_biker_product.php" class="btn btn-outline-dark fst-6 text-center text-wrap" aria-current="page">
+        <a href="goral_biker_product.php?product_category_id=<?= $row["product_category_id"] ?>" class="btn btn-outline-dark fst-6 text-center text-wrap" aria-current="page">
             返回
         </a>
     </div>
