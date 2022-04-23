@@ -14,8 +14,6 @@ $fee=$_POST["fee"];
 $content=$_POST["content"];
 
 
-
-
 // $dateNew=strtotime($date);
 // $dateEnd=strtotime($end_time);
 
