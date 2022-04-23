@@ -227,7 +227,7 @@ $course_count = $result->num_rows;
                 </div>
                 <!-- 搜尋列 -->
                 <div class="my-2">
-                    <form class="d-flex justify-content-end" action="../goral_bike_layout/goral_biker_course-list.php" onsubmit="return toVaildCheck()">
+                    <form class="d-flex justify-content-end" action="../goral_bike_layout/goral_biker_course-list.php">
                         <div class="d-flex">
                             <input type="hidden" name="valid" id="valid" value="<?= $valid ?>">
                             <input type="hidden" name="cate" id="cate" value="<?= $cate ?>"
@@ -247,7 +247,7 @@ $course_count = $result->num_rows;
 
                 <!-- 課程時間篩選 -->
                 <div class="">
-                    <form action="../goral_bike_layout/goral_biker_course-list.php" onsubmit="return toVaildCheck()">
+                    <form action="../goral_bike_layout/goral_biker_course-list.php" onsubmit="return toVaild() ">
                         <div class="row justify-content-end gx-2">
                             <input type="hidden" name="cate" value="<?= $cate ?>" <?php if(!$cate) echo "disabled"?>>
                             <input type="hidden" name="search" value="<?= $search ?>"
@@ -277,8 +277,7 @@ $course_count = $result->num_rows;
 
             <h1 class="fw-bold">COURSE LIST -</h1>
             <?php if ($course_count > 0) : ?>
-            <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post"
-                onsubmit="return  toVaildCheck()">
+            <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post">
                 <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
                     <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
                 <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
@@ -530,6 +529,17 @@ $course_count = $result->num_rows;
                     `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=${e.target.value}<?=$dateURL?>`;
             })
 
+            function toVaild() {
+                var date1Val = document.getElementById("date1").value;
+                var date2Val = document.getElementById("date2").value;
+
+                if (date1Val !== "" && date2Val !== "") {
+                    return true;
+                } else {
+                    location.href = "goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>";
+                    return false;
+                }
+            }
 
             function toVaildCheck() {
      
