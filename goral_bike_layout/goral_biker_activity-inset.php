@@ -29,6 +29,8 @@
               
 
                 require("../activity/layout/activity-inset.php");
+                require("");
+
 
                 ?>
             </article>
