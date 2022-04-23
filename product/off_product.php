@@ -369,3 +369,4 @@ $conn->close();
         第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
     </div>
 </div>
+

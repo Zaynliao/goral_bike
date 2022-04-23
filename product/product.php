@@ -102,7 +102,13 @@ switch ($type) {
 
 $product_valid = 1;
 
-$sql_content = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$search%' ";
+$sql_content = "SELECT * FROM product,product_category 
+WHERE product.valid='$product_valid' 
+AND product.product_category_id=product_category.product_category_id 
+AND `product`.`product_update` <= '$today' 
+AND `product`.`product_update` BETWEEN '$date' AND '$today' 
+AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+AND `product`.`product_name` LIKE '%$search%' ";
 
 
 
