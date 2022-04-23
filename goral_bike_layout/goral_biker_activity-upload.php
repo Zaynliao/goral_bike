@@ -29,6 +29,9 @@
               
 
                 require("../activity/layout/upload-activity.php");
+
+
+
                 ?>
             </article>
         </section>

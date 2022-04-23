@@ -107,7 +107,7 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                     </select>
                 </div>
                 <div>
-                    <a href="activity-inset.php" class="btn btn-primary mx-2">新增活動</a>
+                    <a href="../goral_bike_layout/goral_biker_activity-inset.php" class="btn btn-primary mx-2">新增活動</a>
                 </div>
             </div>
         </div>
