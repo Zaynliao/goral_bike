@@ -26,7 +26,7 @@ if (!isset($_GET["type"])) {
 }
 
 if (!isset($_GET["date"])) {
-    $date = "";
+    $date = "0000-00-00";
 } else {
     $date = $_GET["date"];
 }
@@ -36,7 +36,7 @@ if (!isset($_GET["min_price"])) {
     $min_price = $_GET["min_price"];
 }
 if (!isset($_GET["max_price"])) {
-    $max_price = 999999;
+    $max_price = 9999999999;
 } else {
     $max_price = $_GET["max_price"];
 }
@@ -49,12 +49,12 @@ if (!isset($_GET["serch"])) {
 if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
-    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=0&max_price=99999";
+    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price&serch=$serch";
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&serch=$serch&min_price=0&max_price=99999";
 } else {
     $product_category_id = $_GET["product_category_id"];
-    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=0&max_price=99999";
+    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price&serch=$serch";
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=0&max_price=99999&serch=$serch";
 }
 
 
@@ -105,6 +105,8 @@ $product_valid = 1;
 $sql_content = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%' ";
 
 
+
+
 if (!isset($_GET["product_category_id"])) {
 
     $sql_conunt = $sql_content;
@@ -131,6 +133,7 @@ $start = ($p - 1) * $per_page;
 
 
 $sql_content_limit = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` <= '$today' AND `product`.`product_update` BETWEEN '$date' AND '$today' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%'";
+
 
 if (!isset($_GET["product_category_id"])) {
 
@@ -298,7 +301,7 @@ $conn->close();
                         </div>
                     <?php else : ?>
                         <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                            價格最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
                         </div>
                     <?php endif; ?>
                 </form>
@@ -310,6 +313,7 @@ $conn->close();
 
     <div class="row mt-2">
         <h2 class="h2">商品列表</h2>
+        <p class="text-end">今日日期：<?= $today ?></p>
         <?php if ($product_count > 0) : ?>
             <?php foreach ($rows as $row) : ?>
                 <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
@@ -351,35 +355,27 @@ $conn->close();
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
-            <li class="page-item ">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+
 
 
 
             <?php if (!isset($_GET["product_category_id"])) : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
                     <li class="page-item <?php if ($i == $p) echo "active" ?>">
-                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>"><?= $i ?></a>
+                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&serch=<?= $serch ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
 
             <?php else : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
                     <li class="page-item <?php if ($i == $p) echo "active" ?>">
-                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&product_category_id=<?= $product_category_id ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>"><?= $i ?></a>
+                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&product_category_id=<?= $product_category_id ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&serch=<?= $serch ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             <?php endif; ?>
 
 
-            <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
+
         </ul>
     </nav>
 

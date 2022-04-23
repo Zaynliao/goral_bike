@@ -36,8 +36,8 @@ if (!isset($_GET["date1"])) {
 } else {
     $date1 = $_GET["date1"];
 }
-if (!isset($_GET["date2"])) {   
-    $date2 = "";
+if (!isset($_GET["date2"])) {
+    $date2 = "2022-12-31";
 } else {
     $date2 = $_GET["date2"];
 }
@@ -47,7 +47,7 @@ if (!isset($_GET["min_price"])) {
     $min_price = $_GET["min_price"];
 }
 if (!isset($_GET["max_price"])) {
-    $max_price = 999999;
+    $max_price = 9999999999;
 } else {
     $max_price = $_GET["max_price"];
 }
@@ -236,7 +236,7 @@ $conn->close();
                         </div>
                     <?php else : ?>
                         <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                            價格最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
                         </div>
                     <?php endif; ?>
                 </form>
@@ -248,6 +248,7 @@ $conn->close();
 
     <div class="row">
         <h2 class="h2">下架商品列表</h2>
+        <p class="text-end">今日日期：<?= $today ?></p>
         <?php foreach ($rows as $row) : ?>
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
 
@@ -280,13 +281,6 @@ $conn->close();
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
-            <li class="page-item ">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-
 
             <?php if (!isset($_GET["product_category_id"])) : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
@@ -298,13 +292,6 @@ $conn->close();
                 <?php endfor; ?>
             <?php endif; ?>
 
-
-
-            <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
         </ul>
     </nav>
 
