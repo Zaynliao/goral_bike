@@ -28,8 +28,7 @@
                 <?php
               
 
-                require("../activity/layout/activity-inset.php");
-                require("");
+                require("../activity/layout/activity-insert.php");
 
 
                 ?>
