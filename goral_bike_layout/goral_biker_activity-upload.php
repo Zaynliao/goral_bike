@@ -28,7 +28,7 @@
                 <?php
               
 
-                require("../activity/layout/upload-activity.php");
+                require("../activity/layout/activity-upload.php");
 
 
 
