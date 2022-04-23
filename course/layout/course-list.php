@@ -289,7 +289,8 @@ $course_count = $result->num_rows;
                         formaction="../course/api/course-doBatchIsDoDelete.php"
                         <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
                     <span class="">
-                        <input class="ms-1 me-2" type="checkbox" name="all" onclick="check_all(this,'checkbox[]')" />全選
+                        <input class="ms-1 me-2" type="checkbox" name="checkall" id="checkall"
+                            onclick="CheckedAll()" />全選
                     </span>
                 </div>
                 <div class="d-flex flex-wrap">
@@ -299,7 +300,7 @@ $course_count = $result->num_rows;
                             <figure class="product-img text-center">
                                 <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
                                 <div class="text-start">
-                                    <input class="check_0 form-check-input ms-2 mt-2 position-absolute top-0 start-0"
+                                    <input class="checkbox form-check-input ms-2 mt-2 position-absolute top-0 start-0"
                                         name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
                                         aria-label="">
                                 </div>
@@ -405,7 +406,6 @@ $course_count = $result->num_rows;
             let deleteBtns = document.querySelectorAll(".delete-btn");
             let isdeleteBtns = document.querySelectorAll(".isdelete-btn");
             let validBtns = document.querySelectorAll(".valid-btn");
-            let batchdeleteBtns = document.querySelector(".batch-delete-btn");
 
 
             for (let i = 0; i < deleteBtns.length; i++) {
@@ -550,11 +550,12 @@ $course_count = $result->num_rows;
                 }
             }
 
-            function check_all(obj, cName) {
-                var checkboxs = document.getElementsByName(cName);
-                for (var i = 0; i < checkboxs.length; i++) {
-                    checkboxs[i].checked = obj.checked;
-                }
+            function CheckedAll() {
+                var checkall = $('#checkall')[0].checked;
+                $('input:checkbox.checkbox').each(function() {
+                    this.checked = checkall;
+                    alert($("input[type='checkbox']").val())
+                });
             }
             </script>
 </body>
