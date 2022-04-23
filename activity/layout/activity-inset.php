@@ -38,7 +38,7 @@ $rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
             <h3>新增活動</h3>
             <a href="../goral_bike_layout/goral_biker_activity-list.php" class="btn btn-outline-dark mx-1">返回活動管理</a>
         </div>
-        <form class="row g-2" action="../api/activity-doInset.php" enctype="multipart/form-data" method="post">
+        <form class="row g-2" action="./activity/api/activity-doInset.php" enctype="multipart/form-data" method="post">
             <div class="col-md-2">
                 <label for="" class="form-label">地區</label>
                 <select class="form-control" name="category" id="category">
