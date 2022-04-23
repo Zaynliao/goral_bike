@@ -21,44 +21,52 @@ $conn->close();
 
     <div class="row">
         <div class="col-12 d-flex justify-content-end mt-3">
-            <a href="goral_biker_product.php?product_category_id=<?= $row["product_category_id"] ?>" class="btn btn-outline-dark fst-6 text-center text-wrap" aria-current="page">
+            <a href="goral_biker_product.php?product_category_id=<?= $row["product_category_id"] ?>"
+                class="btn btn-outline-dark fst-6 text-center text-wrap" aria-current="page">
                 返回
             </a>
         </div>
 
-        <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert" action="../product/goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
-
-            <div class="card mb-3">
+        <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert"
+            action="../product/goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
+            <h1>商品編號：</h1>
+            <div class="card mb-3 bg-light">
                 <div class="row g-0">
 
-                    <div class="col-md-4">
-                        <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>" class="img-fluid rounded-start" alt="<?= $row["product_name"] ?>">
+                    <div class="col-md-4 my-auto">
+                        <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>"
+                            class="img-fluid rounded-start" alt="<?= $row["product_name"] ?>">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">更改商品名稱</h5>
-                            <div class=" text-end">
-                                <input type="text" name="product_name" id="product_name" value="<?= $row["product_name"] ?>" class=" form-control">
+
+                            <div class="py-2 px-3">
+                                <h5 class="card-title">更改商品名稱</h5>
+                                <div class=" text-end">
+                                    <input type="text" name="product_name" id="product_name"
+                                        value="<?= $row["product_name"] ?>" class=" form-control">
+                                </div>
                             </div>
                             <div class="py-2 px-3">
                                 <label for="product_price" class="form-label">商品價格 $</label>
                                 <div class=" text-end">
-                                    <input type="text" name="product_price" id="product_price" value="<?= $row["product_price"] ?>" class=" form-control">
+                                    <input type="text" name="product_price" id="product_price"
+                                        value="<?= $row["product_price"] ?>" class=" form-control">
                                 </div>
                             </div>
                             <div class="py-2 px-3">
                                 <label for="product_category_id" class="form-label">商品類別</label>
                                 <select name="product_category_id" id="product_category_id" class="form-select">
                                     <?php foreach ($rows as $row_c) : ?>
-                                        <?php if ($row_c["product_category_id"] == $product_category_id) : ?>
-                                            <option selected value="<?= $row_c["product_category_id"] ?>">
-                                                <?= $row_c["product_category_name"] ?>
-                                            </option>
-                                        <?php else : ?>
-                                            <option value="<?= $row_c["product_category_id"] ?>">
-                                                <?= $row_c["product_category_name"] ?>
-                                            </option>
-                                        <?php endif; ?>
+                                    <?php if ($row_c["product_category_id"] == $product_category_id) : ?>
+                                    <option selected value="<?= $row_c["product_category_id"] ?>">
+                                        <?= $row_c["product_category_name"] ?>
+                                    </option>
+                                    <?php else : ?>
+                                    <option value="<?= $row_c["product_category_id"] ?>">
+                                        <?= $row_c["product_category_name"] ?>
+                                    </option>
+                                    <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
