@@ -110,19 +110,6 @@ $page_count = ceil($total / $per_page);
 $start = ($p - 1) * $per_page;
 
 
-$sqlLoca = "SELECT * FROM course_location";
-$resultLoca = $conn->query($sqlLoca);
-$rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
-
-$sqlStatu = "SELECT * FROM course_status";
-$resultStatu = $conn->query($sqlStatu);
-$rowsStatu = $resultStatu->fetch_all(MYSQLI_ASSOC);
-
-$sqlCate = "SELECT * FROM course_category";
-$resultCate = $conn->query($sqlCate);
-$rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
-
-
 
 // ASC升冪 ; DESC 降冪
 $sql = "SELECT classes.*, course_category.*, course_location.*, course_status.*
@@ -196,7 +183,8 @@ $course_count = $result->num_rows;
                     <select class="me-2 form-select w-auto" aria-label="Default select example" id="pageCount">
                         <?php for($i=1;$i<=3;$i++): $per_page=$i*5; ?>
 
-                        <option value="<?=$per_page?>" <?php if ($per_page == $i) echo "selected" ?>>
+                        <option value="<?=$per_page?>"
+                            <?php if (isset($_GET["per_page"]) && $per_page == $_GET["per_page"] ) echo "selected" ?>>
                             <?=$per_page?>
                         </option>
 
@@ -221,6 +209,7 @@ $course_count = $result->num_rows;
                 </div>
             </div>
             <div class="col-sm-6 col-12 mb-2 mb-sm-0">
+
                 <div class="text-end">
                     <a class="btn btn-dark text-white position-relative fw-bold"
                         href="../goral_bike_layout/goral_biker_course-insert.php"
@@ -238,7 +227,7 @@ $course_count = $result->num_rows;
                 </div>
                 <!-- 搜尋列 -->
                 <div class="my-2">
-                    <form class="d-flex justify-content-end" action="../goral_bike_layout/goral_biker_course-list.php">
+                    <form class="d-flex justify-content-end" action="../goral_bike_layout/goral_biker_course-list.php" onsubmit="return toVaildCheck()">
                         <div class="d-flex">
                             <input type="hidden" name="valid" id="valid" value="<?= $valid ?>">
                             <input type="hidden" name="cate" id="cate" value="<?= $cate ?>"
@@ -258,10 +247,9 @@ $course_count = $result->num_rows;
 
                 <!-- 課程時間篩選 -->
                 <div class="">
-                    <form action="../goral_bike_layout/goral_biker_course-list.php" onsubmit="return toVaild()">
+                    <form action="../goral_bike_layout/goral_biker_course-list.php" onsubmit="return toVaildCheck()">
                         <div class="row justify-content-end gx-2">
-                            <input type="hidden" name="cate" value="<?= $cate ?>"
-                                <?php if(!$cate) echo "disabled"?>>
+                            <input type="hidden" name="cate" value="<?= $cate ?>" <?php if(!$cate) echo "disabled"?>>
                             <input type="hidden" name="search" value="<?= $search ?>"
                                 <?php if(!$search) echo "disabled"?>>
                             <input type="hidden" name="valid" value="<?= $valid ?>">
@@ -286,72 +274,92 @@ $course_count = $result->num_rows;
         </div>
         <!-- 課程列表顯示 -->
         <div class="row">
+
             <h1 class="fw-bold">COURSE LIST -</h1>
             <?php if ($course_count > 0) : ?>
-            <?php foreach ($rows as $row) : ?>
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
-                <div class="card shadow-sm">
-                    <figure class="product-img text-center">
-                        <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
-                    </figure>
-                    <div class="pb-2 px-3">
-                        <span class="badge 
+            <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post"
+                onsubmit="return  toVaildCheck()">
+                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
+                    <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
+                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
+                    formaction="../course/api/course-doBatchValid.php"
+                    <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
+                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-2"
+                    formaction="../course/api/course-doBatchIsDoDelete.php"
+                    <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
+                <div class="d-flex flex-wrap">
+                    <?php foreach ($rows as $row) : ?>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+                        <div class="card shadow-sm mx-2">
+                            <figure class="product-img text-center">
+                                <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
+                                <div class="text-start">
+                                    <input class="check_0 form-check-input ms-2 mt-2 position-absolute top-0 start-0"
+                                        name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
+                                        aria-label="">
+                                </div>
+                            </figure>
+                            <div class="pb-2 px-3">
+                                <span class="badge 
                         <?php if ($row["course_category_id"] == 1) : echo "bg-success" ?>
                         <?php else : echo "bg-danger" ?>
                         <?php endif; ?>
                         rounded-pill px-2 me-1" <?php if (!$row["course_category_id"]) : echo "hidden"?>
-                            <?php endif; ?>><?= $row["course_category_name"] ?>
-                        </span>
-                        <span class="badge 
+                                    <?php endif; ?>><?= $row["course_category_name"] ?>
+                                </span>
+                                <span class="badge 
                         <?php if ($row["course_status_id"] == 1) : echo "bg-secondary" ?>
                         <?php elseif ($row["course_status_id"] == 2) : echo "bg-success" ?>
                         <?php else : echo "bg-danger" ?>
                         <?php endif; ?>
                         rounded-pill px-2 me-1" <?php if (!$row["course_status_id"]) : echo "hidden"?>
-                            <?php endif; ?>><?= $row["course_status_name"] ?>
-                        </span>
-                        <span class="badge bg-dark rounded-pill px-2 me-1"
-                            <?php if (!$row["course_location_id"]) : echo "hidden"?> <?php endif; ?>>
-                            <?= $row["course_location_name"] ?>
-                        </span>
-                        <span class="badge bg-dark rounded-pill px-2 me-2"
-                            <?php if (!$row["course_price"]) : echo "hidden"?> <?php endif; ?>>
-                            <?= $row["course_price"] ?> / 人
-                        </span>
-                        <div class="name-time mt-3">
-                            <h3 class="text-dark fw-bold"><?= $row["course_title"] ?></h3>
-                            <h5 class="text-dark fw-bold"><?= $row["course_date"] ?></h5>
-                        </div>
+                                    <?php endif; ?>><?= $row["course_status_name"] ?>
+                                </span>
+                                <span class="badge bg-dark rounded-pill px-2 me-1"
+                                    <?php if (!$row["course_location_id"]) : echo "hidden"?> <?php endif; ?>>
+                                    <?= $row["course_location_name"] ?>
+                                </span>
+                                <span class="badge bg-dark rounded-pill px-2 me-2"
+                                    <?php if (!$row["course_price"]) : echo "hidden"?> <?php endif; ?>>
+                                    <?= $row["course_price"] ?> / 人
+                                </span>
+                                <div class="name-time mt-3">
+                                    <h3 class="text-dark fw-bold"><?= $row["course_title"] ?></h3>
+                                    <h5 class="text-dark fw-bold"><?= $row["course_date"] ?></h5>
+                                </div>
 
-                        <div class="d-grid mt-4">
-                            <a class="btn btn-dark text-white mb-2 fw-bold"
-                                href="../goral_bike_layout/goral_biker_course-upload.php?id=<?= $row["course_id"] ?>&statu=<?= $row["course_status_id"] ?>&loca=<?= $row["course_location_id"] ?>&cate=<?= $row["course_category_id"] ?>">修改課程</a>
-                        </div>
-                        <div class="d-grid">
-                            <button class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
-                                data-id="<?= $row["course_id"] ?>"
-                                <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?>
-                                <?php endif; ?>>下架課程</button>
-                            <button class="valid-btn btn btn-info text-white mb-2 fw-bold"
-                                data-id="<?= $row["course_id"] ?>"
-                                <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
-                                <?php endif; ?>>上架課程</button>
-                            <button class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
-                                data-id="<?= $row["course_id"] ?>"
-                                <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
-                                <?php endif; ?>>刪除課程</button>
+                                <div class="d-grid mt-4">
+                                    <a class="btn btn-dark text-white mb-2 fw-bold"
+                                        href="../goral_bike_layout/goral_biker_course-upload.php?id=<?= $row["course_id"] ?>&statu=<?= $row["course_status_id"] ?>&loca=<?= $row["course_location_id"] ?>&cate=<?= $row["course_category_id"] ?>">修改課程</a>
+                                </div>
+                                <div class="d-grid">
+                                    <button class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
+                                        data-id="<?= $row["course_id"] ?>"
+                                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) : echo "hidden" ?>
+                                        <?php endif; ?>>下架課程</button>
+                                    <button class="valid-btn btn btn-info text-white mb-2 fw-bold"
+                                        data-id="<?= $row["course_id"] ?>"
+                                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
+                                        <?php endif; ?>>上架課程</button>
+                                    <button class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
+                                        data-id="<?= $row["course_id"] ?>"
+                                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) : echo "hidden" ?>
+                                        <?php endif; ?>>刪除課程</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <?php endforeach; ?>
+
+                    <?php else : ?>
+                    <p class="text-center mt-4 fw-bold text-secondary">
+                        無資料符合
+                        <br>
+                        請選擇其他條件
+                    </p>
+                    <?php endif; ?>
                 </div>
-            </div>
-            <?php endforeach; ?>
-            <?php else : ?>
-            <p class="text-center mt-4 fw-bold text-secondary">
-                無資料符合
-                <br>
-                請選擇其他條件
-            </p>
-            <?php endif; ?>
+            </form>
             <div class="py-2">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mb-0  justify-content-center">
@@ -417,8 +425,6 @@ $course_count = $result->num_rows;
                     validCourse(id);
                 })
             }
-
-
 
             function deleteCourse(id) {
                 $.ajax({
@@ -524,11 +530,10 @@ $course_count = $result->num_rows;
                     `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=${e.target.value}<?=$dateURL?>`;
             })
 
-            function toVaild() {
-                var date1Val = document.getElementById("date1").value;
-                var date2Val = document.getElementById("date2").value;
 
-                if (date1Val !== "" && date2Val !== "") {
+            function toVaildCheck() {
+     
+                if( typeof(method) !== `undefined`) {
                     return true;
                 } else {
                     location.href = "goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>";

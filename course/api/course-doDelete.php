@@ -3,7 +3,6 @@ require("db-connect.php");
 
 $id=$_POST["id"];
 
-
 $sql="UPDATE classes SET course_valid=0 WHERE course_id='$id'";
 
 if ($conn->query($sql) === TRUE) {
