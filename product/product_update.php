@@ -42,11 +42,22 @@ $conn->close();
 
                             <input type="hidden" name="product_id" id="product_id" value="<?= $row["product_id"] ?>"
                                 class=" form-control">
+                            <input type="hidden" name="product_old_images" id="product_old_images"
+                                value="<?= $row["product_images"] ?>" class=" form-control">
+
+
+
                             <div class="py-2 px-3">
                                 <h5 class="card-title">更改商品名稱</h5>
                                 <div class=" text-end">
                                     <input type="text" name="product_name" id="product_name"
                                         value="<?= $row["product_name"] ?>" class=" form-control">
+                                </div>
+                            </div>
+                            <div class="py-2 px-3">
+                                <h5 class="card-title">更改商品圖片檔案</h5>
+                                <div class=" text-end">
+                                    <input type="file" name="product_images" id="product_images" class=" form-control">
                                 </div>
                             </div>
                             <div class="py-2 px-3">
