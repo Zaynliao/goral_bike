@@ -27,6 +27,16 @@ $page_count = ceil($total / $per_page); //總頁數
 $start = ($p - 1) * $per_page;
 // echo $page_count;
 
+$sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
+LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
+LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
+WHERE activity_valid=1
+LIMIT $start,$per_page";
+$resultAct = $conn->query($sqlAct);
+$rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
+
+
+
 ?>
 
 
@@ -51,18 +61,19 @@ $start = ($p - 1) * $per_page;
         }
 
         p {
-            margin: 0 auto;
+            margin: 0px;
         }
 
         a {
             color: #fff;
             font-size: 1.3rem;
         }
+
         .activity_cont {
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 7;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
     </style>
@@ -86,7 +97,7 @@ $start = ($p - 1) * $per_page;
                     <a href="#" class="btn btn-dark mx-1">送出</a>
                 </div>
             </div>
-        <!-- ================= 排序 ================= -->
+            <!-- ================= 排序 ================= -->
             <div class="mt-2 d-flex">
                 <div>
                     <select class="form-select" aria-label="Default select example">
@@ -102,16 +113,16 @@ $start = ($p - 1) * $per_page;
         </div>
         <!-- ================= 內容 ================= -->
         <?php foreach ($rowsAct as $row) : ?>
-            <div class="card mb-3 mt-3">
+            <div class="card mt-3">
                 <div class="row g-0">
-                    <div class="col-md-3 d-flex align-items-center">
+                    <div class="col-3 d-flex align-items-center">
                         <img class="object-cover" src="../activity/images/<?= $row["activity_pictures"] ?>" alt="...">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-6 ">
                         <div class="card-body">
                             <h5 class="card-title"><?= $row["activity_name"] ?></h5>
-                            <h6 class="card-text">出發日期：<?= $row["activity_date"] ?></h6>
-                            <div class="d-flex mb-3">
+                            <h6 class="card-text">活動日期：<?= $row["activity_date"] ?></h6>
+                            <div class="d-flex">
                                 <h5 class="card-text">
                                     <span class="badge <?php if ($row["activity_venue_id"] == 1) : echo "bg-danger" ?>
                                     <?php elseif ($row["activity_venue_id"] == 2) : echo "bg-warning" ?>
@@ -130,24 +141,21 @@ $start = ($p - 1) * $per_page;
                                         <?= $row["activity_status_name"] ?></span>
                                 </h5>
                             </div>
-                            <p class="card-text">出發地點：<?= $row["activity_location"] ?></p>
-                            <p class="card-text">活動人數：<?= $row["activity_persons"] ?></p>
-                            <p class="card-text">活動費用：<?= $row["activity_fee"] ?></p>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">活動地點：<?= $row["activity_location"] ?></p>
+                                <p class="card-text">活動人數：<?= $row["activity_persons"] ?></p>
+                                <p class="card-text">活動費用：<?= $row["activity_fee"] ?></p>
+                            </div>
+                            <p class="card-text activity_cont"><small class="text-muted"><?= $row["activity_content"] ?></small></p>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="card-body">
-                            <h5 class="card-title">活動內容</h5>
-                            <p class="card-text activity_cont"><?= $row["activity_content"] ?></p>
-                        </div>
-                    </div>
-        <!-- ================= 修改 ================= -->
-                    <div class="col-md-2 d-flex align-items-center">
-                        <a class="btn btn-outline-success mx-1" 
-                        href="../layout/upload-activity.php?id=
-                        <?= $row["id"]?>
-                        &status=<?= $row["activity_status_id"]?>
-                        &venue=<?= $row["activity_venue_id"]?>">編輯</a>
+                    <!-- ================= 修改 ================= -->
+                    <div class="col-3 ">
+                        <div class=""></div>
+                        <a class="btn btn-outline-success mx-1" href="../layout/upload-activity.php?id=
+                            <?= $row["id"] ?>
+                            &status=<?= $row["activity_status_id"] ?>
+                            &venue=<?= $row["activity_venue_id"] ?>">編輯</a>
                         <a href="#" class="btn btn-outline-warning mx-1">下架</a>
                         <a href="#" class="btn btn-outline-danger mx-1">刪除</a>
                     </div>
@@ -159,61 +167,61 @@ $start = ($p - 1) * $per_page;
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="activity-list.php?p=1" aria-label="Previous">
+                        <a class="page-link" href="goral_biker_activity-list.php?p=1" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <?php if ($p == 1) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>">
                                 <?= $p ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p + 1 ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>">
                                 <?= $p + 1 ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p + 2 ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 2 ?>">
                                 <?= $p + 2 ?>
                             </a>
                         </li>
                     <?php elseif ($p + 1 <= $page_count) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p - 1 ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>">
                                 <?= $p - 1 ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>">
                                 <?= $p ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p + 1 ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>">
                                 <?= $p + 1 ?>
                             </a>
                         </li>
                     <?php elseif ($p == $page_count) : ?>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p - 2 ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 2 ?>">
                                 <?= $p - 2 ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p - 1 ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>">
                                 <?= $p - 1 ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="activity-list.php?p=<?= $p ?>">
+                            <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>">
                                 <?= $p ?>
                             </a>
                         </li>
                     <?php endif; ?>
                     <li class="page-item">
-                        <a class="page-link" href="activity-list.php?p=<?= $page_count ?>" aria-label="Next">
+                        <a class="page-link" href="goral_biker_activity-list.php?p=<?= $page_count ?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
