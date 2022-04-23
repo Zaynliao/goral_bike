@@ -8,6 +8,7 @@ $path = $_SERVER["REQUEST_URI"];
 // echo $path;
 $today = date('Y-m-d');
 
+$a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列");
 
 // // 透過路徑取得檔名
 // $file = basename($path);
@@ -23,6 +24,11 @@ if (!isset($_GET["type"])) {
     $type = 0;
 } else {
     $type = $_GET["type"];
+}
+if (!isset($_GET["per_page"])) {
+    $per_page = 8;
+} else {
+    $per_page = $_GET["per_page"];
 }
 
 if (!isset($_GET["date"])) {
@@ -49,22 +55,17 @@ if (!isset($_GET["search"])) {
 if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
-    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=" . "&type=$type&search=$search&min_price=0&max_price=99999999";
+
+    //沒有type
+    $path_query = "../goral_bike_layout/goral_biker_product.php?date=$date&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?date=" . "&search=$search&min_price=0&max_price=99999999";
 } else {
     $product_category_id = $_GET["product_category_id"];
-    $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=" . "&type=$type&min_price=0&max_price=99999999&search=$search";
+
+    //沒有type
+    $path_query = "../goral_bike_layout/goral_biker_product.php?product_category_id=$product_category_id&date=$date&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?product_category_id=$product_category_id&date=" . "&min_price=0&max_price=99999999&search=$search";
 }
-
-
-
-
-
-
-
-
-
 
 
 // ------type = ?↓
@@ -129,7 +130,7 @@ $total = $count_result->num_rows;
 
 $count_rows = $count_result->fetch_all(MYSQLI_ASSOC);
 
-$per_page = 8;
+
 $page_count = ceil($total / $per_page);
 $start = ($p - 1) * $per_page;
 
@@ -177,7 +178,7 @@ $conn->close();
     <div class="row justify-content-end">
         <div class="py-2 text-end ">
 
-            <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
+            <?php  ?>
 
 
 
@@ -187,15 +188,25 @@ $conn->close();
 
                 <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
-
                     <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                        <option value="<?= $path_query ?>&type=<?= $i ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                        <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
-                        </option>
                     <?php endfor; ?>
 
                 </select>
+
+                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+
+                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+
+                        <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
+
+                    <?php endfor; ?>
+
+                </select>
+
+
 
             </div>
 
@@ -307,7 +318,7 @@ $conn->close();
                         </div>
                     <?php else : ?>
                         <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            （價格最小值不可大於最大值／上架日期選擇不可大於今天）<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                            （價格最小值不可大於最大值／上架日期選擇不可大於今天）<a class="alert-link" href="<?= $path_query_error ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">請點選此處移除訊息</a>
                         </div>
                     <?php endif; ?>
                 </form>
@@ -362,25 +373,11 @@ $conn->close();
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
 
-
-
-
-            <?php if (!isset($_GET["product_category_id"])) : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>">
-                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&search=<?= $search ?>"><?= $i ?></a>
-                    </li>
-                <?php endfor; ?>
-
-            <?php else : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>">
-                        <a class="page-link text-dark" href="goral_biker_product.php?p=<?= $i ?>&product_category_id=<?= $product_category_id ?>&date=<?= $date ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&search=<?= $search ?>"><?= $i ?></a>
-                    </li>
-                <?php endfor; ?>
-            <?php endif; ?>
-
-
+            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>">
+                    <a class="page-link" href="<?= $path_query ?>&type=<?= $type ?>&p=<?= $i ?>&per_page=<?= $per_page ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
 
         </ul>
     </nav>
