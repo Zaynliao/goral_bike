@@ -31,6 +31,12 @@ if (!isset($_GET["type"])) {
     $type = $_GET["type"];
 }
 
+if (!isset($_GET["per_page"])) {
+    $per_page = 8;
+} else {
+    $per_page = $_GET["per_page"];
+}
+
 if (!isset($_GET["date1"])) {
     $date1 = "0000-00-00";
 } else {
@@ -60,12 +66,16 @@ if (!isset($_GET["search"])) {
 if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
-    $path_query = "../goral_bike_layout/goral_biker_off_product.php?p=$p&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
-    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?p=$p&date1=$date1&date2=$date2&type=$type&search=$search&min_price=0&max_price=99999999";
+
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?date1=$date1&date2=$date2&min_price=$min_price&max_price=$max_price&search=$search";
+
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?date1=$date1&date2=$date2&search=$search&min_price=0&max_price=99999999";
 } else {
     $product_category_id = $_GET["product_category_id"];
-    $path_query = "../goral_bike_layout/goral_biker_off_product.php?p=$p&product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
-    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?p=$p&product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=0&max_price=99999999&search=$search";
+
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
+
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?product_category_id=$product_category_id&date1=$date1&date2=$date2&min_price=0&max_price=99999999&search=$search";
 }
 
 // ------type = ?↓
@@ -147,7 +157,7 @@ $total = $count_result->num_rows;
 
 $count_rows = $count_result->fetch_all(MYSQLI_ASSOC);
 
-$per_page = 8;
+
 $page_count = ceil($total / $per_page);
 $start = ($p - 1) * $per_page;
 
@@ -221,11 +231,11 @@ $conn->close();
         <div class="py-2 text-end ">
 
             <div class="py-2 text-end">
-                <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>">全部商品</a>
+                <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>&per_page=<?= $per_page ?>">全部商品</a>
 
                 <?php foreach ($product_category_rows as $p_c_r) : ?>
 
-                    <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&product_category_id=<?= $p_c_r["product_category_id"] ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>"><?= $p_c_r["product_category_name"] ?></a>
+                    <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&product_category_id=<?= $p_c_r["product_category_id"] ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>&per_page=<?= $per_page ?>"><?= $p_c_r["product_category_name"] ?></a>
 
                 <?php endforeach; ?>
 
@@ -238,13 +248,26 @@ $conn->close();
 
                 <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
+
+
                     <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                        <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
-
+                        <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
                     <?php endfor; ?>
 
+                </select>
+
+
+                </select>
+
+                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+
+                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+
+                        <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
+
+                    <?php endfor; ?>
 
                 </select>
             </div>
@@ -306,7 +329,7 @@ $conn->close();
                         <?php $date1 = "";
                         $date2 = "2022-12-31"; ?>
                         <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            （價格最小值不可大於最大值／日期區間最小值＞最大值）<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                            （價格最小值不可大於最大值／日期區間最小值＞最大值）<a class="alert-link" href="<?= $path_query_error ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">請點選此處移除訊息</a>
                         </div>
                     <?php endif; ?>
                 </form>
@@ -352,15 +375,12 @@ $conn->close();
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
 
-            <?php if (!isset($_GET["product_category_id"])) : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&search=<?= $search ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
-            <?php else : ?>
-                <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&product_category_id=<?= $product_category_id ?>&search=<?= $search ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
-            <?php endif; ?>
+            <?php for ($i = 1; $i <= $page_count; $i++) : ?>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>">
+                    <a class="page-link" href="<?= $path_query ?>&type=<?= $type ?>&p=<?= $i ?>&per_page=<?= $per_page ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
+
 
         </ul>
     </nav>
