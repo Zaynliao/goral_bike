@@ -152,7 +152,7 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                     <!-- ================= 修改 ================= -->
                     <div class="col-3 ">
                         <div class=""></div>
-                        <a class="btn btn-outline-success mx-1" href="../layout/upload-activity.php?id=
+                        <a class="btn btn-outline-success mx-1" href="goral_biker_activity-upload.php?id=
                             <?= $row["id"] ?>
                             &status=<?= $row["activity_status_id"] ?>
                             &venue=<?= $row["activity_venue_id"] ?>">編輯</a>
