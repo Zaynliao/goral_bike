@@ -108,37 +108,37 @@ $product_valid_Date = 1;
 if (!isset($_GET["product_category_id"])) {
 
     $sql_conunt = "SELECT * FROM product,product_category 
-    WHERE product.valid='$product_valid' 
+    WHERE (product.valid='$product_valid' 
     AND product.product_category_id=product_category.product_category_id 
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%' 
+    AND `product`.`product_name` LIKE '%$search%') 
     OR 
-    product.valid='$product_valid_Date' 
+    (product.valid='$product_valid_Date' 
     AND product.product_category_id=product_category.product_category_id 
     AND `product`.`product_update` > '$today' 
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%'";
+    AND `product`.`product_name` LIKE '%$search%')";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
 
     $sql_conunt = "SELECT * FROM product,product_category 
-    WHERE product.valid='$product_valid' 
+    WHERE (product.valid='$product_valid' 
     AND product.product_category_id=product_category.product_category_id 
     AND product.product_category_id='$product_category_id' 
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%'
+    AND `product`.`product_name` LIKE '%$search%')
     OR 
-    product.valid='$product_valid_Date' 
+    (product.valid='$product_valid_Date' 
     AND product.product_category_id=product_category.product_category_id 
     AND product.product_category_id='$product_category_id' 
     AND`product`.`product_update` > '$today'
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%'";
+    AND `product`.`product_name` LIKE '%$search%')";
 }
 
 $count_result = $conn->query($sql_conunt);
@@ -159,38 +159,38 @@ if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
     $sql = "SELECT * FROM product,product_category 
-    WHERE product.valid='$product_valid' 
+    WHERE (product.valid='$product_valid' 
     AND product.product_category_id=product_category.product_category_id
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%'  
+    AND `product`.`product_name` LIKE '%$search%')  
     OR 
-    product.valid='$product_valid_Date' 
+    (product.valid='$product_valid_Date' 
     AND product.product_category_id=product_category.product_category_id 
     AND `product`.`product_update` > '$today' 
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%' 
+    AND `product`.`product_name` LIKE '%$search%') 
     ORDER BY $order 
     LIMIT $start,$per_page";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
     $sql = "SELECT * FROM product,product_category 
-    WHERE product.valid='$product_valid' 
+    WHERE (product.valid='$product_valid' 
     AND product.product_category_id=product_category.product_category_id 
     AND product.product_category_id='$product_category_id'
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%'  
+    AND `product`.`product_name` LIKE '%$search%')  
     OR
-    product.valid='$product_valid_Date' 
+    (product.valid='$product_valid_Date' 
     AND product.product_category_id=product_category.product_category_id 
     AND product.product_category_id='$product_category_id' 
     AND`product`.`product_update` > '$today' 
     AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
     AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
-    AND `product`.`product_name` LIKE '%$search%' 
+    AND `product`.`product_name` LIKE '%$search%') 
     ORDER BY $order 
     LIMIT $start,$per_page";
 }

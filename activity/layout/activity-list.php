@@ -11,11 +11,11 @@ $sql = "SELECT * FROM activity WHERE activity_valid=1";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-$actsql = "SELECT activity.*, activity_status.*, activity_venue.* FROM activity
+$sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
 LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
 LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
 WHERE activity_valid=1";
-$resultAct = $conn->query($actsql);
+$resultAct = $conn->query($sqlAct);
 $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
 
 
@@ -26,15 +26,6 @@ $per_page = 4;
 $page_count = ceil($total / $per_page); //總頁數
 $start = ($p - 1) * $per_page;
 // echo $page_count;
-$actsql = "SELECT activity.*, activity_status.*, activity_venue.* FROM activity
-LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
-LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
-WHERE activity_valid=1
-LIMIT $start,$per_page
-";
-$resultAct = $conn->query($actsql);
-$rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-
 
 ?>
 
@@ -67,12 +58,20 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
             color: #fff;
             font-size: 1.3rem;
         }
+        .activity_cont {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 7;
+            -webkit-box-orient: vertical;
+        }
     </style>
 </head>
 
 
 <body>
     <div class="container mt-5">
+        <!-- ================= nav ================= -->
         <div class="d-flex justify-content-between">
             <div class="">
                 <div class="layui-inline d-flex">
@@ -87,27 +86,28 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                     <a href="#" class="btn btn-dark mx-1">送出</a>
                 </div>
             </div>
+        <!-- ================= 排序 ================= -->
             <div class="mt-2 d-flex">
                 <div>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>排列方式</option>
                         <option value="1">價錢 $-$$$</option>
                         <option value="2">價錢 $$$-$</option>
-                        <option value="3"></option>
                     </select>
                 </div>
                 <div>
-                    <a href="activity-inset.php" class="btn btn-primary mx-1">新增活動</a>
+                    <a href="activity-inset.php" class="btn btn-primary mx-2">新增活動</a>
                 </div>
             </div>
         </div>
+        <!-- ================= 內容 ================= -->
         <?php foreach ($rowsAct as $row) : ?>
             <div class="card mb-3 mt-3">
                 <div class="row g-0">
-                    <div class="col-md-3 ">
-                        <img class="object-cover rounded-1" src="../images/<?= $row["activity_pictures"] ?>" alt="...">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <img class="object-cover" src="../images/<?= $row["activity_pictures"] ?>" alt="...">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="card-body">
                             <h5 class="card-title"><?= $row["activity_name"] ?></h5>
                             <h6 class="card-text">出發日期：<?= $row["activity_date"] ?></h6>
@@ -135,8 +135,19 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                             <p class="card-text">活動費用：<?= $row["activity_fee"] ?></p>
                         </div>
                     </div>
-                    <div class="col-md-3 d-flex align-items-center">
-                        <a href="#" class="btn btn-outline-success mx-1">編輯</a>
+                    <div class="col-md-5">
+                        <div class="card-body">
+                            <h5 class="card-title">活動內容</h5>
+                            <p class="card-text activity_cont"><?= $row["activity_content"] ?></p>
+                        </div>
+                    </div>
+        <!-- ================= 修改 ================= -->
+                    <div class="col-md-2 d-flex align-items-center">
+                        <a class="btn btn-outline-success mx-1" 
+                        href="../layout/upload-activity.php?id=
+                        <?= $row["id"]?>
+                        &status=<?= $row["activity_status_name"]?>
+                        &venue=<?= $row["activity_venue_name"]?>">編輯</a>
                         <a href="#" class="btn btn-outline-warning mx-1">下架</a>
                         <a href="#" class="btn btn-outline-danger mx-1">刪除</a>
                     </div>

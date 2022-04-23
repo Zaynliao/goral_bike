@@ -1,13 +1,21 @@
 <?php
 require_once("../../db-connect.php");
 
-$status_sql = "SELECT * FROM activity_status";
-$result_status = $conn->query($status_sql);
-$rows_status = $result_status->fetch_all(MYSQLI_ASSOC);
+$id=$_GET['id'];
+$idStatus=$_GET['Status'];
+$idVenue=$_GET['Venue'];
 
-$venue_sql = "SELECT * FROM activity_venue";
-$result_venue = $conn->query($venue_sql);
-$rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
+$sql = "SELECT * FROM activity WHERE id=$id";
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+$sqlStatus = "SELECT activity_status FROM activity_status.name";
+$resultStatus = $conn->query($sqlStatus);
+$rowsStatus = $resultStatus->fetch_all(MYSQLI_ASSOC);
+
+$sqlVenue = "SELECT activity_venue FROM activity_venue.name";
+$resultVenue = $conn->query($sqlVenue);
+$rowsVenue = $resultVenue->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
@@ -15,7 +23,7 @@ $rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-    <title>Activity Inset</title>
+    <title>Upload Activity</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,16 +43,20 @@ $rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
 <body>
     <div class="container mt-5">
         <div class="d-flex justify-content-between my-5">
-            <h3>新增活動</h3>
+            <h3>修改活動內容</h3>
             <a href="activity-list.php" class="btn btn-outline-dark mx-1">返回活動管理</a>
         </div>
         <form class="row g-2" action="../api/activity-doInset.php" enctype="multipart/form-data" method="post">
             <div class="col-md-2">
                 <label for="" class="form-label">地區</label>
                 <select class="form-control" name="category" id="category">
-                    <?php foreach ($rows_venue  as $row) : ?>
-                        <option value="<?= $row["id"] ?>"><?= $row["activity_venue_name"] ?></option>
-                    <?php endforeach; ?>
+                    <?php foreach ($$rowsVenue as $row): ?>
+                        <option value="<?=$row ["activity_venue.name"]?>"
+                        <?php if($row ["activity_venue.name"] == $idVenue): echo "selected"?>
+                        <?php else:?>
+                        <?php endif;?>>
+                </option>
+                <?php endforeach ?>
                 </select>
             </div>
             <div class="col-md-6">
@@ -74,9 +86,7 @@ $rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
             <div class="col-md-2">
                 <label for="" class="form-label">報名狀態</label>
                 <select class="form-control" name="status" id="status">
-                    <?php foreach ($rows_status  as $row) : ?>
-                        <option value="<?= $row["id"] ?>"><?= $row["activity_status_name"] ?></option>
-                    <?php endforeach; ?>
+                        <option value=""></option>
                 </select>
             </div>
             <div class="col-2">
