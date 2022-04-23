@@ -29,6 +29,7 @@
               
 
                 require("../activity/layout/activity-list.php");
+                
 
                 ?>
             </article>
