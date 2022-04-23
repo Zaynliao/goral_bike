@@ -12,9 +12,12 @@ $path = $_SERVER["REQUEST_URI"];
 $today = date('Y-m-d');
 
 
+
 // // 透過路徑取得檔名
 // $file = basename($path);
 // // echo $file;
+
+
 
 if (!isset($_GET["p"])) {
     $p = 1;
@@ -29,12 +32,12 @@ if (!isset($_GET["type"])) {
 }
 
 if (!isset($_GET["date1"])) {
-    $date1 = "";
+    $date1 = "0000-00-00";
 } else {
     $date1 = $_GET["date1"];
 }
 if (!isset($_GET["date2"])) {
-    $date2 = "";
+    $date2 = "2022-12-31";
 } else {
     $date2 = $_GET["date2"];
 }
@@ -44,14 +47,25 @@ if (!isset($_GET["min_price"])) {
     $min_price = $_GET["min_price"];
 }
 if (!isset($_GET["max_price"])) {
-    $max_price = 999999;
+    $max_price = 9999999999;
 } else {
     $max_price = $_GET["max_price"];
 }
-if (!isset($_GET["serch"])) {
-    $serch = "";
+if (!isset($_GET["search"])) {
+    $search = "";
 } else {
-    $serch = $_GET["serch"];
+    $search = $_GET["search"];
+}
+
+if (!isset($_GET["product_category_id"])) {
+
+    $product_category_id = "";
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?p=$p&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?p=$p&date1=$date1&date2=$date2&type=$type&search=$search&min_price=0&max_price=99999999";
+} else {
+    $product_category_id = $_GET["product_category_id"];
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?p=$p&product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?p=$p&product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=0&max_price=99999999&search=$search";
 }
 
 // ------type = ?↓
@@ -93,12 +107,38 @@ $product_valid_Date = 1;
 
 if (!isset($_GET["product_category_id"])) {
 
-    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` > '$today' AND `product`.`product_update` BETWEEN '$date1' AND '$date2' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%' ";
+    $sql_conunt = "SELECT * FROM product,product_category 
+    WHERE (product.valid='$product_valid' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%') 
+    OR 
+    (product.valid='$product_valid_Date' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND `product`.`product_update` > '$today' 
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%')";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
 
-    $sql_conunt = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' AND`product`.`product_update` > '$today'AND `product`.`product_update` BETWEEN '$date1' AND '$date2' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%'";
+    $sql_conunt = "SELECT * FROM product,product_category 
+    WHERE (product.valid='$product_valid' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND product.product_category_id='$product_category_id' 
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%')
+    OR 
+    (product.valid='$product_valid_Date' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND product.product_category_id='$product_category_id' 
+    AND`product`.`product_update` > '$today'
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%')";
 }
 
 $count_result = $conn->query($sql_conunt);
@@ -117,11 +157,42 @@ $start = ($p - 1) * $per_page;
 
 if (!isset($_GET["product_category_id"])) {
 
-    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND `product`.`product_update` > '$today' AND `product`.`product_update` BETWEEN '$date1' AND '$date2' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%' ORDER BY $order LIMIT $start,$per_page";
+    $product_category_id = "";
+    $sql = "SELECT * FROM product,product_category 
+    WHERE (product.valid='$product_valid' 
+    AND product.product_category_id=product_category.product_category_id
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%')  
+    OR 
+    (product.valid='$product_valid_Date' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND `product`.`product_update` > '$today' 
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%') 
+    ORDER BY $order 
+    LIMIT $start,$per_page";
 } else {
 
     $product_category_id = $_GET["product_category_id"];
-    $sql = "SELECT * FROM product,product_category WHERE product.valid='$product_valid' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' OR product.valid='$product_valid_Date' AND product.product_category_id=product_category.product_category_id AND product.product_category_id='$product_category_id' AND`product`.`product_update` > '$today' AND `product`.`product_update` BETWEEN '$date1' AND '$date2' AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' AND `product`.`product_name` LIKE '%$serch%' ORDER BY $order LIMIT $start,$per_page";
+    $sql = "SELECT * FROM product,product_category 
+    WHERE (product.valid='$product_valid' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND product.product_category_id='$product_category_id'
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%')  
+    OR
+    (product.valid='$product_valid_Date' 
+    AND product.product_category_id=product_category.product_category_id 
+    AND product.product_category_id='$product_category_id' 
+    AND`product`.`product_update` > '$today' 
+    AND `product`.`product_update` BETWEEN '$date1' AND '$date2' 
+    AND `product`.`product_price` BETWEEN '$min_price' AND '$max_price' 
+    AND `product`.`product_name` LIKE '%$search%') 
+    ORDER BY $order 
+    LIMIT $start,$per_page";
 }
 
 
@@ -149,6 +220,18 @@ $conn->close();
     <div class="row justify-content-end">
         <div class="py-2 text-end ">
 
+            <div class="py-2 text-end">
+                <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>">全部商品</a>
+
+                <?php foreach ($product_category_rows as $p_c_r) : ?>
+
+                    <a class=" btn btn-outline-dark" href="goral_biker_off_product.php?p=<?= $p ?>&type=<?= $type ?>&product_category_id=<?= $p_c_r["product_category_id"] ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>"><?= $p_c_r["product_category_name"] ?></a>
+
+                <?php endforeach; ?>
+
+
+            </div>
+
             <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
 
             <div class="d-flex justify-content-end mt-2 gap-3">
@@ -157,7 +240,7 @@ $conn->close();
 
                     <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                        <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&min_price=<?= $min_price ?>0&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&serch=<?= $serch ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                        <option value="../goral_bike_layout/goral_biker_off_product.php?p=<?= $p ?>&type=<?= $i ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&search=<?= $search ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
 
                     <?php endfor; ?>
@@ -180,26 +263,10 @@ $conn->close();
         <div class="collapse show" id="collapseExample">
             <div class="card card-body">
 
-                <form action="" method="get">
-                    <?php if ($min_price <= $max_price) : ?>
+                <form action="">
+                    <?php if ($min_price <= $max_price && $date1 < $date2) : ?>
                         <div class="row justify-content-start align-items-center gx-2">
-                            <h5 class="fw-bold mt-3">價格篩選</h5>
-
-
-
-                            <select class="form-select w-25 mx-4 my-3 ms-auto" aria-label="Default select example">
-
-                                <?php foreach ($product_category_rows as $p_c_r) : ?>
-
-                                    <option name="product_category_id" id="product_category_id" value="<?= $p_c_r["product_category_id"] ?>" ?><?= $p_c_r["product_category_name"] ?></option>
-
-
-                                <?php endforeach; ?>
-
-
-
-                            </select>
-
+                            <h5 class="fw-bold mt-3">商品價格篩選</h5>
 
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
@@ -214,7 +281,7 @@ $conn->close();
                                 </div>
                             </div>
 
-                            <h5 class="fw-bold mt-3">日期篩選</h5>
+                            <h5 class="fw-bold mt-3">上架日期篩選</h5>
 
                             <div class="col-6 mt-2">
                                 <input type="date" name="date1" id="date1" value="<?= $date1 ?>" class="form-control">
@@ -223,10 +290,10 @@ $conn->close();
                                 <input type="date" name="date2" id="date2" value="<?= $date2 ?>" class="form-control">
                             </div>
 
-                            <h5 class="fw-bold mt-3">名稱篩選</h5>
+                            <h5 class="fw-bold mt-3">商品名稱篩選</h5>
 
                             <div class="col my-2">
-                                <input type="text" class="form-control" value="<?= $serch ?>" name="serch" id="serch" placeholder="serch" aria-label="serch">
+                                <input type="text" class="form-control" value="<?= $search ?>" name="search" id="search" placeholder="search" aria-label="search">
                             </div>
                             <p></p>
                             <div class="col-auto ms-auto mt-1">
@@ -235,8 +302,11 @@ $conn->close();
                             </div>
                         </div>
                     <?php else : ?>
+
+                        <?php $date1 = "";
+                        $date2 = "2022-12-31"; ?>
                         <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                            （價格最小值不可大於最大值／日期區間最小值＞最大值）<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
                         </div>
                     <?php endif; ?>
                 </form>
@@ -248,6 +318,7 @@ $conn->close();
 
     <div class="row">
         <h2 class="h2">下架商品列表</h2>
+        <p class="text-end">今日日期：<?= $today ?></p>
         <?php foreach ($rows as $row) : ?>
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
 
@@ -280,32 +351,17 @@ $conn->close();
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
-            <li class="page-item ">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
 
-
-
-            <?php if (strpos($file, "product_category_id") === false) : ?>
+            <?php if (!isset($_GET["product_category_id"])) : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&type=<?= $type ?>&min_price=<?= $min_price ?>&max_price=<?= $max_price ?>&search=<?= $search ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
             <?php else : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&type=<?= $type ?>&product_category_id=<?= $product_category_id ?>"><?= $i ?></a>
-                    </li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_product.php?p=<?= $i ?>&date1=<?= $date1 ?>&date2=<?= $date2 ?>&product_category_id=<?= $product_category_id ?>&search=<?= $search ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
             <?php endif; ?>
 
-
-
-            <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
         </ul>
     </nav>
 

@@ -69,7 +69,8 @@ $product_count = $result->num_rows;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 
 
@@ -86,10 +87,14 @@ $product_count = $result->num_rows;
 
 
         <div class="py-2 text-end">
-            <a class=" btn btn-outline-dark   <?php if ($type == 1) echo "active " ?>" href="goral_biker_order_list.php?p=<?= $p ?>&type=1">依訂單ID正序排列</a>
-            <a class=" btn btn-outline-dark   <?php if ($type == 2) echo "active " ?>" href="goral_biker_order_list.php?p=<?= $p ?>&type=2">依訂單ID反序排列</a>
-            <a class=" btn btn-outline-dark   <?php if ($type == 3) echo "active " ?>" href="goral_biker_order_list.php?p=<?= $p ?>&type=3">依使用者ID正序排列</a>
-            <a class=" btn btn-outline-dark   <?php if ($type == 4) echo "active " ?>" href="goral_biker_order_list.php?p=<?= $p ?>&type=4">依使用者ID反序排列</a>
+            <a class=" btn btn-outline-dark   <?php if ($type == 1) echo "active " ?>"
+                href="goral_biker_order_list.php?p=<?= $p ?>&type=1">依訂單ID正序排列</a>
+            <a class=" btn btn-outline-dark   <?php if ($type == 2) echo "active " ?>"
+                href="goral_biker_order_list.php?p=<?= $p ?>&type=2">依訂單ID反序排列</a>
+            <a class=" btn btn-outline-dark   <?php if ($type == 3) echo "active " ?>"
+                href="goral_biker_order_list.php?p=<?= $p ?>&type=3">依使用者ID正序排列</a>
+            <a class=" btn btn-outline-dark   <?php if ($type == 4) echo "active " ?>"
+                href="goral_biker_order_list.php?p=<?= $p ?>&type=4">依使用者ID反序排列</a>
         </div>
 
 
@@ -117,20 +122,25 @@ $product_count = $result->num_rows;
 
                 <?php
                 foreach ($rows as $row) : ?>
-                    <tr>
-                        <td><?= $row["order_id"] ?></td>
-                        <td><?= $row["user_id"] ?></td>
-                        <td><?= $row["order_address"] ?></td>
-                        <td><?= $row["total_amount"] ?></td>
-                        <td><?= $row["order_status"] ?></td>
-                        <td><?= $row["order_create_time"] ?></td>
-                        <td><?= $row["remark"] ?></td>
-                        <td><?= $row["payment_method_id"] ?></td>
-                        <td><?= $row["coupon_id"] ?></td>
-                        <td><a class="btn btn-primary text-white" href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a></td>
-                        <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td>
-                        <td><a class="btn btn-danger text-white" href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a></td>
-                    </tr>
+                <tr>
+                    <td><?= $row["order_id"] ?></td>
+                    <td><?= $row["user_id"] ?></td>
+                    <td><?= $row["order_address"] ?></td>
+                    <td><?= $row["total_amount"] ?></td>
+                    <td><?= $row["order_status"] ?></td>
+                    <td><?= $row["order_create_time"] ?></td>
+                    <td><?= $row["remark"] ?></td>
+                    <td><?= $row["payment_method_id"] ?></td>
+                    <td><?= $row["coupon_id"] ?></td>
+                    <td><a class="btn btn-primary text-white"
+                            href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
+                    </td>
+                    <td><a class="btn btn-dark text-white"
+                            href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td>
+                    <td><a class="btn btn-danger text-white"
+                            href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
+                    </td>
+                </tr>
                 <?php endforeach; ?>
 
             </tbody>
@@ -150,7 +160,8 @@ $product_count = $result->num_rows;
                 </li>
 
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark"
+                        href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
 
 
@@ -164,8 +175,12 @@ $product_count = $result->num_rows;
     </div>
 
     <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

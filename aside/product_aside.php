@@ -80,7 +80,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <a href="goral_biker_product.php?product_category_id=<?= $row["product_category_id"] ?>" class="nav-link text-white fst-6 text-center text-wrap
                 
                 <?php
-                if (strpos($file, "product_category_id=" . $row["product_category_id"]) !== false) {
+                if (strpos($file, "product_category_id=" . $row["product_category_id"]) !== false && strpos($file, "goral_biker_product.php") !== false) {
                     echo ("active");
                 }
                 ?>

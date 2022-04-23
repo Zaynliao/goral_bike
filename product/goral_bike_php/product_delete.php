@@ -28,7 +28,7 @@ if ($conn->query($sql) === TRUE) {
     // header("Refresh: 0;");
     // header("Refresh");
     // echo "<script> alert('下架成功');history.go(-1); </script>";
-    echo "<script> location.href = document.referrer;</script>";
+    echo "<script>alert('下架成功');location.href = document.referrer;</script>";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
     exit;
