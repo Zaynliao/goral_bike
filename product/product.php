@@ -314,6 +314,11 @@ $conn->close();
                             <div class="col-auto ms-auto mt-1">
                                 <button type="submit" class="btn btn-secondary">查詢</button>
                                 <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
+                                <?php if (!isset($_GET["product_category_id"])) : ?>
+                                    <a href="goral_biker_product.php" class="btn btn-outline-secondary">清除篩選</a>
+                                <?php else : ?>
+                                    <a href="goral_biker_product.php?product_category_id=<?= $product_category_id ?>" class="btn btn-outline-secondary">清除篩選</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php else : ?>
@@ -328,48 +333,57 @@ $conn->close();
 
     </div>
 
-    <div class="row mt-2">
-        <h2 class="h2 mt-5">商品列表</h2>
-        <p class="text-end">今日日期：<?= $today ?></p>
-        <?php if ($product_count > 0) : ?>
-            <?php foreach ($rows as $row) : ?>
-                <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
-                    <div class="card px-3">
-                        <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
-                        <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
+    <form action="" method="post">
+        <div class="row mt-2">
+            <div class="row">
+                <h2 class="h2 mt-5">商品列表</h2>
+                <p class="text-end">今日日期：<?= $today ?></p>
+                <input class="btn my-3 btn-outline-dark" type="button" value="全部選取" onclick="usel();">
+            </div>
 
-                            <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
 
-                        </figure>
+            <?php if ($product_count > 0) : ?>
+                <?php foreach ($rows as $row) : ?>
+                    <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
+                        <div class="card px-3">
+                            <div class="form-check">
+                                <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
+                                <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
+                            </div>
+                            <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
 
-                        <div class="mb-3 ">
-                            <span class="badge rounded-pill bg-danger" <?php if (!$row["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
-                                <?= $row["product_category_name"] ?>
-                            </span>
-                            <span class="badge bg-dark rounded-pill" <?php if (!$row["product_price"]) : echo "hidden" ?> <?php endif; ?>>
-                                $ <?= $row["product_price"] ?>
-                            </span>
-                        </div>
+                                <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
 
+                            </figure>
+
+                            <div class="mb-3 ">
+                                <span class="badge rounded-pill bg-danger" <?php if (!$row["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
+                                    <?= $row["product_category_name"] ?>
+                                </span>
+                                <span class="badge bg-dark rounded-pill" <?php if (!$row["product_price"]) : echo "hidden" ?> <?php endif; ?>>
+                                    $ <?= $row["product_price"] ?>
+                                </span>
+                            </div>
                         <h1 class="h4 fw-bold my-3 text-center"><?= $row["product_name"] ?></h1>
 
 
                         <div class="py-2 d-grid">
-                            <a class="delete-btn btn btn-dark text-white mb-2 fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
-                            <a class="delete-btn btn btn-secondary text-white mb-2 fw-bold" href="../product/goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
-                        </div>
+                                <a class="delete-btn btn btn-dark text-white mb-2 fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
+                                <a class="delete-btn btn btn-secondary text-white mb-2 fw-bold" href="../product/goral_bike_php/product_delete.php?product_id=<?= $row["product_id"] ?>">下架商品</a>
+                            </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        <?php else : ?>
-            <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
+                <?php endforeach; ?>
+            <?php else : ?>
+                <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
 
-                <div>
-                    <h6>NO DATA!</h6>
+                    <div>
+                        <h6>NO DATA!</h6>
+                    </div>
                 </div>
-            </div>
-        <?php endif; ?>
-    </div>
+            <?php endif; ?>
+        </div>
+    </form>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
 
@@ -385,4 +399,14 @@ $conn->close();
     <div class="py-2 text-center">
         第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
     </div>
-</div>
+    </div>
+
+<script type="text/javascript">
+    function usel() {
+        //變數checkItem為checkbox的集合
+        var checkItem = document.getElementsByName("check[]");
+        for (var i = 0; i < checkItem.length; i++) {
+            checkItem[i].checked = !checkItem[i].checked;
+        }
+    }
+</script> 
