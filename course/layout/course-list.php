@@ -278,14 +278,20 @@ $course_count = $result->num_rows;
             <h1 class="fw-bold">COURSE LIST -</h1>
             <?php if ($course_count > 0) : ?>
             <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post">
-                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
-                    <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
-                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-4"
-                    formaction="../course/api/course-doBatchValid.php"
-                    <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
-                <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold mb-3 ms-2"
-                    formaction="../course/api/course-doBatchIsDoDelete.php"
-                    <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
+                <div class="d-flex align-items-center gap-3 mb-3 ms-3">
+                    <button type="submit" id="batchDel" name="batchDel"
+                        class="batch-delete-btn btn btn-secondary fw-bold"
+                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
+                    <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
+                        formaction="../course/api/course-doBatchValid.php"
+                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
+                    <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
+                        formaction="../course/api/course-doBatchIsDoDelete.php"
+                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
+                    <span class="">
+                        <input class="ms-1 me-2" type="checkbox" name="all" onclick="check_all(this,'checkbox[]')" />全選
+                    </span>
+                </div>
                 <div class="d-flex flex-wrap">
                     <?php foreach ($rows as $row) : ?>
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
@@ -399,6 +405,7 @@ $course_count = $result->num_rows;
             let deleteBtns = document.querySelectorAll(".delete-btn");
             let isdeleteBtns = document.querySelectorAll(".isdelete-btn");
             let validBtns = document.querySelectorAll(".valid-btn");
+            let batchdeleteBtns = document.querySelector(".batch-delete-btn");
 
 
             for (let i = 0; i < deleteBtns.length; i++) {
@@ -424,6 +431,7 @@ $course_count = $result->num_rows;
                     validCourse(id);
                 })
             }
+
 
             function deleteCourse(id) {
                 $.ajax({
@@ -515,6 +523,7 @@ $course_count = $result->num_rows;
                     });
             }
 
+
             $(function() {
                 $("#select").change(function() {
                     var op = $("#select").find('option');
@@ -541,13 +550,10 @@ $course_count = $result->num_rows;
                 }
             }
 
-            function toVaildCheck() {
-     
-                if( typeof(method) !== `undefined`) {
-                    return true;
-                } else {
-                    location.href = "goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>";
-                    return false;
+            function check_all(obj, cName) {
+                var checkboxs = document.getElementsByName(cName);
+                for (var i = 0; i < checkboxs.length; i++) {
+                    checkboxs[i].checked = obj.checked;
                 }
             }
             </script>
