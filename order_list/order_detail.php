@@ -58,30 +58,64 @@ if($row["order_status"]==1){
 }
 
 ?>
-
-
-<div class="container">
-    <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
-    <div class="card shadow-sm p-4 fw-bold lh-1 bg-light">
-        <p class="badge bg-secondary fs-6">訂單編號 : <?= $row["order_id"] ?></p>
-        <div class="p-4">
-            <p>使用者姓名 : <?= $row["name"] ?></p>
-            <p>寄送地址 : <?= $row["address"] ?></p>
-            <p>訂單狀態 : <?= $statusName ?></p>
-            <ul class="card shadow-sm my-5 py-3 ps-0">
-                <?php foreach ($rows as $row_product) : ?>
-                <div class="d-flex align-items-center gap-4 justify-content-evenly">
-                    <img class="w-25" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
-                    <p><?= $row_product["product_name"] ?></p>
-                    <p><?= $row_product["product_category_name"] ?></p>
-                    <p>$<?= $row_product["product_price"] ?></p>
+<div class="d-flex align-items-center vh-100">
+    <div class="container">
+        <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
+        <div class="card shadow-sm bg-light p-4 mb-5 pb-0">
+            <div class="badge bg-dark d-flex flex-nowrap align-items-center py-0">
+                <p class="fs-6 mb-0 ms-2">訂單編號 : <?= $row["order_id"] ?></p>
+                <p class="badge rounded-pill bg-success shadow-sm ms-2 my-2"><?= $statusName ?></p>
+                <p class="badge rounded-pill bg-warning text-dark shadow-sm ms-2 my-2">
+                    <?= $row["payment_method_name"] ?>
+                </p>
+            </div>
+            <div class="row">
+                <ul class="p-3 pb-0 col-6">
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom fw-bold">
+                            <p class="mb-0">使用者姓名</p>
+                        </div>
+                        <p class="mt-3 text-center"><?= $row["name"] ?></p>
+                    </li>
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom fw-bold">
+                            <p class="mb-0">寄送地址</p>
+                        </div>
+                        <p class="mt-3 text-center"><?= $row["address"] ?></p>
+                    </li>
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom">
+                            <p class="mb-0 fw-bold">優惠碼 - <?= $row["coupon_name"] ?></p>
+                        </div>
+                        <p class="mt-3 text-center"><?= $row["coupon_content"] ?></p>
+                    </li>
+                </ul>
+                <ul class="p-3 pb-0 col-6">
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom fw-bold">
+                            <p class="mb-0">訂單商品</p>
+                        </div>
+                        <?php foreach ($rows as $row_product) : ?>
+                        <div class="row align-items-center justify-content-evenly mt-4 ms-3">
+                            <img class="w-25 col-12 col-lg-3" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>"
+                                alt="">
+                            <p class="col-12 col-xl-3"><?= $row_product["product_name"] ?></p>
+                            <p class="col-12 col-xl-3"><?= $row_product["product_category_name"] ?></p>
+                            <p class="col-12 col-xl-3">$<?= $row_product["product_price"] ?></p>
+                        </div>
+                        <hr>
+                        <?php endforeach; ?>
+                        <span class="text-end fw-bold d-flex flex-wrap justify-content-between">
+                            <p class="text-nowrap">總額 - </p> 
+                            <p class="text-nowrap">$ <?= $row["total_amount"] ?></p>
+                        </span>
+                    </li>
+                </ul>
+                <div class=" d-flex justify-content-center">
+                    <a href="goral_biker_order_list.php" class="btn btn-secondary w-25 mb-3" aria-current="page">
+                        返回訂單列表
+                    </a>
                 </div>
-                <hr>
-                <?php endforeach; ?>
-            </ul>
-            <p>付款方式 : <?= $row["payment_method_name"] ?></p>
-            <p>優惠碼 : <?= $row["coupon_name"] ?></p>
-            <p>優惠碼內容 : <?= $row["coupon_content"] ?></p>
-            <p>總金額 : <?= $row["total_amount"] ?></p>
+            </div>
         </div>
     </div>
