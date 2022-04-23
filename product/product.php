@@ -329,7 +329,7 @@ $conn->close();
     </div>
 
     <div class="row mt-2">
-        <h2 class="h2">商品列表</h2>
+        <h2 class="h2 mt-5">商品列表</h2>
         <p class="text-end">今日日期：<?= $today ?></p>
         <?php if ($product_count > 0) : ?>
             <?php foreach ($rows as $row) : ?>
