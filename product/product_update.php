@@ -29,7 +29,7 @@ $conn->close();
 
         <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert"
             action="../product/goral_bike_php/product_update.php" method="post" enctype="multipart/form-data">
-            <h1>商品編號：</h1>
+            <h1>商品編號：<?= $row["product_id"] ?></h1>
             <div class="card mb-3 bg-light">
                 <div class="row g-0">
 
