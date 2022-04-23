@@ -57,6 +57,17 @@ if (!isset($_GET["search"])) {
     $search = $_GET["search"];
 }
 
+if (!isset($_GET["product_category_id"])) {
+
+    $product_category_id = "";
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?p=$p&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?p=$p&date1=$date1&date2=$date2&type=$type&search=$search&min_price=0&max_price=99999999";
+} else {
+    $product_category_id = $_GET["product_category_id"];
+    $path_query = "../goral_bike_layout/goral_biker_off_product.php?p=$p&product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_off_product.php?p=$p&product_category_id=$product_category_id&date1=$date1&date2=$date2&type=$type&min_price=0&max_price=99999999&search=$search";
+}
+
 // ------type = ?↓
 switch ($type) {
     case "0":
@@ -197,7 +208,7 @@ $conn->close();
             <div class="card card-body">
 
                 <form action="">
-                    <?php if ($min_price <= $max_price) : ?>
+                    <?php if ($min_price <= $max_price && $date1 < $date2) : ?>
                         <div class="row justify-content-start align-items-center gx-2">
                             <h5 class="fw-bold mt-3">商品價格篩選</h5>
 
@@ -235,8 +246,11 @@ $conn->close();
                             </div>
                         </div>
                     <?php else : ?>
+
+                        <?php $date1 = "";
+                        $date2 = "2022-12-31"; ?>
                         <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            價格最小值錯誤，<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
+                            （價格最小值不可大於最大值／日期區間最小值＞最大值）<a class="alert-link" href="<?= $path_query_error ?>">請點選此處移除訊息</a>
                         </div>
                     <?php endif; ?>
                 </form>

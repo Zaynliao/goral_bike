@@ -50,11 +50,11 @@ if (!isset($_GET["product_category_id"])) {
 
     $product_category_id = "";
     $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=$date&type=$type&search=$search&min_price=0&max_price=99999";
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&date=" . "&type=$type&search=$search&min_price=0&max_price=99999999";
 } else {
     $product_category_id = $_GET["product_category_id"];
     $path_query = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=$min_price&max_price=$max_price&search=$search";
-    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=$date&type=$type&min_price=0&max_price=99999&search=$search";
+    $path_query_error = "../goral_bike_layout/goral_biker_product.php?p=$p&product_category_id=$product_category_id&date=" . "&type=$type&min_price=0&max_price=99999999&search=$search";
 }
 
 
