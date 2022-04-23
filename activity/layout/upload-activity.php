@@ -1,19 +1,19 @@
 <?php
 require_once("../../db-connect.php");
 
-$id=$_GET['id'];
-$idStatus=$_GET['Status'];
-$idVenue=$_GET['Venue'];
+$id = $_GET['id'];
+$idStatus = $_GET['status'];
+$idVenue = $_GET['venue'];
 
 $sql = "SELECT * FROM activity WHERE id=$id";
 $result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+$rows = $result->fetch_assoc();
 
-$sqlStatus = "SELECT activity_status FROM activity_status.name";
+$sqlStatus = "SELECT * FROM activity_status";
 $resultStatus = $conn->query($sqlStatus);
 $rowsStatus = $resultStatus->fetch_all(MYSQLI_ASSOC);
 
-$sqlVenue = "SELECT activity_venue FROM activity_venue.name";
+$sqlVenue = "SELECT * FROM activity_venue";
 $resultVenue = $conn->query($sqlVenue);
 $rowsVenue = $resultVenue->fetch_all(MYSQLI_ASSOC);
 
@@ -46,61 +46,64 @@ $rowsVenue = $resultVenue->fetch_all(MYSQLI_ASSOC);
             <h3>修改活動內容</h3>
             <a href="activity-list.php" class="btn btn-outline-dark mx-1">返回活動管理</a>
         </div>
-        <form class="row g-2" action="../api/activity-doInset.php" enctype="multipart/form-data" method="post">
+        <form class="row g-2" action="../api/activity-doUpload.php" enctype="multipart/form-data" method="post">
             <div class="col-md-2">
                 <label for="" class="form-label">地區</label>
                 <select class="form-control" name="category" id="category">
-                    <?php foreach ($$rowsVenue as $row): ?>
-                        <option value="<?=$row ["activity_venue.name"]?>"
-                        <?php if($row ["activity_venue.name"] == $idVenue): echo "selected"?>
-                        <?php else:?>
-                        <?php endif;?>>
-                </option>
-                <?php endforeach ?>
+                    <?php foreach ($rowsVenue as $row) : ?>
+                        <option value="<?= $row["id"] ?>" <?php if ($row["id"] == $idVenue) : echo "selected" ?> <?php else : ?> <?php endif; ?>>
+                            <?= $row["activity_venue_name"] ?>
+                        </option>
+                    <?php endforeach ?>
                 </select>
             </div>
             <div class="col-md-6">
+                <input value="<?= $rows["id"]?>" type="text" name="id" hidden>
                 <label for="" class="form-label">活動名稱</label>
-                <input type="text" class="form-control" name="name" id="name">
+                <input value="<?= $rows["activity_name"]?>" type="text" class="form-control" name="name" id="name">
             </div>
             <div class="col-md-2">
                 <label for="" class="form-label">活動日期</label>
-                <input type="date" class="form-control" name="date" id="date">
+                <input value="<?= $rows["activity_date"]?>" type="date" class="form-control" name="date" id="date">
             </div>
             <div class="col-md-2">
                 <label for="" class="form-label">報名人數</label>
-                <input type="text" class="form-control" name="persons" id="persons">
+                <input value="<?= $rows["activity_persons"]?>" type="text" class="form-control" name="persons" id="persons">
             </div>
             <div class="col-md-2">
                 <label for="" class="form-label">出發地點</label>
-                <input type="text" class="form-control" name="location" id="location">
+                <input value="<?= $rows["activity_location"]?>" type="text" class="form-control" name="location" id="location">
             </div>
             <div class="col-3">
                 <label for="" class="form-label">報名開始日期</label>
-                <input type="date" class="form-control" name="date_start" id="date_start">
+                <input value="<?= $rows["activity_start_date"]?>" type="date" class="form-control" name="date_start" id="date_start">
             </div>
             <div class="col-3">
                 <label for="" class="form-label">報名結束日期</label>
-                <input type="date" class="form-control" name="date_end" id="date_end">
+                <input value="<?= $rows["activity_end_date"]?>"  type="date" class="form-control" name="date_end" id="date_end">
             </div>
             <div class="col-md-2">
                 <label for="" class="form-label">報名狀態</label>
                 <select class="form-control" name="status" id="status">
-                        <option value=""></option>
+                    <?php foreach ($rowsStatus as $row) : ?>
+                        <option value="<?= $row["id"] ?>" <?php if ($row["id"] == $idStatus) : echo "selected" ?> <?php else : ?> <?php endif; ?>>
+                            <?= $row["activity_status_name"] ?>
+                        </option>
+                    <?php endforeach ?>
                 </select>
             </div>
             <div class="col-2">
                 <label for="" class="form-label">報名費用</label>
-                <input type="text" class="form-control" name="fee" id="fee">
+                <input value="<?= $rows["activity_fee"]?>" type="text" class="form-control" name="fee" id="fee">
             </div>
             <div class="col-md-8">
                 <label for="" class="form-label">活動內容</label>
-                <textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
+                <textarea class="form-control" name="content" id="content" cols="30" rows="10"><?= $rows["activity_content"]?></textarea>
             </div>
             <div class="col-4">
                 <label for="" class="form-label">活動圖片</label>
                 <div class="img-thumbnail text-center">
-                    <img src="../icon/no-image.png" class="img-fluid" id="img-view">
+                    <img src="../images/<?= $rows["activity_pictures"]?>" class="img-fluid" id="img-view">
                 </div>
                 <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
             </div>

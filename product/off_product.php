@@ -325,6 +325,7 @@ $conn->close();
                             <div class="col-auto ms-auto mt-1">
                                 <button type="submit" class="btn btn-secondary">查詢</button>
                                 <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
+                                <a href="goral_biker_off_product.php" class="btn btn-outline-secondary">清除篩選</a>
                             </div>
                         </div>
                     <?php else : ?>
@@ -343,13 +344,24 @@ $conn->close();
     </div>
 
     <div class="row">
-        <h2 class="h2 mt-5">下架商品列表</h2>
-        <p class="text-end">今日日期：<?= $today ?></p>
+        <div class="row">
+            <h2 class="h2 mt-5">下架商品列表</h2>
+            <p class="text-end">今日日期：<?= $today ?></p>
+            <input class="btn my-3 btn-outline-dark" type="button" value="全部選取" onclick="usel();">
+        </div>
+
         <?php foreach ($rows as $row) : ?>
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
 
                 <div class="card px-3">
-                    <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
+                    <div class="form-check">
+                        <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
+                        <?php if ($row["product_update"] > $today) : ?>
+                            <h1 class="h6 fw-bold mt-3 text-end">預計上架日期 : <?= $row["product_update"] ?></h1>
+                        <?php else : ?>
+                            <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
+                        <?php endif; ?>
+                    </div>
                     <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
 
                         <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
@@ -392,3 +404,12 @@ $conn->close();
         第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
     </div>
 </div>
+<script type="text/javascript">
+    function usel() {
+        //變數checkItem為checkbox的集合
+        var checkItem = document.getElementsByName("check[]");
+        for (var i = 0; i < checkItem.length; i++) {
+            checkItem[i].checked = !checkItem[i].checked;
+        }
+    }
+</script>

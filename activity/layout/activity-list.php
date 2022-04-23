@@ -146,8 +146,8 @@ $start = ($p - 1) * $per_page;
                         <a class="btn btn-outline-success mx-1" 
                         href="../layout/upload-activity.php?id=
                         <?= $row["id"]?>
-                        &status=<?= $row["activity_status_name"]?>
-                        &venue=<?= $row["activity_venue_name"]?>">編輯</a>
+                        &status=<?= $row["activity_status_id"]?>
+                        &venue=<?= $row["activity_venue_id"]?>">編輯</a>
                         <a href="#" class="btn btn-outline-warning mx-1">下架</a>
                         <a href="#" class="btn btn-outline-danger mx-1">刪除</a>
                     </div>
