@@ -32,10 +32,14 @@ AND `order_list`.`user_id`=`user`.`id`
 AND `order_list`.`payment_method_id`=`payment_method`.`id` 
 AND `order_list`.`coupon_id`=`coupons`.`id` ";
 
-
-
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+
+
+$sql_total="SELECT SUM(`product`.`product_price`) AS total FROM `product`,`product_order`,`order_list` WHERE `product_order`.`product_id`=`product`.`product_id`AND`product_order`.`order_id`=`order_list`.`order_id` AND `order_list`.`order_id` ='$order_id';";
+$result_total = $conn->query($sql_total);
+$row_total=$result_total->fetch_assoc();
+
 
 $sql_product = "SELECT 
 `product`.`product_name`,
@@ -112,21 +116,24 @@ if ($row["order_status"] == 1) {
                             <p class="mb-0">訂單商品</p>
                         </div>
                         <?php foreach ($rows as $row_product) : ?>
-                            <div class="row align-items-center justify-content-around mt-4 mx-auto p-4 text-center">
-                                <img class="w-25 col-12 col-lg-2" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
-                                <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
-                                <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
-                                <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
-                                <!-- <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p> -->
-                                <!-- <a class="btn btn-danger col-1">刪除</a> -->
-                            </div>
-                            <hr>
+                        <div class="row align-items-center justify-content-around mt-4 mx-auto p-4 text-center">
+                            <img class="w-25 col-12 col-lg-2"
+                                src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
+                            <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
+                            <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
+                            <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
+                            <!-- <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p> -->
+                            <!-- <a class="btn btn-danger col-1">刪除</a> -->
+                        </div>
+                        <hr>
                         <?php endforeach; ?>
-
+                        <h4 class="h4 text-end py-4 mx-3">總金額：＄<?= $row_total["total"] ?></h4>
+                        <input type="hidden" name="total" id="total" value="<?= $row_total["total"] ?>">
                     </li>
                 </ul>
                 <div class="row justify-content-end gap-3">
-                    <a class="btn btn-dark text-white w-25 mb-3 " href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a>
+                    <a class="btn btn-dark text-white w-25 mb-3 "
+                        href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a>
                     <a href="goral_biker_order_list.php" class="btn btn-secondary w-25 mb-3" aria-current="page">
                         返回訂單列表
                     </a>

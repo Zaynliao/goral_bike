@@ -27,11 +27,14 @@ WHERE `order_list`.`order_id`='$order_id'
 AND `order_list`.`user_id`=`user`.`id` 
 AND `order_list`.`payment_method_id`=`payment_method`.`id` 
 AND `order_list`.`coupon_id`=`coupons`.`id` ";
-
-
-
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+
+
+$sql_total="SELECT SUM(`product`.`product_price`) AS total FROM `product`,`product_order`,`order_list` WHERE `product_order`.`product_id`=`product`.`product_id`AND`product_order`.`order_id`=`order_list`.`order_id` AND `order_list`.`order_id` ='$order_id';";
+$result_total = $conn->query($sql_total);
+$row_total=$result_total->fetch_assoc();
+
 
 $sql_product = "SELECT `product`.`product_name`,`product`.`product_id`,`product_order`.`order_count`,`product`.`product_images`,`product`.`product_price` ,`product_category_name`
 FROM product_order,product,order_list ,`product_category`
@@ -81,7 +84,8 @@ if ($row["order_status"] == 1) {
 <div class="container d-flex align-items-center">
     <form action="../order_list/order_list_php/order_list_update.php" method="post">
         <div class="">
-            <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
+            <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?>
+            </p>
             <div class="card shadow-sm bg-light p-4 mb-5 pb-0">
                 <div class="badge bg-dark d-flex flex-nowrap align-items-center p-2">
                     <p class="fs-6 mb-0 ms-2">訂單編號 : <?= $row["order_id"] ?></p>
@@ -102,16 +106,19 @@ if ($row["order_status"] == 1) {
                             <div class="title border-bottom fw-bold">
                                 <p class="mb-0">寄送地址</p>
                             </div>
-                            <input name="order_address" id="order_address" type="text" class="my-3 text-center form-control" value="<?= $row["order_address"] ?>"></input>
+                            <input name="order_address" id="order_address" type="text"
+                                class="my-3 text-center form-control" value="<?= $row["order_address"] ?>"></input>
 
                         </li>
                         <li class="card shadow-sm px-3 pt-2 my-3">
                             <div class="title border-bottom">
                                 <p class="mb-0 fw-bold">優惠碼 - <?= $row["coupon_name"] ?></p>
-                                <select class="form-select form-select-sm my-2" name="coupon_id" id="coupon_id" aria-label=".form-select-sm example">
+                                <select class="form-select form-select-sm my-2" name="coupon_id" id="coupon_id"
+                                    aria-label=".form-select-sm example">
 
                                     <?php foreach ($rows_coupons as $coupons_row) : ?>
-                                        <option value="<?= $coupons_row["id"] ?>"><?= $coupons_row["coupon_name"] ?></option>
+                                    <option value="<?= $coupons_row["id"] ?>"><?= $coupons_row["coupon_name"] ?>
+                                    </option>
                                     <?php endforeach; ?>
 
                                 </select>
@@ -121,14 +128,16 @@ if ($row["order_status"] == 1) {
                             <div class="title border-bottom">
                                 <p class="mb-0 fw-bold">備註</p>
                             </div>
-                            <textarea name="remark" id="remark" type="text" class="my-3 form-control"><?= $row["remark"] ?></textarea>
+                            <textarea name="remark" id="remark" type="text"
+                                class="my-3 form-control"><?= $row["remark"] ?></textarea>
 
                         </li>
                         <li class="card shadow-sm px-3 py-2 my-3">
                             <div class="title border-bottom">
                                 <p class="mb-0 fw-bold">付款狀態 -<?= $statusName ?></p>
                             </div>
-                            <select class="form-select form-select-sm mt-2" name="order_status" id="order_status" aria-label=".form-select-sm example">
+                            <select class="form-select form-select-sm mt-2" name="order_status" id="order_status"
+                                aria-label=".form-select-sm example">
                                 <option value="0">未付款</option>
                                 <option value="1">已付款</option>
                             </select>
@@ -138,10 +147,12 @@ if ($row["order_status"] == 1) {
                                 <p class="mb-0 fw-bold">付款方式</p>
                             </div>
                             <!-- payment_method_name -->
-                            <select class="form-select form-select-sm my-2" name="payment_method_id" id="payment_method_id" aria-label=".form-select-sm example">
+                            <select class="form-select form-select-sm my-2" name="payment_method_id"
+                                id="payment_method_id" aria-label=".form-select-sm example">
 
                                 <?php foreach ($rows_payment as $payment_row) : ?>
-                                    <option value="<?= $payment_row["id"] ?>"><?= $payment_row["payment_method_name"] ?></option>
+                                <option value="<?= $payment_row["id"] ?>"><?= $payment_row["payment_method_name"] ?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
                         </li>
@@ -158,27 +169,32 @@ if ($row["order_status"] == 1) {
                                 <p class="mb-0">訂單商品</p>
                             </div>
                             <?php foreach ($rows as $row_product) : ?>
-                                <div class="row align-items-center justify-content-around mt-4 mx-auto p-4 text-center">
-                                    <img class="w-25 col-12 col-lg-2" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
-                                    <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
-                                    <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
-                                    <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
+                            <div class="row align-items-center justify-content-around mt-4 mx-auto p-4 text-center">
+                                <img class="w-25 col-12 col-lg-2"
+                                    src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
+                                <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
+                                <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
+                                <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
 
-                                    <!-- <p class="col-12 col-xl-1">數量：</p>
+                                <!-- <p class="col-12 col-xl-1">數量：</p>
                                     <input type="number" name="order_count" id="order_count" class="text-center form-control col-12 col-xl-2" style="width:65px" value="<?= $row_product["order_count"] ?>"></input> -->
 
-                                    <input type="hidden" name="product_id" id="product_id" value="<?= $row_product["product_id"] ?>"></input>
+                                <input type="hidden" name="product_id" id="product_id"
+                                    value="<?= $row_product["product_id"] ?>"></input>
 
-                                    <button type="submit" class="btn btn-danger col-1" formaction="../order_list/order_list_php/order_list_delete.php">刪除</button>
-                                </div>
-                                <hr>
+                                <button type="submit" class="btn btn-danger col-1"
+                                    formaction="../order_list/order_list_php/order_list_delete.php">刪除</button>
+                            </div>
+                            <hr>
                             <?php endforeach; ?>
-
+                            <h4 class="h4 text-end py-4 mx-3">總金額：＄<?= $row_total["total"] ?></h4>
+                            <input type="hidden" name="total" id="total" value="<?= $row_total["total"] ?>">
                         </li>
                     </ul>
                     <div class=" d-flex justify-content-end gap-3">
 
-                        <button class="btn btn btn-dark w-25 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn btn-dark w-25 mb-3" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             商品列表
                         </button>
 
@@ -196,47 +212,61 @@ if ($row["order_status"] == 1) {
                                 <div class="row mt-2">
                                     <div class="row justify-content-end align-items-center gap-3">
                                         <h2 class="h2 mt-5">商品列表</h2>
-                                        <p class="text-end">今日日期：<?= $today ?></p>
-                                        <input class="btn col-2 my-3 btn-dark" type="button" value="全部選取" onclick="usel();">
+                                        <p class="text-end">今日日期：<?= $today ?>
+                                        </p>
+                                        <input class="btn col-2 my-3 btn-dark" type="button" value="全部選取"
+                                            onclick="usel();">
                                         <input type="hidden" name="order_id" value="<?= $order_id ?>">
-                                        <button class="btn col-2 my-3 btn-primary" formaction="../order_list/order_list_php/order_list_select_insert.php" type="submit">批次新增</button>
+                                        <button class="btn col-2 my-3 btn-primary"
+                                            formaction="../order_list/order_list_php/order_list_select_insert.php"
+                                            type="submit">批次新增</button>
                                     </div>
 
 
                                     <?php if ($product_count > 0) : ?>
-                                        <?php foreach ($rows_product_list as $row_p) : ?>
-                                            <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
-                                                <div class="card px-3">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input mt-3" type="checkbox" value="<?= $row_p["product_id"] ?>" name="check[]" id="check">
-                                                        <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row_p["product_update"] ?></h1>
-                                                    </div>
-                                                    <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
-
-                                                        <img class="img-fluid" src="../product/goral_bike_pic/<?= $row_p["product_images"] ?>" alt="">
-
-                                                    </figure>
-
-                                                    <div class="mb-3 ">
-                                                        <span class="badge rounded-pill bg-danger" <?php if (!$row_p["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
-                                                            <?= $row_p["product_category_name"] ?>
-                                                        </span>
-                                                        <span class="badge bg-dark rounded-pill" <?php if (!$row_p["product_price"]) : echo "hidden" ?> <?php endif; ?>>
-                                                            $ <?= $row_p["product_price"] ?>
-                                                        </span>
-                                                    </div>
-                                                    <h1 class="h4 fw-bold my-3 text-center"><?= $row_p["product_name"] ?></h1>
-
-                                                </div>
+                                    <?php foreach ($rows_product_list as $row_p) : ?>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
+                                        <div class="card px-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input mt-3" type="checkbox"
+                                                    value="<?= $row_p["product_id"] ?>" name="check[]" id="check">
+                                                <h1 class="h6 fw-bold mt-3 text-end">上架日期 :
+                                                    <?= $row_p["product_update"] ?></h1>
                                             </div>
-                                        <?php endforeach; ?>
-                                    <?php else : ?>
-                                        <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
+                                            <figure class=" figure d-flex justify-content-center align-items-center"
+                                                style="height: 280px;">
 
-                                            <div>
-                                                <h6>NO DATA!</h6>
+                                                <img class="img-fluid"
+                                                    src="../product/goral_bike_pic/<?= $row_p["product_images"] ?>"
+                                                    alt="">
+
+                                            </figure>
+
+                                            <div class="mb-3 ">
+                                                <span class="badge rounded-pill bg-danger"
+                                                    <?php if (!$row_p["product_category_name"]) : echo "hidden" ?>
+                                                    <?php endif; ?>>
+                                                    <?= $row_p["product_category_name"] ?>
+                                                </span>
+                                                <span class="badge bg-dark rounded-pill"
+                                                    <?php if (!$row_p["product_price"]) : echo "hidden" ?>
+                                                    <?php endif; ?>>
+                                                    $ <?= $row_p["product_price"] ?>
+                                                </span>
                                             </div>
+                                            <h1 class="h4 fw-bold my-3 text-center"><?= $row_p["product_name"] ?></h1>
+
                                         </div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                    <?php else : ?>
+                                    <div class="alert alert-danger d-flex align-items-center  justify-content-center "
+                                        role="alert">
+
+                                        <div>
+                                            <h6>NO DATA!</h6>
+                                        </div>
+                                    </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -247,11 +277,11 @@ if ($row["order_status"] == 1) {
         </div>
 
         <script type="text/javascript">
-            function usel() {
-                //變數checkItem為checkbox的集合
-                var checkItem = document.getElementsByName("check[]");
-                for (var i = 0; i < checkItem.length; i++) {
-                    checkItem[i].checked = !checkItem[i].checked;
-                }
+        function usel() {
+            //變數checkItem為checkbox的集合
+            var checkItem = document.getElementsByName("check[]");
+            for (var i = 0; i < checkItem.length; i++) {
+                checkItem[i].checked = !checkItem[i].checked;
             }
+        }
         </script>

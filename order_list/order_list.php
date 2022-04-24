@@ -134,6 +134,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 $product_count = $result->num_rows;
 
+// $sql_total="SELECT SUM(`product`.`product_price`) AS total FROM `product`,`product_order`,`order_list` WHERE `product_order`.`product_id`=`product`.`product_id`AND`product_order`.`order_id`=`order_list`.`order_id` AND `order_list`.`order_id` ='1';";
+// $result_total = $conn->query($sql_total);
+// $row_total=$result_total->fetch_all(MYSQLI_ASSOC);
+
+
 
 ?>
 <!doctype html>
@@ -250,8 +255,8 @@ $product_count = $result->num_rows;
 
                     <td>編號</td>
                     <td>使用者</td>
-                    <!-- <td>地址</td> -->
                     <td>狀態</td>
+                    <td>總價</td>
                     <td>創建時間</td>
                     <td>備註</td>
                     <td>付款方式</td>
@@ -278,6 +283,7 @@ $product_count = $result->num_rows;
                     <td><?= $row["order_id"] ?></td>
                     <td><?= $row["name"] ?></td>
                     <td><img class="object-cover" src="../order_list/icon/<?=  $statusName ?>" alt=""></td>
+                    <td><?= $row["total_amount"] ?></td>
                     <td><?= $row["order_create_time"] ?></td>
                     <td><?= $row["remark"] ?></td>
                     <td><?= $row["payment_method_name"] ?></td>
