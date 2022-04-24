@@ -22,8 +22,7 @@ switch($type){
 case "1":
     $order="product_category_id ASC";
     break;
-
-case"2":
+case "2":
     $order="product_category_id DESC";
     break;
 case "3":
@@ -37,9 +36,9 @@ default:
 }
 
 $sql = "SELECT * FROM product_category";
-$per_page=4;
+$per_page=2;
 $result = $conn->query($sql);
-$total=$result->num_rows;
+$total = $result->num_rows;
 
 $page_count=ceil($total/$per_page);
 // echo "user count: ". $result->num_rows;
@@ -80,8 +79,6 @@ $conn->close();
 
     <div class="container mt-5">
         <div class="container">
-            <a href="goral_biker_product_category_restore.php" class="btn btn-dark my-3">Restore deleted payment
-                method</a>
             <a href="goral_biker_product_category_create.php" class="btn btn-success">Create payment method</a>
             <div>
                 <table class="table table-bordered w-100">

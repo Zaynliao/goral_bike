@@ -10,10 +10,11 @@ $id=$_GET["id"];
 
 $select = mysqli_query($conn, "SELECT * FROM coupons WHERE id = '".$_GET["id"]."'");
 if(mysqli_num_rows($select) == 0) {
-    exit('This Method Does Not Exist');
+    exit('This Coupon Does Not Exist');
 }else{
 //SOFT DELETE
-$sql="DELETE FROM coupons WHERE id ='$id'";
+$sql="UPDATE coupons SET valid=0 WHERE id='$id'";
+
 
 
 

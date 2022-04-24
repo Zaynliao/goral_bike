@@ -360,11 +360,11 @@ $conn->close();
 
     <form action="../product/goral_bike_php/product_select_delete.php" method="post">
         <div class="row mt-2">
-            <div class="row">
+            <div class="row justify-content-end align-items-center gap-3">
                 <h2 class="h2 mt-5">商品列表</h2>
                 <p class="text-end">今日日期：<?= $today ?></p>
-                <input class="btn my-3 btn-outline-dark" type="button" value="全部選取" onclick="usel();">
-                <button class="btn my-3 btn-outline-dark" type="submit">批次下架</button>
+                <input class="btn col-2 my-3 btn-dark" type="button" value="全部選取" onclick="usel();">
+                <button class="btn col-2 my-3 btn-danger" type="submit">批次下架</button>
             </div>
 
 

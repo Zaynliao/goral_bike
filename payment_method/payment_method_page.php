@@ -5,9 +5,6 @@ require_once("../db-connect.php");
 $sql = "SELECT * FROM payment_method WHERE valid=1";
 $result = $conn->query($sql);
 
-$sql="SELECT * FROM payment_method";
-$result=$conn->query($sql);
-
 // -----------------------------------------------------------------------------------------------------------------------
 $product_valid = 1;
 if(!isset($_GET["p"])){
@@ -26,7 +23,7 @@ switch($type){
 case "1":
     $order="id ASC";
     break;
-case"2":
+case "2":
     $order="id DESC";
     break;
 case "3":
@@ -39,17 +36,17 @@ default:
       $order="id ASC";
 }
 
-$sql = "SELECT * FROM payment_method";
+$sql = "SELECT * FROM payment_method WHERE valid=1";
 $per_page=4;
 $result = $conn->query($sql);
-$total=$result->num_rows;
+$total = $result->num_rows;
 
 $page_count=ceil($total/$per_page);
 // echo "user count: ". $result->num_rows;
 
 
 $start=($p-1)*$per_page;
-$sql="SELECT * FROM payment_method ORDER BY $order
+$sql="SELECT * FROM payment_method  WHERE valid=1 ORDER BY $order
 LIMIT $start,$per_page";
 $result = $conn->query($sql);
 
@@ -64,8 +61,6 @@ $user_count=$result->num_rows;
 
 
 
-
-$rows = $result->fetch_all(MYSQLI_ASSOC);
 
 $conn->close();
 ?>
@@ -85,7 +80,7 @@ $conn->close();
 
 <body>
   <div class="container">
-    <a href="goral_biker_payment_method_restore.php" class="btn btn-dark my-3">Restore deleted payment method</a>
+    <a href="goral_biker_payment_method_restore.php" class="btn btn-dark my-3">Restore hidden payment method</a>
     <a href="goral_biker_payment_method_create.php" class="btn btn-success">Create payment method</a>
     <!-- <div class="row col-11 justify-content-between align-items-between"> -->
     <div>
@@ -94,12 +89,12 @@ $conn->close();
                 <td>Payment method id</td>
                 <td>Payment method name</td>
                 <td>Edit coupon</td>
-                <td>Delete</td>
-              </tr>
+                <td>Hide</td>
+                </tr>
               <?php foreach($rows as $row) : 
             echo '<tr><td>' .$row["id"].'</td><td>'.$row["payment_method_name"].'</td><td class="m-auto">'?>
           <a href="goral_biker_payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a></td><td>
-          <a href="../payment_method/payment_method_delete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete payment method</a></td></tr>
+          <a href="../payment_method/payment_method_hide.php?id=<?= $row["id"] ?>" class="btn btn-danger">Hide payment method</a></td></tr>
           <?php endforeach;?>
         </table>
         </div>  
@@ -116,7 +111,7 @@ $conn->close();
 
 
             <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_payment_method.php?p=<?=$i?>"<?=$i?>><?=$i?></a>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_payment_method.php?p=<?=$i?>"><?=$i?></a>
                 </li>
             <?php endfor; ?>
 
