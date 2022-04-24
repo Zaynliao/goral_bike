@@ -15,14 +15,18 @@ $sql = "SELECT
 `order_list`.`order_id`,
 `order_list`.`order_status`,
 `order_list`.`order_create_time`,
-payment_method.payment_method_name,
+`payment_method`.`payment_method_name`,
 `coupons`.`coupon_name`,
 `coupons`.`coupon_content`,
 `order_list`.`total_amount`,
 `order_list`.`remark`,
 `product_category`.`product_category_id`,
 `product_category`.`product_category_name`
-FROM order_list,user,payment_method,coupons,`product_category`
+FROM order_list,
+user,
+payment_method,
+coupons,
+product_category
 WHERE `order_list`.`order_id`='$order_id'
 AND `order_list`.`user_id`=`user`.`id` 
 AND `order_list`.`payment_method_id`=`payment_method`.`id` 
@@ -33,7 +37,12 @@ AND `order_list`.`coupon_id`=`coupons`.`id` ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-$sql_product = "SELECT `product`.`product_name`,`product_order`.`order_count`,`product`.`product_images`,`product`.`product_price` ,`product_category_name`
+$sql_product = "SELECT 
+`product`.`product_name`,
+`product_order`.`order_count`,
+`product`.`product_images`,
+`product`.`product_price` ,
+`product_category_name`
 FROM product_order,product,order_list ,`product_category`
 WHERE  `order_list`.`order_id`=`product_order`.`order_id` 
 AND `product_order`.`product_id`=`product`.`product_id` 

@@ -91,26 +91,28 @@ $conn->close();
       <button type="reset" class="btn btn-warning">Reset</button>
     </form>
     <div>
-            <table class="table-bordered w-100">
-              <thead class="">
-              <tr>
+    <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
                 <td>Coupon id</td>
                 <td>Coupon name</td>
                 <td>Coupon code</td>
                 <td>Coupon content</td>
                 <td>Coupon expiry date</td>
                 <td>Coupon discount</td>
-                <td>Edit coupon</td>
-                <td>Hide</td>
+                <td>Restore coupon</td>
+                <td>Delete</td>
               </tr>
             </thead>
-              <?php foreach($rows as $row) : 
-            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_name"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_discount"].'</td><td>'?>
-
-          <a href="goral_biker_coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>&discount=<?= $row["coupon_discount"]?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td>
-
-          <a href="../coupons/coupons_hide.php?id=<?= $row["id"] ?>" class="btn btn-danger m-auto">Hide coupon</a></td></tr>
-          <?php endforeach;?>
+            <tbody>
+                <?php foreach($rows as $row) : 
+                echo '<tr class="table-light"><td>'.$row["id"]. '</td><td>'.$row["coupon_name"].'</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"].'</td><td>'.$row["coupon_discount"]?>
+                </td>
+                <td><a href="../coupons/coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a></td>
+                <td><a href="../coupons/coupons_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td>
+              </tr>
+              <?php endforeach;?>
+            </tbody>
         </table>
         </div>
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">

@@ -1,12 +1,6 @@
 <?php
 
-// $path = $_SERVER["REQUEST_URI"];
-// echo $path . "<br>";
-// // 透過路徑取得檔名
-// $file = basename($path);
-// echo $file;
-
-require_once("db-connect.php");
+require_once("../db-connect.php");
 
 $sql = "SELECT * FROM course_location";
 $result = $conn->query($sql);
