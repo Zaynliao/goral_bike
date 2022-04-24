@@ -178,7 +178,9 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
 </head>
 
 <body>
+
     <div class="container mb-5 mt-4">
+
         <!-- 每分頁顯示資料數量 -->
         <div class="d-flex align-items-end mb-3 flex-column-reverse flex-sm-row">
             <div class="col-12 col-sm-6 col-md-4">
@@ -187,7 +189,7 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                         顯示
                     </span>
                     <select class="me-2 form-select w-auto" aria-label="Default select example" id="pageCount">
-                        <?php for($i=1;$i<=3;$i++): $per_page=$i*5; ?>
+                        <?php for($i=1;$i<=3;$i++): $per_page=$i*6; ?>
 
                         <option value="<?=$per_page?>"
                             <?php if (isset($_GET["per_page"]) && $per_page == $_GET["per_page"] ) echo "selected" ?>>

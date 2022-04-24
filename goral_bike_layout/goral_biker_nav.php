@@ -31,7 +31,7 @@ $file = basename($path);
                     <?php if (strpos($file, "course") !== false) {
                         echo ("active");
                     } ?>
-                    " href="goral_biker_course-list.php">課程</a>
+                    " href="../goral_bike_layout/goral_biker_course-list.php?valid=1&per_page=6">課程</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 

@@ -12,7 +12,7 @@ $file = basename($path);
 
 
         <li class="nav-item">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1" class="nav-link  fst-6 text-center text-wrap text-white
+            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1&per_page=6" class="nav-link  fst-6 text-center text-wrap text-white
             <?php
                 if ((strpos($file, "valid=1") !== false) && (strpos($file, "cate") == false)): echo "active" ?>
             <?php endif;?>
@@ -22,7 +22,7 @@ $file = basename($path);
         </li>
 
         <li class="nav-item">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?cate=1&valid=1" class="nav-link  fst-6 text-center text-wrap  text-white
+            <a href="../goral_bike_layout/goral_biker_course-list.php?cate=1&valid=1&per_page=6" class="nav-link  fst-6 text-center text-wrap  text-white
             <?php
                 if ((strpos($file, "cate=1") !== false) && (strpos($file, "valid=1") !== false)): echo "active" ?>
             <?php endif;?>
@@ -32,7 +32,7 @@ $file = basename($path);
         </li>
 
         <li class="nav-item">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?cate=2&valid=1" class="nav-link text-white fst-6 text-center text-wrap
+            <a href="../goral_bike_layout/goral_biker_course-list.php?cate=2&valid=1&per_page=6" class="nav-link text-white fst-6 text-center text-wrap
             <?php
                 if ((strpos($file, "cate=2") !== false) && (strpos($file, "valid=1") !== false)): echo "active" ?>
             <?php endif;?>
@@ -42,7 +42,7 @@ $file = basename($path);
         </li>
 
         <li class="nav-item">
-            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=0" class="nav-link text-white fst-6 text-center text-wrap
+            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=0&per_page=6" class="nav-link text-white fst-6 text-center text-wrap
             <?php
                 if ((strpos($file, "valid=0") !== false)): echo "active" ?>
             <?php endif;?>
