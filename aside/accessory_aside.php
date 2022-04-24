@@ -31,14 +31,6 @@ require_once("../db-connect.php");
         </li>
 
         <li class="nav-item">
-            <a href="goral_biker_product_category.php" class="nav-link  fst-6 text-center text-wrap text-white
-            <?php if (basename($_SERVER['PHP_SELF']) === "goral_biker_product_category.php") echo "active" ?>
-            " aria-current="page">
-                商品類別管理
-            </a>
-        </li>
-
-        <li class="nav-item">
             <a href="goral_biker_off_accessory.php" class="nav-link text-white fst-6 text-center text-wrap
             <?php if (basename($_SERVER['PHP_SELF']) === "goral_biker_off_accessory.php") echo "active" ?>
             ">

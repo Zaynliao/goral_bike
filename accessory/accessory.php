@@ -283,7 +283,7 @@ $conn->close();
                 篩選
             </button>
         </p>
-        <div class="collapse show" id="collapseFilter">
+        <div class="collapse" id="collapseFilter">
             <div class="card card-body">
                 <form action="">
                     <?php if ($min_price <= $max_price && $date <= $today) : ?>

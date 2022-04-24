@@ -237,7 +237,7 @@ $conn->close();
             </button>
         </p>
 
-        <div class="collapse show" id="collapseExample">
+        <div class="collapse" id="collapseExample">
             <div class="card card-body">
 
                 <form action="">
