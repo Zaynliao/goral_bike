@@ -35,7 +35,7 @@ $sql="INSERT INTO activity (activity_venue_id, activity_pictures, activity_name,
 
 if ($conn->query($sql) === TRUE) {
     echo "<script>alert('新增活動完成')</script>";
-    echo "<script>location.href='../../goral_bike_layout/goral_biker_course-list.php?type=2'</script> ";
+    echo "<script>location.href='../goral_bike_layout/goral_biker_activity-list.php?type=2'</script> ";
     exit;
 
 } else {
