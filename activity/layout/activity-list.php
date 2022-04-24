@@ -82,7 +82,7 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
 
 <body>
     <div class="container mt-5">
-        <!-- ================= nav ================= -->
+        <!-- ================= 活動時間篩選 ================= -->
         <div class="d-flex justify-content-between">
             <div class="">
                 <div class="layui-inline d-flex">
@@ -104,6 +104,8 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                         <option selected>排列方式</option>
                         <option value="1">價錢 $-$$$</option>
                         <option value="2">價錢 $$$-$</option>
+                        <option value="1">活動日期 ▲</option>
+                        <option value="2">活動日期 ▼</option>
                     </select>
                 </div>
                 <div>
@@ -150,8 +152,8 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                     <!-- ================= 修改 ================= -->
-                    <div class="col-3 ">
-                        <div class="d-flex "></div>
+                    <div class="col-3">
+                        <div class="d-flex"></div>
                         <a class="btn btn-outline-success mx-1" href="goral_biker_activity-upload.php?id=<?= $row["id"] ?>&status=<?= $row["activity_status_id"] ?>&venue=<?= $row["activity_venue_id"] ?>">編輯</a>
                         <a href="../activity/api/activity-doDelisting.php?id=<?= $row["id"] ?>" class="btn btn-outline-warning mx-1">下架</a>
                         <a href="../activity/api/activity-doDelete.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger mx-1">刪除</a>
@@ -160,7 +162,7 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
             </div>
         <?php endforeach; ?>
         <!-- ================= 分頁 ================= -->
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-3">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item">
