@@ -3,8 +3,9 @@ require_once("../db-connect.php");
 
 $sql = "SELECT * FROM order_list";
 $result = $conn->query($sql);
+
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-$path_query = "goral_biker_order_list.php?";
+
 $a = array(
     "依訂單ID正序排列",
     "依訂單ID反序排列",
@@ -40,6 +41,15 @@ if (!isset($_GET["per_page"])) {
 } else {
     $per_page = $_GET["per_page"];
 }
+
+if (!isset($_GET["search"])) {
+    $search="";
+    $path_query = "goral_biker_order_list.php?";
+} else {
+    $search = $_GET["search"];
+    $path_query = "goral_biker_order_list.php?search=$search";
+}
+
 
 // ------type = ?↓
 
@@ -91,7 +101,14 @@ switch ($type) {
         $order = "`order_list`.`order_id` ASC";
 }
 
-$sql = "SELECT * FROM order_list";
+$sql = "SELECT * FROM  order_list 
+LEFT JOIN payment_method on order_list.payment_method_id=payment_method.id
+LEFT JOIN coupons on order_list.coupon_id=coupons.id
+LEFT JOIN user on order_list.user_id=user.id
+WHERE 
+`user`.`name` LIKE '%$search%' OR
+`order_list`.`remark` LIKE '%$search%'";
+
 $result = $conn->query($sql);
 $total = $result->num_rows;
 
@@ -106,6 +123,9 @@ $sql = "SELECT * FROM  order_list
 LEFT JOIN payment_method on order_list.payment_method_id=payment_method.id
 LEFT JOIN coupons on order_list.coupon_id=coupons.id
 LEFT JOIN user on order_list.user_id=user.id
+WHERE 
+`user`.`name` LIKE '%$search%' OR
+`order_list`.`remark` LIKE '%$search%' 
 ORDER BY $order LIMIT $start,$per_page";
 $result = $conn->query($sql);
 
@@ -153,8 +173,21 @@ $product_count = $result->num_rows;
 
             <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-            <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>" <?php if ($type == $i) echo "selected" ?>>
+            <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>"
+                <?php if ($type == $i) echo "selected" ?>>
                 <?= $a[$i] ?></option>
+            <?php endfor; ?>
+
+        </select>
+
+        <select class="form-select w-25" aria-label="Default select example"
+            onchange="location.href=this.options[this.selectedIndex].value;">
+
+            <?php for ($i = 1; $i <= 4; $i++) : ?>
+
+            <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>"
+                <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
+
             <?php endfor; ?>
 
         </select>
@@ -169,26 +202,27 @@ $product_count = $result->num_rows;
             </p>
 
             <div class="collapse show" id="collapseExample">
-                <div class="card card-body">
+                <div class="">
 
-                    <form action="goral_biker_product.php" method="post">
-                        <?php  ?>
+                    <form action="" method="get">
+
                         <div class="row justify-content-start align-items-center gx-2">
 
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
+                            <input type="hidden" name="per_page" id="per_page" value="<?= $per_page ?>">
 
-                            <h5 class="fw-bold mt-3">商品名稱篩選</h5>
+                            <h5 class="fw-bold mt-3">名稱篩選</h5>
 
                             <div class="col my-2">
-                                <input type="text" class="form-control" value="" name="search" id="search"
+                                <input type="text" class="form-control" value="<?=$search?>" name="search" id="search"
                                     placeholder="search" aria-label="search">
                             </div>
                             <p></p>
                             <div class="col-auto ms-auto mt-1">
                                 <button type="submit" class="btn btn-secondary">查詢</button>
                                 <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
-                                <a href="goral_biker_product.php" class="btn btn-outline-secondary">清除篩選</a>
+                                <a href="goral_biker_order_list.php" class="btn btn-outline-secondary">清除篩選</a>
                             </div>
                         </div>
                     </form>
@@ -206,19 +240,17 @@ $product_count = $result->num_rows;
                     <span class="">已付款</span>
                 </div>
                 <div class="nocheck-img-box">
-                <img class="object-cover" src="../order_list/icon/remove.png" alt="">
-                <span class="">未付款</span>
+                    <img class="object-cover" src="../order_list/icon/remove.png" alt="">
+                    <span class="">未付款</span>
                 </div>
             </div>
 
             <thead class="table-dark">
                 <tr class="fw-bold">
-                    <td class="left-top-table"><input class="form-check-input" type="checkbox" onclick="usel();">
-                    </td>
+
                     <td>編號</td>
                     <td>使用者</td>
                     <!-- <td>地址</td> -->
-                    <td>總金額</td>
                     <td>狀態</td>
                     <td>創建時間</td>
                     <td>備註</td>
@@ -242,12 +274,9 @@ $product_count = $result->num_rows;
                 }
                 ?>
                 <tr>
-                    <td>
-                        <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
-                    </td>
+
                     <td><?= $row["order_id"] ?></td>
                     <td><?= $row["name"] ?></td>
-                    <td><?= $row["total_amount"] ?></td>
                     <td><img class="object-cover" src="../order_list/icon/<?=  $statusName ?>" alt=""></td>
                     <td><?= $row["order_create_time"] ?></td>
                     <td><?= $row["remark"] ?></td>
@@ -273,23 +302,16 @@ $product_count = $result->num_rows;
 
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
             <ul class="pagination">
-                <li class="page-item ">
-                    <a class="page-link text-dark" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+
 
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark"
-                        href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link "
+                        href="<?= $path_query ?>&p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?>"
+                        <?php if ($type == $i) echo "selected" ?>><?= $i ?></a>
+                </li>
                 <?php endfor; ?>
 
 
-                <li class="page-item">
-                    <a class="page-link text-dark" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
             </ul>
         </nav>
     </div>

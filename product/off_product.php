@@ -306,7 +306,6 @@ $conn->close();
                         <?php if (isset($_GET["product_category_id"])) : ?>
                         <input type="hidden" name="product_category_id" id="product_category_id"
                             value="<?= $product_category_id ?>">
-
                         <?php endif; ?>
 
                         <div class="row mt-2">
