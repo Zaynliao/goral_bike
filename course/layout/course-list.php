@@ -1,18 +1,27 @@
 <?php
-require_once("db-connect.php");
+require_once("../db-connect.php");
 
+// 若 URL 有 GET valid
+// 則向自訂義變數 $valid 放入 $_GET["valid"] 的值
+// 沒有則向 $valid 放入 1 的值 -->讓 valid=1 為 URL 中的常設參數
 if (isset($_GET["valid"])) {
     $valid = $_GET["valid"];
 } else {
     $valid = 1;
 }
 
+
 if (!isset($_GET["p"])) {
+    //沒有 GET 到值就設為預設值 ==> URL=../...php?valid=1'&p=1'
     $p = 1;
     $pURL = "";
 } else {
     $p = $_GET["p"];
     $pURL = "&p=$p";
+    // ($_GET["p"])) ==> URL=../...php?valid=1&'p'=$p
+    // $p ==> 簡化的 $_GET["p"] ==> URL=../...php?valid=1&p='$p'
+    // 有 GET 到值就放上字串 "&p=$p" ==> URL=../...php?valid=1'&p=$p'
+    // 沒有就放空字串 -->  ==> URL=../...php?valid=1'空字串'
 }
 
 if (!isset($_GET["type"])) {

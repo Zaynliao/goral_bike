@@ -12,20 +12,25 @@ $file = basename($path);
 
 
         <li class="nav-item">
+            <!-- 網址參數預設 -->
+            <!-- 上架商品 valid=1 -->
+            <!-- 顯示 6 筆資料 per_page=6 -->
             <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1&per_page=6" class="nav-link  fst-6 text-center text-wrap text-white
             <?php
-                if ((strpos($file, "valid=1") !== false) && (strpos($file, "cate") == false)): echo "active" ?>
-            <?php endif;?>
+            // strpos — 查找字符串首次出现的位置
+            // 如果是上架商品且無類別則為所有課程
+                if ((strpos($file, "valid=1") !== false) && (strpos($file, "cate") == false)) echo "active" ?>
+
             " aria-current="page">
-                所有商品
+                所有課程
             </a>
         </li>
 
         <li class="nav-item">
             <a href="../goral_bike_layout/goral_biker_course-list.php?cate=1&valid=1&per_page=6" class="nav-link  fst-6 text-center text-wrap  text-white
             <?php
-                if ((strpos($file, "cate=1") !== false) && (strpos($file, "valid=1") !== false)): echo "active" ?>
-            <?php endif;?>
+             // 如果是上架商品且是入門類別則為入門課程
+                if ((strpos($file, "cate=1") !== false) && (strpos($file, "valid=1") !== false)) echo "active" ?>
             " aria-current="page">
                 入門課程
             </a>
@@ -34,8 +39,8 @@ $file = basename($path);
         <li class="nav-item">
             <a href="../goral_bike_layout/goral_biker_course-list.php?cate=2&valid=1&per_page=6" class="nav-link text-white fst-6 text-center text-wrap
             <?php
-                if ((strpos($file, "cate=2") !== false) && (strpos($file, "valid=1") !== false)): echo "active" ?>
-            <?php endif;?>
+             // 如果是上架商品且是進階類別則為進階課程
+                if ((strpos($file, "cate=2") !== false) && (strpos($file, "valid=1") !== false)) echo "active" ?>
             " aria-current="page">
                 進階課程
             </a>
@@ -44,10 +49,10 @@ $file = basename($path);
         <li class="nav-item">
             <a href="../goral_bike_layout/goral_biker_course-list.php?valid=0&per_page=6" class="nav-link text-white fst-6 text-center text-wrap
             <?php
-                if ((strpos($file, "valid=0") !== false)): echo "active" ?>
-            <?php endif;?>
+               // 如果是下架商品且是進階類別則為管理下架課程
+                if ((strpos($file, "valid=0") !== false)) echo "active" ?>
             " aria-current="page">
-                管理下架商品
+                管理下架課程
             </a>
         </li>
     </ul>
