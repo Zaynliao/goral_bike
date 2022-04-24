@@ -84,29 +84,25 @@ $conn->close();
     <a href="goral_biker_payment_method_create.php" class="btn btn-success">Create payment method</a>
     <!-- <div class="row col-11 justify-content-between align-items-between"> -->
     <div>
-      <table class="table table-bordered w-100">
-            <thead class="table-dark">
-              <tr class="text-center">
+            <table class="table-bordered w-100">
+              <tr>
                 <td>Payment method id</td>
                 <td>Payment method name</td>
-                <td>Edit payment method</td>
+                <td>Edit coupon</td>
                 <td>Hide</td>
-              </tr>
-            </thead>
-            <tbody>
+                </tr>
               <?php foreach($rows as $row) : 
-                echo '<tr class="table-light"><td>' .$row["id"].'</td><td>'.$row["payment_method_name"].'</td><td class="m-auto">'?>
-                <a href="goral_biker_payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a></td><td>
-                <a href="../payment_method/payment_method_hide.php?id=<?= $row["id"] ?>" class="btn btn-danger">Hide payment method</a></td></tr>
-              <?php endforeach;?>
-            </tbody>
+            echo '<tr><td>' .$row["id"].'</td><td>'.$row["payment_method_name"].'</td><td class="m-auto">'?>
+          <a href="goral_biker_payment_method_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["payment_method_name"] ?>" class="btn btn-info text-white">Edit payment method</a></td><td>
+          <a href="../payment_method/payment_method_hide.php?id=<?= $row["id"] ?>" class="btn btn-danger">Hide payment method</a></td></tr>
+          <?php endforeach;?>
         </table>
         </div>  
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item ">
-              <a class="page-link text-dark" href="goral_biker_payment_method.php?p=<?php if($p > 1){echo $p-1;}else{echo $p;} ?>" aria-label="Next">
+                <a class="page-link text-dark" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -123,7 +119,7 @@ $conn->close();
 
 
             <li class="page-item">
-              <a class="page-link text-dark" href="goral_biker_payment_method.php?p=<?php if($p < $i-1){echo $p+1;}else{echo $p;} ?>" aria-label="Next">
+                <a class="page-link text-dark" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
