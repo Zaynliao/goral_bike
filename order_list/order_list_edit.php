@@ -165,7 +165,7 @@ if ($row["order_status"] == 1) {
                                     <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
 
                                     <p class="col-12 col-xl-1">數量：</p>
-                                    <input type="number" name="count" id="count" class="text-center form-control col-12 col-xl-2" style="width:65px" value="<?= $row_product["order_count"] ?>"></input>
+                                    <input type="number" name="order_count" id="order_count" class="text-center form-control col-12 col-xl-2" style="width:65px" value="<?= $row_product["order_count"] ?>"></input>
 
                                     <input type="hidden" name="product_id" id="product_id" value="<?= $row_product["product_id"] ?>"></input>
 
@@ -193,7 +193,7 @@ if ($row["order_status"] == 1) {
                         </a>
                     </div>
 
-                    <form action="" method="post">
+                    <form action="../order_list/order_list_php/order_list_select_insert.php" method="post">
                         <div class="collapse my-2 show" id="collapseExample">
                             <div class="card card-body">
                                 <div class="row mt-2">
@@ -202,7 +202,7 @@ if ($row["order_status"] == 1) {
                                         <p class="text-end">今日日期：<?= $today ?></p>
                                         <input class="btn col-2 my-3 btn-dark" type="button" value="全部選取" onclick="usel();">
                                         <input type="hidden" name="order_id" value="<?= $order_id ?>">
-                                        <button class="btn col-2 my-3 btn-primary" type="submit">批次上架</button>
+                                        <button class="btn col-2 my-3 btn-primary" formaction="../order_list/order_list_php/order_list_select_insert.php" type="submit">批次新增</button>
                                     </div>
 
 

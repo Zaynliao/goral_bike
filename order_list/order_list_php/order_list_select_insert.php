@@ -14,11 +14,13 @@ $state = 0;
 $today = "Y-m-d";
 foreach ($check as $value) {
 
-    $sql = "INSERT INTO `product_order` (`id`, `product_id`, `order_id`, `order_count`) VALUES (NULL, '$value', '3', '1');";
+    $sql = "INSERT INTO `product_order` (`id`, `product_id`, `order_id`, `order_count`) VALUES (NULL, '$value', '$order_id', '1');";
+
     if ($conn->query($sql) === TRUE) {
 
-        echo "<script>alert('批次下架成功');location.href = document.referrer;</script>";
+        echo "<script>alert('批次新增成功');location.href = document.referrer;</script>";
     } else {
+
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
