@@ -151,7 +151,7 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
                     </div>
                     <!-- ================= 修改 ================= -->
                     <div class="col-3 ">
-                        <div class=""></div>
+                        <div class="d-flex "></div>
                         <a class="btn btn-outline-success mx-1" href="goral_biker_activity-upload.php?id=<?= $row["id"] ?>&status=<?= $row["activity_status_id"] ?>&venue=<?= $row["activity_venue_id"] ?>">編輯</a>
                         <a href="#" class="btn btn-outline-warning mx-1">下架</a>
                         <a href="#" class="btn btn-outline-danger mx-1">刪除</a>
