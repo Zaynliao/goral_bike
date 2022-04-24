@@ -239,22 +239,26 @@ $conn->close();
         <div class="py-2 text-end ">
 
             <div>
-                <a class="btn btn-dark" href="<?= $path_query_all ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">所有商品</a>
+                <a class="btn btn-dark"
+                    href="<?= $path_query_all ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">所有商品</a>
 
 
                 <?php foreach ($product_category_rows as $p_c_r) : ?>
 
-                    <a class="btn btn-dark" href="../goral_bike_layout/goral_biker_off_product.php?product_category_id=<?= $p_c_r["product_category_id"] ?>"><?= $p_c_r["product_category_name"] ?></a>
+                <a class="btn btn-dark"
+                    href="../goral_bike_layout/goral_biker_off_product.php?product_category_id=<?= $p_c_r["product_category_id"] ?>"><?= $p_c_r["product_category_name"] ?></a>
 
                 <?php endforeach; ?>
             </div>
             <div class="d-flex justify-content-end mt-4 gap-3">
 
-                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+                <select class="form-select w-25" aria-label="Default select example"
+                    onchange="location.href=this.options[this.selectedIndex].value;">
 
                     <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                        <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                    <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>"
+                        <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
 
                     <?php endfor; ?>
 
@@ -263,11 +267,13 @@ $conn->close();
 
 
 
-                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+                <select class="form-select w-25" aria-label="Default select example"
+                    onchange="location.href=this.options[this.selectedIndex].value;">
 
                     <?php for ($i = 1; $i <= 4; $i++) : ?>
 
-                        <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
+                    <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>"
+                        <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
 
                     <?php endfor; ?>
 
@@ -280,7 +286,8 @@ $conn->close();
     <div class="py-2">
 
         <p class="text-end">
-            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
                 篩選
             </button>
         </p>
@@ -290,50 +297,56 @@ $conn->close();
 
                 <form action="">
                     <?php if ($min_price <= $max_price && $date1 < $date2) : ?>
-                        <div class="row justify-content-start align-items-center gx-2">
-                            <h5 class="fw-bold mt-3">商品價格篩選</h5>
+                    <div class="row justify-content-start align-items-center gx-2">
+                        <h5 class="fw-bold mt-3">商品價格篩選</h5>
 
-                            <input type="hidden" name="p" id="p" value="<?= $p ?>">
-                            <input type="hidden" name="type" id="type" value="<?= $type ?>">
-                            <input type="hidden" name="product_category_id" id="product_category_id" value="<?= $product_category_id ?>">
+                        <input type="hidden" name="p" id="p" value="<?= $p ?>">
+                        <input type="hidden" name="type" id="type" value="<?= $type ?>">
+                        <input type="hidden" name="product_category_id" id="product_category_id"
+                            value="<?= $product_category_id ?>">
 
-                            <div class="row mt-2">
-                                <div class="col">
-                                    <input type="number" class="form-control" value="<?= $min_price ?>" name="min_price" id="min_price" placeholder="min_price" aria-label="min_price">
-                                </div>
-
-                                <div class="col">
-                                    <input type="number" class="form-control" value="<?= $max_price ?>" name="max_price" id="max_price" placeholder="max_price" aria-label="max_price">
-                                </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <input type="number" class="form-control" value="<?= $min_price ?>" name="min_price"
+                                    id="min_price" placeholder="min_price" aria-label="min_price">
                             </div>
 
-                            <h5 class="fw-bold mt-3">上架日期篩選</h5>
-
-                            <div class="col-6 mt-2">
-                                <input type="date" name="date1" id="date1" value="<?= $date1 ?>" class="form-control">
-                            </div>
-                            <div class="col-6 mt-2">
-                                <input type="date" name="date2" id="date2" value="<?= $date2 ?>" class="form-control">
-                            </div>
-
-                            <h5 class="fw-bold mt-3">商品名稱篩選</h5>
-
-                            <div class="col my-2">
-                                <input type="text" class="form-control" value="<?= $search ?>" name="search" id="search" placeholder="search" aria-label="search">
-                            </div>
-                            <p></p>
-                            <div class="col-auto ms-auto mt-1">
-                                <button type="submit" class="btn btn-secondary">查詢</button>
-                                <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
+                            <div class="col">
+                                <input type="number" class="form-control" value="<?= $max_price ?>" name="max_price"
+                                    id="max_price" placeholder="max_price" aria-label="max_price">
                             </div>
                         </div>
+
+                        <h5 class="fw-bold mt-3">上架日期篩選</h5>
+
+                        <div class="col-6 mt-2">
+                            <input type="date" name="date1" id="date1" value="<?= $date1 ?>" class="form-control">
+                        </div>
+                        <div class="col-6 mt-2">
+                            <input type="date" name="date2" id="date2" value="<?= $date2 ?>" class="form-control">
+                        </div>
+
+                        <h5 class="fw-bold mt-3">商品名稱篩選</h5>
+
+                        <div class="col my-2">
+                            <input type="text" class="form-control" value="<?= $search ?>" name="search" id="search"
+                                placeholder="search" aria-label="search">
+                        </div>
+                        <p></p>
+                        <div class="col-auto ms-auto mt-1">
+                            <button type="submit" class="btn btn-secondary">查詢</button>
+                            <button type="reset" class="btn btn-outline-secondary">重新填寫</button>
+                            <a href="goral_biker_off_product.php" class="btn btn-outline-secondary">清除篩選</a>
+                        </div>
+                    </div>
                     <?php else : ?>
 
-                        <?php $date1 = "";
+                    <?php $date1 = "";
                         $date2 = "2022-12-31"; ?>
-                        <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
-                            （價格最小值不可大於最大值／日期區間最小值＞最大值）<a class="alert-link" href="<?= $path_query_error ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">請點選此處移除訊息</a>
-                        </div>
+                    <div class="alert alert-danger d-flex align-items-center justify-content-center " role="alert">
+                        （價格最小值不可大於最大值／日期區間最小值＞最大值）<a class="alert-link"
+                            href="<?= $path_query_error ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $per_page ?>">請點選此處移除訊息</a>
+                    </div>
                     <?php endif; ?>
                 </form>
 
@@ -342,14 +355,32 @@ $conn->close();
 
     </div>
 
-    <div class="row">
-        <h2 class="h2 mt-5">下架商品列表</h2>
-        <p class="text-end">今日日期：<?= $today ?></p>
-        <?php foreach ($rows as $row) : ?>
+
+    <form action="../product/goral_bike_php/product_select_on_product.php" method="post">
+        <div class="row mt-2">
+            <div class="row justify-content-end align-items-center gap-3">
+                <h2 class="h2 mt-5">下架商品列表</h2>
+                <p class="text-end">今日日期：<?= $today ?></p>
+                <input class="btn col-2 my-3 btn-outline-dark" type="button" value="全部選取" onclick="usel();">
+                <button class="btn col-2 my-3 btn-dark" type="submit">批次商品上架</button>
+                <button class="btn col-2 my-3 btn-danger" type="submit"
+                    formaction="../product/goral_bike_php/product_select_DELETE_ALL.php">批次商品移除</button>
+            </div>
+            <?php if ($product_count > 0) : ?>
+            <?php foreach ($rows as $row) : ?>
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
 
                 <div class="card px-3">
-                    <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
+
+                    <div class="form-check">
+                        <input class="form-check-input mt-3" type="checkbox" value="<?= $row["product_id"] ?>"
+                            name="check[]" id="check">
+                        <?php if ($row["product_update"] > $today) : ?>
+                        <h1 class="h6 fw-bold mt-3 text-end">預計上架日期 : <?= $row["product_update"] ?></h1>
+                        <?php else : ?>
+                        <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row["product_update"] ?></h1>
+                        <?php endif; ?>
+                    </div>
                     <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
 
                         <img class="img-fluid" src="../product/goral_bike_pic/<?= $row["product_images"] ?>" alt="">
@@ -357,31 +388,47 @@ $conn->close();
                     </figure>
 
                     <div class="mb-3 ">
-                        <span class="badge rounded-pill bg-danger" <?php if (!$row["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
+                        <span class="badge rounded-pill bg-danger"
+                            <?php if (!$row["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
                             <?= $row["product_category_name"] ?>
                         </span>
-                        <span class="badge bg-dark rounded-pill" <?php if (!$row["product_price"]) : echo "hidden" ?> <?php endif; ?>>
+                        <span class="badge bg-dark rounded-pill" <?php if (!$row["product_price"]) : echo "hidden" ?>
+                            <?php endif; ?>>
                             $ <?= $row["product_price"] ?>
                         </span>
                     </div>
 
                     <h1 class="h4 fw-bold my-3 text-center"><?= $row["product_name"] ?></h1>
                     <div class="py-2 d-grid">
-                        <a class="delete-btn btn btn-dark text-white mb-2 fw-bold" href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
-                        <a class="delete-btn btn btn-info text-white mb-2 fw-bold" href="../product/goral_bike_php/product_on_product.php?product_id=<?= $row["product_id"] ?>">上架商品</a>
-                        <a class="delete-btn btn btn-danger text-white mb-2 fw-bold" href="../product/goral_bike_php/product_DELETE_ALL.php?product_id=<?= $row["product_id"] ?>">刪除商品</a>
+                        <a class="delete-btn btn btn-dark text-white mb-2 fw-bold"
+                            href="../goral_bike_layout/goral_biker_update.php?product_id=<?= $row["product_id"] ?>&product_category_id=<?= $row["product_category_id"] ?>">更新資料</a>
+                        <a class="delete-btn btn btn-info text-white mb-2 fw-bold"
+                            href="../product/goral_bike_php/product_on_product.php?product_id=<?= $row["product_id"] ?>">上架商品</a>
+                        <a class="delete-btn btn btn-danger text-white mb-2 fw-bold"
+                            href="../product/goral_bike_php/product_DELETE_ALL.php?product_id=<?= $row["product_id"] ?>">刪除商品</a>
                     </div>
                 </div>
+
             </div>
-        <?php endforeach; ?>
-    </div>
+            <?php endforeach; ?>
+            <?php else : ?>
+            <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
+                <div>
+                    <h6>NO DATA!</h6>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
+    </form>
+
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
 
             <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>">
-                    <a class="page-link" href="<?= $path_query ?>&type=<?= $type ?>&p=<?= $i ?>&per_page=<?= $per_page ?>"><?= $i ?></a>
-                </li>
+            <li class="page-item <?php if ($i == $p) echo "active" ?>">
+                <a class="page-link"
+                    href="<?= $path_query ?>&type=<?= $type ?>&p=<?= $i ?>&per_page=<?= $per_page ?>"><?= $i ?></a>
+            </li>
             <?php endfor; ?>
 
 
@@ -391,4 +438,13 @@ $conn->close();
     <div class="py-2 text-center">
         第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
     </div>
-</div>
+
+    <script type="text/javascript">
+    function usel() {
+        //變數checkItem為checkbox的集合
+        var checkItem = document.getElementsByName("check[]");
+        for (var i = 0; i < checkItem.length; i++) {
+            checkItem[i].checked = !checkItem[i].checked;
+        }
+    }
+    </script>

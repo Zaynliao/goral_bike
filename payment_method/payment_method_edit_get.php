@@ -35,7 +35,7 @@ $conn -> close();
                 <td>Payment method id</td>
                 <td>Payment method name</td>
                 <td>Edit coupon</td>
-                <td>Delete</td>
+                <td>Reset</td>
               </tr>
               <td>
                 <?=$id?>
@@ -49,8 +49,8 @@ $conn -> close();
               <td>
               <button type="submit" class="btn btn-info mt-2 my-2 text-white">Submit new method</button>
               </td>
-                <td>
-                <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
+              <td>
+              <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
               </td>
             </table>
             <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary text-white">Return</a>

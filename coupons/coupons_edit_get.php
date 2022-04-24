@@ -48,7 +48,7 @@ $conn -> close();
                 <td>Coupon expiry date</td>
                 <td>Coupon discount</td>
                 <td>Edit coupon</td>
-                <td>Delete</td>
+                <td>Reset</td>
               </tr>
               <td>
                 <?=$id?>

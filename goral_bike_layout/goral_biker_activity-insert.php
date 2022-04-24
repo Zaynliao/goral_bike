@@ -28,8 +28,10 @@
                 <?php
               
 
-                require("../activity/layout/activity-list.php");
-                
+                require("../activity/layout/activity-insert.php");
+                require("../activity/api/activity-doDelete.php");
+
+
 
                 ?>
             </article>
@@ -42,6 +44,7 @@
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <?php require_once("../product/goral_bike_php/js.php") ?>
+
 
 </body>
 
