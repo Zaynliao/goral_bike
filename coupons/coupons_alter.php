@@ -25,7 +25,7 @@
           <button type="reset" class="btn btn-warning mt-2 my-2">Reset</button>
         </form>
         <form action="coupons_edit_get.php" method="get">
-          <h5>Edit, Restore, and Delete coupons:</h5>
+          <h5>Edit, Restore, and Hidden coupons:</h5>
           <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary">Return to coupon page</a>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
