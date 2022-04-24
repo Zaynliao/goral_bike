@@ -22,14 +22,6 @@ $rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
 
     <!-- Bootstrap CSS v5.0.2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <!-- ================= CSS ================= -->
-    <style>
-        a {
-            color: #fff;
-            font-size: 1.3rem;
-        }
-    </style>
 </head>
 
 <body>

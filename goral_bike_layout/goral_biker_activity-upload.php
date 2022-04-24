@@ -16,34 +16,26 @@
 
 <body>
     <div class="container-fluid p-0 m-0">
-
+    <!-- ================= header ================= -->
         <header class="header">
             <?php require("goral_biker_nav.php") ?>
         </header>
+
         <section class="row p-0 m-0 vh-100">
+    <!-- ================= aside ================= -->
             <aside class="aside col-2 p-0">
-                <?php require("../aside/course_aside.php") ?>
+                <?php require("../aside/activity_aside.php") ?>
             </aside>
+    <!-- ================= article ================= -->
             <article class="article col-10 ">
                 <?php
-              
-
                 require("../activity/layout/activity-upload.php");
-
-
                 ?>
             </article>
         </section>
-        <footer class="footer bg-light">
-
-        </footer>
-
-
+        <footer class="footer bg-light"></footer>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <?php require_once("../product/goral_bike_php/js.php") ?>
-
-
 </body>
-
 </html>

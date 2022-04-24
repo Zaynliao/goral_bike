@@ -63,12 +63,6 @@ $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
         p {
             margin: 0px;
         }
-
-        a {
-            color: #fff;
-            font-size: 1.3rem;
-        }
-
         .activity_cont {
             overflow: hidden;
             text-overflow: ellipsis;
