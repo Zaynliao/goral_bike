@@ -128,22 +128,14 @@ $product_count = $result->num_rows;
     <!-- Bootstrap CSS v5.0.2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <style>
-    td:first-child {
-        border-top-left-radius: 5px;
-        border-style: none;
-    }
-
-    td:last-child {
-        border-top-right-radius: 5px;
-        border-style: none;
-    }
-
-    tr:first-child {
-        border-style: none;
+    .object-cover {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
     }
     </style>
-
 
 </head>
 
@@ -206,15 +198,26 @@ $product_count = $result->num_rows;
 
         </div>
 
+        <div class="space mt-5"></div>
+        <table class="table table-bordered text-center">
+            <div class="d-flex flex-nowrap justify-content-star gap-2 mb-2">
+                <div class="check-img-box">
+                    <img class="object-cover" src="../order_list/icon/check.png" alt="">
+                    <span class="">已付款</span>
+                </div>
+                <div class="nocheck-img-box">
+                <img class="object-cover" src="../order_list/icon/remove.png" alt="">
+                <span class="">未付款</span>
+                </div>
+            </div>
 
-        <table class="table table-bordered mt-5 text-center">
-            <thead class="">
-                <tr class="table-dark">
-                    <td class="left-top-table"><input class="form-check-input mt-3" type="checkbox" onclick="usel();">
+            <thead class="table-dark">
+                <tr class="fw-bold">
+                    <td class="left-top-table"><input class="form-check-input" type="checkbox" onclick="usel();">
                     </td>
                     <td>編號</td>
                     <td>使用者</td>
-                    <td>地址</td>
+                    <!-- <td>地址</td> -->
                     <td>總金額</td>
                     <td>狀態</td>
                     <td>創建時間</td>
@@ -233,9 +236,9 @@ $product_count = $result->num_rows;
                 foreach ($rows as $row) : ?>
                 <?php
                 if ($row["order_status"] == 1) {
-                    $statusName = "已付款";
+                    $statusName = "check.png";
                 } else {
-                    $statusName = "未付款";
+                    $statusName = "remove.png";
                 }
                 ?>
                 <tr>
@@ -244,9 +247,8 @@ $product_count = $result->num_rows;
                     </td>
                     <td><?= $row["order_id"] ?></td>
                     <td><?= $row["name"] ?></td>
-                    <td><?= $row["order_address"] ?></td>
                     <td><?= $row["total_amount"] ?></td>
-                    <td><?=  $statusName ?></td>
+                    <td><img class="object-cover" src="../order_list/icon/<?=  $statusName ?>" alt=""></td>
                     <td><?= $row["order_create_time"] ?></td>
                     <td><?= $row["remark"] ?></td>
                     <td><?= $row["payment_method_name"] ?></td>
@@ -255,7 +257,7 @@ $product_count = $result->num_rows;
                             href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
                     </td>
                     <!-- <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td> -->
-                    <td><a class="btn btn-danger text-white"
+                    <td class="delete-table"><a class="btn btn-danger text-white"
                             href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
                     </td>
                 </tr>
