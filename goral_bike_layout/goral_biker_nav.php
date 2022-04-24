@@ -28,6 +28,12 @@ $file = basename($path);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link 
+                    <?php if (strpos($file, "accessory") !== false) {
+                        echo ("active");
+                    } ?>" href="goral_biker_accessory.php">配件</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link 
                     <?php if (strpos($file, "course") !== false) {
                         echo ("active");
                     } ?>
