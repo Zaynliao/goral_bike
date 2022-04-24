@@ -173,10 +173,7 @@ if ($row["order_status"] == 1) {
                                 </div>
                                 <hr>
                             <?php endforeach; ?>
-                            <span class="text-end fw-bold d-flex flex-wrap justify-content-between">
-                                <p class="text-nowrap">總額 - </p>
-                                <p class="text-nowrap">$ <?= $row["total_amount"] ?></p>
-                            </span>
+
                         </li>
                     </ul>
                     <div class=" d-flex justify-content-end gap-3">
