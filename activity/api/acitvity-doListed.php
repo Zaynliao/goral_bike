@@ -1,31 +1,28 @@
 <?php
 require("../../db-connect.php");
 
-$id=$_POST["id"];
-
-
-$sql="UPDATE activity SET activity_valid=1 WHERE activity_valid='$id'";
-
-if ($conn->query($sql) === TRUE) {
-
-    $data=[
-        "status"=>1,
-        "message"=>"上架課程成功"
-    ];
-    echo json_encode($data);
-
-} else {
-
-    $data=[
-        "status"=>0,
-        "message"=>"上架課程失敗: " . $conn->error
-    ];
-    echo json_encode($data);
-
+if (!isset($_GET['id'])) {
+    echo "id = null";
     exit;
 }
 
-$conn->close();
+if (isset($_GET["id"])) {
+    $activity_id = $_GET["id"];
+}
 
+$activity_valid = 1;
+
+$sql = "UPDATE activity SET activity_valid = '$activity_valid' WHERE activity.id = '$activity_id'";
+
+if ($conn->query($sql) === TRUE) {
+
+    $conn->close();
+
+    echo "<script>alert('活動上架成功');location.href = document.referrer;</script>";
+
+} else {
+    echo "Error: " . $sql . "<br>" .$conn->error;
+    exit;
+}
 
 ?>
