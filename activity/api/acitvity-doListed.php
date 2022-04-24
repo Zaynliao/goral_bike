@@ -10,15 +10,15 @@ if (isset($_GET["id"])) {
     $activity_id = $_GET["id"];
 }
 
-$activity_id = $_GET["id"];
+$activity_valid = 1;
 
-$sql = "DELETE FROM activity WHERE activity.id = '$activity_id'";
+$sql = "UPDATE activity SET activity_valid = '$activity_valid' WHERE activity.id = '$activity_id'";
 
 if ($conn->query($sql) === TRUE) {
 
     $conn->close();
 
-    echo "<script>alert('刪除成功');location.href = document.referrer;</script>";
+    echo "<script>alert('活動上架成功');location.href = document.referrer;</script>";
 
 } else {
     echo "Error: " . $sql . "<br>" .$conn->error;

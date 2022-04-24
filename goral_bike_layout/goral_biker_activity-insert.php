@@ -29,6 +29,8 @@
               
 
                 require("../activity/layout/activity-insert.php");
+                require("../activity/api/activity-doDelete.php");
+
 
 
                 ?>
