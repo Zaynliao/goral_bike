@@ -6,7 +6,7 @@
 // $file = basename($path);
 // echo $file;
 
-require_once("db-connect.php");
+require_once("../db-connect.php");
 
 $sql = "SELECT * FROM course_location";
 $result = $conn->query($sql);

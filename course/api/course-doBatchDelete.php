@@ -1,5 +1,5 @@
 <?php
-require("db-connect.php");
+require_once("./db-connect.php");
 
 $id=$_POST["checkbox"];
 

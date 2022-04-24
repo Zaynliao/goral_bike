@@ -277,6 +277,7 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                                         <input type="hidden" name="cate" value="<?= $cate ?>"
                                             <?php if(!$cate) echo "disabled"?>>
                                         <input type="hidden" name="valid" value="<?= $valid ?>">
+                                        <input type="hidden" name="per_page" value="<?= $_GET["per_page"] ?>">
                                     </div>
                                 </div>
                             </div>
