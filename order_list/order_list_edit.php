@@ -164,8 +164,8 @@ if ($row["order_status"] == 1) {
                                     <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
                                     <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
 
-                                    <p class="col-12 col-xl-1">數量：</p>
-                                    <input type="number" name="order_count" id="order_count" class="text-center form-control col-12 col-xl-2" style="width:65px" value="<?= $row_product["order_count"] ?>"></input>
+                                    <!-- <p class="col-12 col-xl-1">數量：</p>
+                                    <input type="number" name="order_count" id="order_count" class="text-center form-control col-12 col-xl-2" style="width:65px" value="<?= $row_product["order_count"] ?>"></input> -->
 
                                     <input type="hidden" name="product_id" id="product_id" value="<?= $row_product["product_id"] ?>"></input>
 

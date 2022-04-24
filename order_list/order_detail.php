@@ -117,7 +117,7 @@ if ($row["order_status"] == 1) {
                                 <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
                                 <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
                                 <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
-                                <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p>
+                                <!-- <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p> -->
                                 <!-- <a class="btn btn-danger col-1">刪除</a> -->
                             </div>
                             <hr>
