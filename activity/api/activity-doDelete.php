@@ -18,7 +18,7 @@ if ($conn->query($sql) === TRUE) {
 
     $conn->close();
 
-    echo "<script>alert('刪除成功');location.href = document.referrer;</script>";
+    echo "<script>alert('活動刪除成功');location.href = document.referrer;</script>";
 
 } else {
     echo "Error: " . $sql . "<br>" .$conn->error;

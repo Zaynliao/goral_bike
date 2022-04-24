@@ -106,7 +106,7 @@ if (!isset($_GET["accessory_category"])) {
 } else {
     $accessory_category = $_GET["accessory_category"];
     // query 列表總數
-    $sql_count =  $sql_queryCount . "AND accessory.accessory_category=$accessory_category";
+    $sql_count =  $sql_queryCount . " AND accessory.accessory_category='$accessory_category'";
     $count_result = $conn->query($sql_count);
     // 計算分頁數量
     $total = $count_result->num_rows;
@@ -137,19 +137,25 @@ $conn->close();
 
     <div class="row justify-content-end">
         <div class="py-2 text-end ">
+            <div class="py-2 text-end">
 
+                <a class="btn btn-outline-dark" href="goral_biker_off_accessory.php">全部商品</a>
+                <?php foreach ($accessory_category_rows as $p_c_r) : ?>
+                    <a class=" btn btn-outline-dark" href="goral_biker_off_accessory.php?accessory_category=<?= $p_c_r["id"] ?>&type=<?= $type ?>&per_page=<?= $per_page ?>"><?= $p_c_r["accessory_category_name"] ?></a>
+                <?php endforeach; ?>
+
+            </div>
             <?php $a = array("依商品ID正序排列", "依商品ID反序排列", "依名字正序排列", "依名字反序排列", "依價錢正序排列", "依價錢反序排列", "依日期正序排列", "依日期反序排列"); ?>
 
             <div class="d-flex justify-content-end mt-2 gap-3">
                 <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false" aria-controls="insert">新增配件</a>
                 <!-- 排序下拉式選單 -->
                 <div class="dropdown">
-                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                    >
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- 排序方式選擇 -->
-                        <?php 
+                        <?php
                         for ($i = 0; $i < count($a); $i++) {
-                            if ($i==$type){
+                            if ($i == $type) {
                                 echo $a[$i];
                             }
                         }
@@ -179,10 +185,10 @@ $conn->close();
                 <div class="dropdown">
                     <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- 分頁選擇 -->
-                        <?php 
+                        <?php
                         for ($i = 0; $i < count($a); $i++) {
-                            if ($i * 4==$per_page){
-                                echo "每頁".($i * 4)."筆";
+                            if ($i * 4 == $per_page) {
+                                echo "每頁" . ($i * 4) . "筆";
                             }
                         }
                         ?>
@@ -282,9 +288,9 @@ $conn->close();
                 <form action="">
                     <?php if ($min_price <= $max_price && $date <= $today) : ?>
                         <div class="row justify-content-start align-items-center gx-2">
-                            <h5 class="fw-bold mt-3">商品價格篩選</h5>
-                            <?php if (!isset($_GET["accessory_category"])) : ?>
-                            <input type="hidden" name="accessory_category" id="accessory_category" value="<?= $accessory_category ?>">
+                            <h5 class="fw-bold mt-3">配件價格篩選</h5>
+                            <?php if (isset($_GET["accessory_category"])) : ?>
+                                <input type="hidden" name="accessory_category" id="accessory_category" value="<?= $accessory_category ?>">
                             <?php endif; ?>
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
@@ -301,8 +307,8 @@ $conn->close();
                             <div class="col-12 mt-2">
                                 <input type="date" name="date" value="<?= $date ?>" class="form-control">
                             </div>
-                            <h5 class="fw-bold mt-3">商品名稱篩選</h5>
-                            <div class="col my-2">
+                            <h5 class="fw-bold mt-3">配件名稱篩選</h5>
+                            <div class="col-12 my-2">
                                 <input type="text" class="form-control" value="<?= $search ?>" name="search" id="search" placeholder="search" aria-label="search">
                             </div>
                             <div class="col-auto ms-auto mt-1">
@@ -350,7 +356,7 @@ $conn->close();
                     </div>
                 </div>
             <?php endforeach; ?>
-            <?php else : ?>
+        <?php else : ?>
             <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
 
                 <div>
