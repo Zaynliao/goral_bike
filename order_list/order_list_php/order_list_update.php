@@ -24,7 +24,7 @@ $coupon_id = $_POST["coupon_id"];
 $remark = $_POST["remark"];
 
 
-
+// echo $order_address . $order_id . $order_status . $payment_method_id . $coupon_i . $remark;
 
 
 
