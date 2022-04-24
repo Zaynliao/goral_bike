@@ -81,30 +81,36 @@ $conn->close();
   </head>
   <body>
       <div class="container">
-          <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary my-3">Back to coupon page</a>
-          <div class="row col-11 justify-content-between align-items-between">
-            <table class="table-bordered">
-              <tr>
+        <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary my-3">Back to coupon page</a>
+        <div>
+          <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
                 <td>Coupon id</td>
                 <td>Coupon name</td>
                 <td>Coupon code</td>
                 <td>Coupon content</td>
                 <td>Coupon expiry date</td>
+                <td>Coupon discount</td>
                 <td>Restore coupon</td>
                 <td>Delete</td>
               </tr>
-              <?php foreach($rows as $row) : 
-            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_name"].'</td><td>'?>
-
-          <a href="../coupons/coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a></td><td>
-          <a href="../coupons/coupons_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td></tr>
-          <?php endforeach;?>
+            </thead>
+            <tbody>
+                <?php foreach($rows as $row) : 
+                echo '<tr class="table-light"><td>'.$row["id"]. '</td><td>'.$row["coupon_name"].'</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"].'</td><td>'.$row["coupon_discount"]?>
+                </td>
+                <td><a href="../coupons/coupons_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore coupon</a></td>
+                <td><a href="../coupons/coupons_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td>
+              </tr>
+              <?php endforeach;?>
+            </tbody>
         </table>
         </div>
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item ">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
+                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php if($p > 1){echo $p-1;}else{echo $p;} ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -121,7 +127,7 @@ $conn->close();
 
 
             <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
+                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php if($p < $i-1){echo $p+1;}else{echo $p;} ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
