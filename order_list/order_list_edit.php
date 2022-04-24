@@ -45,6 +45,14 @@ $rows = $result_product->fetch_all(MYSQLI_ASSOC);
 
 // var_dump($rows);
 
+
+
+// Payment
+$sql_payment = "SELECT * FROM `payment_method` WHERE valid=1";
+$result_payment = $conn->query($sql_payment);
+$rows_payment = $result_payment->fetch_all(MYSQLI_ASSOC);
+
+
 $conn->close();
 
 // var_dump($rows);
@@ -77,7 +85,9 @@ if ($row["order_status"] == 1) {
                         <div class="title border-bottom fw-bold">
                             <p class="mb-0">寄送地址</p>
                         </div>
-                        <p class="mt-3 text-center"><?= $row["address"] ?></p>
+
+                        <input type="text" class="my-3 text-center form-control" value="<?= $row["address"] ?>"></input>
+
                     </li>
                     <li class="card shadow-sm px-3 pt-2 my-3">
                         <div class="title border-bottom">
@@ -100,8 +110,10 @@ if ($row["order_status"] == 1) {
                         </div>
                         <!-- payment_method_name -->
                         <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example">
-                            <option value="0">未付款</option>
-                            <option value="1">已付款</option>
+
+                            <?php foreach ($rows_payment as $payment_row) : ?>
+                                <option value="<?= $payment_row["id"] ?>"><?= $payment_row["payment_method_name"] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </li>
 
