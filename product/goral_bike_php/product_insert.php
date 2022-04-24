@@ -19,7 +19,7 @@ $product_category_id = $_POST['product_category_id'];
 $product_update =  $_POST['product_update'];
 $today = date("Y-m-d");
 if (empty($product_name) || empty($product_images) || empty($product_price)) {
-    echo "欄位為空";
+    echo "<script>alert('欄位為空');location.href = document.referrer;</script>";
     return;
 }
 
@@ -33,8 +33,8 @@ if (empty($product_update)) {
 if ($_FILES["product_images"]["error"] == 0) {
 
     if (file_exists("../product/goral_bike_pic/" . $_FILES["product_images"]["name"])) {
-        echo $_FILES["product_images"]["name"];
-        echo "檔案已存在";
+        // echo $_FILES["product_images"]["name"];
+        echo "<script>alert(檔案重複');location.href = document.referrer;</script>";
     } else {
         if (move_uploaded_file($_FILES["product_images"]["tmp_name"], "../goral_bike_pic/" . $_FILES["product_images"]["name"])) {
 

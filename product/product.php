@@ -294,14 +294,15 @@ $conn->close();
         <div class="collapse show" id="collapseExample">
             <div class="card card-body">
 
-                <form action="" method="post">
+                <form action="" method="get">
                     <?php if ($min_price <= $max_price && $date <= $today) : ?>
                     <div class="row justify-content-start align-items-center gx-2">
                         <h5 class="fw-bold mt-3">商品價格篩選</h5>
 
+                        <?php if (isset($_GET["product_category_id"])) : ?>
                         <input type="hidden" name="product_category_id" id="product_category_id"
-                            <?php if (!isset($_GET["product_category_id"])) : ?> disabled <?php endif; ?>
                             value="<?= $product_category_id ?>">
+                        <?php endif; ?>
 
 
 
