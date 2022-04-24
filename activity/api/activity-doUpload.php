@@ -20,7 +20,7 @@ $fileName=$_FILES["image"]["name"];
 // $dateEnd=strtotime($end_time);
 
 if(empty($category)||empty($name)||empty($date)||empty($persons)||empty($location)||empty($date_start)||empty($date_end)||empty($status)||empty($fee)||empty($content)){ 
-    echo "<script>alert('錯誤:存在未填寫欄位e') </script>";
+    echo "<script>alert('錯誤:存在未填寫欄位') </script>";
     echo "<script>history.go(-1)</script> ";
     exit;
 }
@@ -62,7 +62,7 @@ if(empty($fileName)){
 
 if ($conn->query($sql) === TRUE) {
     echo "<script>alert('編輯活動完成')</script>";
-    echo "<script>location.href='../layout/activity-list.php'</script>";
+    echo "<script>location.href='../../goral_bike_layout/goral_biker_activity-list.php'</script>";
     exit;
 
 } else {

@@ -46,7 +46,7 @@ $rowsVenue = $resultVenue->fetch_all(MYSQLI_ASSOC);
             <h3>修改活動內容</h3>
             <a href="goral_biker_activity-list.php" class="btn btn-outline-dark mx-1">返回活動管理</a>
         </div>
-        <form class="row g-2" action="../activity/api/activity-doInsert.php" enctype="multipart/form-data" method="post">
+        <form class="row g-2" action="../activity/api/activity-doUpload.php" enctype="multipart/form-data" method="post">
             <div class="col-md-2">
                 <label for="" class="form-label">地區</label>
                 <select class="form-control" name="category" id="category">
@@ -103,7 +103,7 @@ $rowsVenue = $resultVenue->fetch_all(MYSQLI_ASSOC);
             <div class="col-4">
                 <label for="" class="form-label">活動圖片</label>
                 <div class="img-thumbnail text-center">
-                    <img src="../goral_bike_layout/goral_biker_activity-list.php<?= $rows["activity_pictures"]?>" class="img-fluid" id="img-view">
+                    <img src="../../goral_bike_First/activity/images/<?= $rows["activity_pictures"]?>" class="img-fluid" id="img-view">
                 </div>
                 <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
             </div>
