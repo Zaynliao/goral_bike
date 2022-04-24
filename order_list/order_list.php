@@ -102,7 +102,11 @@ $start = ($p - 1) * $per_page;
 
 // .............................................頁碼起始,每頁筆數
 // ---***---20220407 sql 資料排序語法 order by ---***---
-$sql = "SELECT * FROM  order_list ORDER BY $order LIMIT $start,$per_page";
+$sql = "SELECT * FROM  order_list 
+LEFT JOIN payment_method on order_list.payment_method_id=payment_method.id
+LEFT JOIN coupons on order_list.coupon_id=coupons.id
+LEFT JOIN user on order_list.user_id=user.id
+ORDER BY $order LIMIT $start,$per_page";
 $result = $conn->query($sql);
 
 
@@ -122,7 +126,8 @@ $product_count = $result->num_rows;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 
 
@@ -137,12 +142,13 @@ $product_count = $result->num_rows;
             第<?= $p ?>頁,共<?= $total ?>筆,共<?= $page_count ?>頁
         </div>
 
-        <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+        <select class="form-select w-25" aria-label="Default select example"
+            onchange="location.href=this.options[this.selectedIndex].value;">
 
             <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>" <?php if ($type == $i) echo "selected" ?>>
-                    <?= $a[$i] ?></option>
+            <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>" <?php if ($type == $i) echo "selected" ?>>
+                <?= $a[$i] ?></option>
             <?php endfor; ?>
 
         </select>
@@ -150,7 +156,8 @@ $product_count = $result->num_rows;
         <div class="py-2">
 
             <p class="text-end">
-                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     篩選
                 </button>
             </p>
@@ -168,7 +175,8 @@ $product_count = $result->num_rows;
                             <h5 class="fw-bold mt-3">商品名稱篩選</h5>
 
                             <div class="col my-2">
-                                <input type="text" class="form-control" value="" name="search" id="search" placeholder="search" aria-label="search">
+                                <input type="text" class="form-control" value="" name="search" id="search"
+                                    placeholder="search" aria-label="search">
                             </div>
                             <p></p>
                             <div class="col-auto ms-auto mt-1">
@@ -208,25 +216,34 @@ $product_count = $result->num_rows;
 
                 <?php
                 foreach ($rows as $row) : ?>
-                    <tr>
-                        <td>
-                            <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
-                        </td>
-                        <td><?= $row["order_id"] ?></td>
-                        <td><?= $row["user_id"] ?></td>
-                        <td><?= $row["order_address"] ?></td>
-                        <td><?= $row["total_amount"] ?></td>
-                        <td><?= $row["order_status"] ?></td>
-                        <td><?= $row["order_create_time"] ?></td>
-                        <td><?= $row["remark"] ?></td>
-                        <td><?= $row["payment_method_id"] ?></td>
-                        <td><?= $row["coupon_id"] ?></td>
-                        <td><a class="btn btn-primary text-white" href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
-                        </td>
-                        <!-- <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td> -->
-                        <td><a class="btn btn-danger text-white" href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
-                        </td>
-                    </tr>
+                <?php
+                if ($row["order_status"] == 1) {
+                    $statusName = "已付款";
+                } else {
+                    $statusName = "未付款";
+                }
+                ?>
+                <tr>
+                    <td>
+                        <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
+                    </td>
+                    <td><?= $row["order_id"] ?></td>
+                    <td><?= $row["name"] ?></td>
+                    <td><?= $row["order_address"] ?></td>
+                    <td><?= $row["total_amount"] ?></td>
+                    <td><?=  $statusName ?></td>
+                    <td><?= $row["order_create_time"] ?></td>
+                    <td><?= $row["remark"] ?></td>
+                    <td><?= $row["payment_method_name"] ?></td>
+                    <td><?= $row["coupon_name"] ?></td>
+                    <td><a class="btn btn-primary text-white"
+                            href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
+                    </td>
+                    <!-- <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td> -->
+                    <td><a class="btn btn-danger text-white"
+                            href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
+                    </td>
+                </tr>
                 <?php endforeach; ?>
 
             </tbody>
@@ -246,7 +263,8 @@ $product_count = $result->num_rows;
                 </li>
 
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark"
+                        href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
 
 
@@ -260,11 +278,11 @@ $product_count = $result->num_rows;
     </div>
 
     <script type="text/javascript">
-        function usel() {
-            //變數checkItem為checkbox的集合
-            var checkItem = document.getElementsByName("check[]");
-            for (var i = 0; i < checkItem.length; i++) {
-                checkItem[i].checked = !checkItem[i].checked;
-            }
+    function usel() {
+        //變數checkItem為checkbox的集合
+        var checkItem = document.getElementsByName("check[]");
+        for (var i = 0; i < checkItem.length; i++) {
+            checkItem[i].checked = !checkItem[i].checked;
         }
+    }
     </script>
