@@ -55,6 +55,16 @@ $sql_payment = "SELECT * FROM `payment_method`";
 $result_payment = $conn->query($sql_payment);
 $rows_payment = $result_payment->fetch_all(MYSQLI_ASSOC);
 
+
+$today = date("Y-m-d");
+$sql_product_list = "SELECT * FROM `product`,`product_category` WHERE `product`.`valid`='1' AND `product`.`product_update`<='$today' AND `product`.`product_category_id`=`product_category`.`product_category_id`";
+$result_product_list = $conn->query($sql_product_list);
+$product_count = $result_product_list->num_rows;
+$rows_product_list = $result_product_list->fetch_all(MYSQLI_ASSOC);
+
+// var_dump($rows_product_list);
+
+
 $conn->close();
 
 // var_dump($rows);
@@ -183,11 +193,68 @@ if ($row["order_status"] == 1) {
                         </a>
                     </div>
 
-                    <div class="collapse my-2" id="collapseExample">
-                        <div class="card card-body">
-                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                    <form action="" method="post">
+                        <div class="collapse my-2 show" id="collapseExample">
+                            <div class="card card-body">
+                                <div class="row mt-2">
+                                    <div class="row justify-content-end align-items-center gap-3">
+                                        <h2 class="h2 mt-5">商品列表</h2>
+                                        <p class="text-end">今日日期：<?= $today ?></p>
+                                        <input class="btn col-2 my-3 btn-dark" type="button" value="全部選取" onclick="usel();">
+                                        <input type="hidden" name="order_id" value="<?= $order_id ?>">
+                                        <button class="btn col-2 my-3 btn-primary" type="submit">批次上架</button>
+                                    </div>
+
+
+                                    <?php if ($product_count > 0) : ?>
+                                        <?php foreach ($rows_product_list as $row_p) : ?>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
+                                                <div class="card px-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input mt-3" type="checkbox" value="<?= $row_p["product_id"] ?>" name="check[]" id="check">
+                                                        <h1 class="h6 fw-bold mt-3 text-end">上架日期 : <?= $row_p["product_update"] ?></h1>
+                                                    </div>
+                                                    <figure class=" figure d-flex justify-content-center align-items-center" style="height: 280px;">
+
+                                                        <img class="img-fluid" src="../product/goral_bike_pic/<?= $row_p["product_images"] ?>" alt="">
+
+                                                    </figure>
+
+                                                    <div class="mb-3 ">
+                                                        <span class="badge rounded-pill bg-danger" <?php if (!$row_p["product_category_name"]) : echo "hidden" ?> <?php endif; ?>>
+                                                            <?= $row_p["product_category_name"] ?>
+                                                        </span>
+                                                        <span class="badge bg-dark rounded-pill" <?php if (!$row_p["product_price"]) : echo "hidden" ?> <?php endif; ?>>
+                                                            $ <?= $row_p["product_price"] ?>
+                                                        </span>
+                                                    </div>
+                                                    <h1 class="h4 fw-bold my-3 text-center"><?= $row_p["product_name"] ?></h1>
+
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <div class="alert alert-danger d-flex align-items-center  justify-content-center " role="alert">
+
+                                            <div>
+                                                <h6>NO DATA!</h6>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            function usel() {
+                //變數checkItem為checkbox的集合
+                var checkItem = document.getElementsByName("check[]");
+                for (var i = 0; i < checkItem.length; i++) {
+                    checkItem[i].checked = !checkItem[i].checked;
+                }
+            }
+        </script>
