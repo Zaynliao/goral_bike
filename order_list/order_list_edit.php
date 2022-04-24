@@ -53,6 +53,12 @@ $result_payment = $conn->query($sql_payment);
 $rows_payment = $result_payment->fetch_all(MYSQLI_ASSOC);
 
 
+
+$sql_coupons = "SELECT * FROM `coupons` WHERE valid=1";
+$result_coupons = $conn->query($sql_coupons);
+$rows_coupons = $result_coupons->fetch_all(MYSQLI_ASSOC);
+
+
 $conn->close();
 
 // var_dump($rows);
@@ -67,7 +73,7 @@ if ($row["order_status"] == 1) {
 
 ?>
 <div class="container d-flex align-items-center">
-    <div class="">
+    <form action="" method="post">
         <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
         <div class="card shadow-sm bg-light p-4 mb-5 pb-0">
             <div class="badge bg-dark d-flex flex-nowrap align-items-center p-2">
@@ -89,11 +95,18 @@ if ($row["order_status"] == 1) {
                         <input type="text" class="my-3 text-center form-control" value="<?= $row["address"] ?>"></input>
 
                     </li>
-                    <li class="card shadow-sm px-3 pt-2 my-3">
+                    <li class="card shadow-sm px-3 py-2 my-3">
                         <div class="title border-bottom">
                             <p class="mb-0 fw-bold">優惠碼 - <?= $row["coupon_name"] ?></p>
+                            <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example">
+
+                                <?php foreach ($rows_coupons as $coupons_row) : ?>
+                                    <option value="<?= $coupons_row["id"] ?>"><?= $coupons_row["coupon_name"] ?></option>
+                                <?php endforeach; ?>
+
+                            </select>
                         </div>
-                        <p class="mt-3 text-center"><?= $row["coupon_content"] ?></p>
+
                     </li>
                     <li class="card shadow-sm px-3 py-2 my-3">
                         <div class="title border-bottom">
@@ -148,11 +161,15 @@ if ($row["order_status"] == 1) {
                         </span>
                     </li>
                 </ul>
-                <div class=" d-flex justify-content-center">
+                <div class=" d-flex justify-content-end gap-3">
+                    <a href="goral_biker_order_list.php" class="btn btn-dark w-25 mb-3" aria-current="page">
+                        修改訂單
+                    </a>
                     <a href="goral_biker_order_list.php" class="btn btn-secondary w-25 mb-3" aria-current="page">
                         返回訂單列表
                     </a>
                 </div>
             </div>
         </div>
-    </div>
+
+    </form>

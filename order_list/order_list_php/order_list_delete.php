@@ -11,10 +11,7 @@ if (isset($_GET["order_id"])) {
 
 
 
-
-$state = 0;
-
-$sql = "UPDATE `product` SET `valid` = '$state' WHERE  `product_order`.`order_id`='$order_id'";
+$sql = "DELETE FROM `product_order` WHERE `product_order`.`id` = '$order_id';";
 
 // test
 // $sql = "DELETE FROM `general_product` WHERE `general_product`.`$typename` = $typename";
