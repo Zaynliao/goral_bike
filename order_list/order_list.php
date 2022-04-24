@@ -128,7 +128,21 @@ $product_count = $result->num_rows;
     <!-- Bootstrap CSS v5.0.2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+    td:first-child {
+        border-top-left-radius: 5px;
+        border-style: none;
+    }
 
+    td:last-child {
+        border-top-right-radius: 5px;
+        border-style: none;
+    }
+
+    tr:first-child {
+        border-style: none;
+    }
+    </style>
 
 
 </head>
@@ -165,7 +179,7 @@ $product_count = $result->num_rows;
             <div class="collapse show" id="collapseExample">
                 <div class="card card-body">
 
-                    <form action="" method="post">
+                    <form action="goral_biker_product.php" method="post">
                         <?php  ?>
                         <div class="row justify-content-start align-items-center gx-2">
 
@@ -194,9 +208,10 @@ $product_count = $result->num_rows;
 
 
         <table class="table table-bordered mt-5 text-center">
-            <thead>
-                <tr>
-                    <td><input class="form-check-input mt-3" type="checkbox" onclick="usel();"></td>
+            <thead class="">
+                <tr class="table-dark">
+                    <td class="left-top-table"><input class="form-check-input mt-3" type="checkbox" onclick="usel();">
+                    </td>
                     <td>編號</td>
                     <td>使用者</td>
                     <td>地址</td>
