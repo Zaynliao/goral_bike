@@ -90,7 +90,7 @@ $rows_venue = $result_venue->fetch_all(MYSQLI_ASSOC);
             <div class="col-4">
                 <label for="" class="form-label">活動圖片</label>
                 <div class="img-thumbnail text-center">
-                    <img src="../icon/no-image.png" class="img-fluid" id="img-view">
+                    <img src="./goral_bike_First/activity/icon/no-image.png" class="img-fluid" id="img-view">
                 </div>
                 <input type="file" class="form-control" name="image" id="image" accept=".jpg, .jpeg, .png, .webp, .svg">
             </div>

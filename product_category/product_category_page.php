@@ -79,7 +79,7 @@ $conn->close();
 
     <div class="container mt-5">
         <div class="container">
-            <a href="goral_biker_product_category_create.php" class="btn btn-success">Create payment method</a>
+            <a href="goral_biker_product_category_create.php" class="btn btn-success mb-3git ">Create payment method</a>
             <div>
                 <table class="table table-bordered w-100">
                     <thead class="table-dark">
