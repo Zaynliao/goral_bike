@@ -42,7 +42,7 @@ $conn -> close();
                                     <td>Product category id</td>
                                     <td>Product category name</td>
                                     <td>Edit coupon</td>
-                                    <td>Delete</td>
+                                    <td>Reset</td>
                                 </tr>
                             </thead>
                             <tbody>
