@@ -22,18 +22,10 @@
         </header>
         <section class="row p-0 m-0 vh-100">
             <aside class="aside col-2 p-0">
-                <?php require("../aside/course_aside.php") ?>
+                <?php require("../aside/accessory_aside.php") ?>
             </aside>
             <article class="article col-10 ">
-                <?php
-              
-
-                require("../activity/layout/activity-insert.php");
-                require("../activity/api/activity-doInsert.php");
-
-
-
-                ?>
+                <?php require("../accessory/accessory_update.php") ?>
             </article>
         </section>
         <footer class="footer bg-light">
@@ -43,7 +35,7 @@
 
     </div>
     <!-- Bootstrap JavaScript Libraries -->
-    <?php require_once("../product/goral_bike_php/js.php") ?>
+    <?php require_once("../accessory/js.php") ?>
 
 
 </body>

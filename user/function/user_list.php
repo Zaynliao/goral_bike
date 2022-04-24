@@ -38,13 +38,13 @@ if (!isset($_GET["per_page"])) {
     $per_page = $_GET["per_page"];
 }
 
-//for 啟用狀態
+// for 啟用狀態
 if (!isset($_GET["enable"])) {
     $enable = 1;
 } else {
     $enable = $_GET["enable"];
 }
-
+// 搜尋列
 if (isset($_GET["search"])) {
     //query所有使用者
     $search = $_GET["search"];
@@ -225,7 +225,7 @@ $user_count = $result->num_rows;
 
     
   <script>
-      // 切換分頁的js
+      // 切換分頁顯示數量的js
       let pageCount = document.querySelector("#pageCount");
       pageCount.addEventListener("change", function(e) {
           console.log(e.target.value);

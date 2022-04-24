@@ -11,7 +11,7 @@ $order_id = $_GET["order_id"];
 
 $sql = "SELECT 
 `user`.`name`,
-`user`.`address`,
+`order_list`.`order_address`,
 `order_list`.`order_id`,
 `order_list`.`order_status`,
 `order_list`.`order_create_time`,
@@ -19,6 +19,7 @@ payment_method.payment_method_name,
 `coupons`.`coupon_name`,
 `coupons`.`coupon_content`,
 `order_list`.`total_amount`,
+`order_list`.`remark`,
 `product_category`.`product_category_id`,
 `product_category`.`product_category_name`
 FROM order_list,user,payment_method,coupons,`product_category`
@@ -81,13 +82,19 @@ if ($row["order_status"] == 1) {
                         <div class="title border-bottom fw-bold">
                             <p class="mb-0">寄送地址</p>
                         </div>
-                        <p class="mt-3 text-center"><?= $row["address"] ?></p>
+                        <p class="mt-3 text-center"><?= $row["order_address"] ?></p>
                     </li>
                     <li class="card shadow-sm px-3 pt-2 my-3">
                         <div class="title border-bottom">
                             <p class="mb-0 fw-bold">優惠碼 - <?= $row["coupon_name"] ?></p>
                         </div>
                         <p class="mt-3 text-center"><?= $row["coupon_content"] ?></p>
+                    </li>
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom">
+                            <p class="mb-0 fw-bold">備註</p>
+                        </div>
+                        <p class="mt-3 text-center"><?= $row["remark"] ?></p>
                     </li>
                 </ul>
                 <ul class="p-3 pb-0 col-12">
@@ -102,7 +109,7 @@ if ($row["order_status"] == 1) {
                                 <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
                                 <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
                                 <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p>
-                                <a class="btn btn-danger col-1">刪除</a>
+                                <!-- <a class="btn btn-danger col-1">刪除</a> -->
                             </div>
                             <hr>
                         <?php endforeach; ?>
