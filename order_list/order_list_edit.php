@@ -1,106 +1,146 @@
 <?php
 require_once("../db-connect.php");
+// $sql = "SELECT `user`.`name`,`order_list`.`order_id`,`order_list`.`order_address`,`order_list`.`total_amount`,`order_list`.`order_status`,`order_list`.`order_create_time`,`order_list`.`remark`,`coupons`.`coupon_name`,`coupons`.`coupon_content`,`payment_method`.`payment_method_name` FROM order_list,payment_method,coupons,user WHERE `order_list`.`order_id`='1' AND ";
 
+if (!isset($_GET["order_id"])) {
+    exit;
+}
 
 $order_id = $_GET["order_id"];
-// $product_category_id = $_GET["product_category_id"];
+// $order_id = 2;
 
-$sql = "SELECT * FROM order_list WHERE order_list.order_id='$order_id'";
+$sql = "SELECT 
+`user`.`name`,
+`user`.`address`,
+`order_list`.`order_id`,
+`order_list`.`order_status`,
+`order_list`.`order_create_time`,
+payment_method.payment_method_name,
+`coupons`.`coupon_name`,
+`coupons`.`coupon_content`,
+`order_list`.`total_amount`,
+`product_category`.`product_category_id`,
+`product_category`.`product_category_name`
+FROM order_list,user,payment_method,coupons,`product_category`
+WHERE `order_list`.`order_id`='$order_id'
+AND `order_list`.`user_id`=`user`.`id` 
+AND `order_list`.`payment_method_id`=`payment_method`.`id` 
+AND `order_list`.`coupon_id`=`coupons`.`id` ";
+
+
 
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-// $sql = "SELECT * FROM product_category";
-// $category_result = $conn->query($sql);
-// $rows = $category_result->fetch_all(MYSQLI_ASSOC);
+$sql_product = "SELECT `product`.`product_name`,`product_order`.`order_count`,`product`.`product_images`,`product`.`product_price` ,`product_category_name`
+FROM product_order,product,order_list ,`product_category`
+WHERE  `order_list`.`order_id`=`product_order`.`order_id` 
+AND `product_order`.`product_id`=`product`.`product_id` 
+AND `order_list`.`order_id`='$order_id'
+AND `product_category`.`product_category_id`=`product`.`product_category_id` 
+";
+
+$result_product = $conn->query($sql_product);
+$rows = $result_product->fetch_all(MYSQLI_ASSOC);
+
+// var_dump($rows);
 
 $conn->close();
 
+// var_dump($rows);
+
+// echo json_encode($row);
+
+if ($row["order_status"] == 1) {
+    $statusName = "已付款";
+} else {
+    $statusName = "未付款";
+}
+
 ?>
-<div class="container">
-
-    <div class="col-12 d-flex justify-content-end mt-3">
-        <a href="goral_biker_order_list.php" class="btn btn-outline-dark fst-6 text-center text-wrap" aria-current="page">
-            返回
-        </a>
-    </div>
-
-    <form class="row g-3 mt-1 justify-content-center align-items-center" name="insert" action="../goral_bike_php/order_list_edit.php" method="post">
-
-        <div class="col-8 mb-4">
-
-
-            <input type="hidden" name="order_id" id="order_id" value="<?= $row["order_id"] ?>" class=" form-control">
-
-            <div class="card p-2">
-
-                <div class="py-2 px-3">
-                    <label for="order_adress" class="form-label">order_id : <?= $row["order_id"] ?></label>
-                    <div class=" text-end">
-                        <h1 name="order_id" id="order_id" class="h1">
-                    </div>
-                </div>
-
-                <div class="py-2 px-3">
-                    <label for="order_adress" class="form-label">order_adress</label>
-                    <div class=" text-end">
-                        <input type="text" name="order_address" id="order_address" value="<?= $row["order_address"] ?>" class=" form-control">
-                    </div>
-                </div>
-
-                <div class="py-2 px-3">
-                    <label for="totoal_amount" class="form-label">total_amount</label>
-                    <div class=" text-end">
-                        <input type="text" name="total_amount" id="total_amount" value="<?= $row["total_amount"] ?>" class=" form-control">
-                    </div>
-                </div>
-
-                <div class="py-2 px-3">
-
-                    <label for="order_status" class="form-label">order_status</label>
-                    <div class=" text-end">
-                        <input type="text" name="order_status" id="order_status" value="<?= $row["order_status"] ?>" class=" form-control">
-                    </div>
-                </div>
-
-                <div class="py-2 px-3">
-
-                    <label for="order_status" class="form-label">order_status</label>
-                    <div class=" text-end">
-                        <input type="text" name="order_status" id="order_status" value="<?= $row["order_status"] ?>" class=" form-control">
-                    </div>
-                </div>
-
-                <!-- <div class="py-2 px-3">
-
-                    <label for="order_create_time" class="form-label">時間</label>
-                    <div class=" text-end">
-                        <input type="date" name="order_create_time" id="order_create_time" value="<?= $row["order_create_time"] ?>" class=" form-control">
-                    </div>
-                </div> -->
-
-                <div class="py-2 px-3">
-
-                    <label for="remark" class="form-label">remark</label>
-                    <div class=" text-end">
-                        <input type="text" name="remark" id="remark" value="<?= $row["remark"] ?>" class=" form-control">
-                    </div>
-                </div>
+<div class="container d-flex align-items-center">
+    <div class="">
+        <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
+        <div class="card shadow-sm bg-light p-4 mb-5 pb-0">
+            <div class="badge bg-dark d-flex flex-nowrap align-items-center p-2">
+                <p class="fs-6 mb-0 ms-2">訂單編號 : <?= $row["order_id"] ?></p>
+            </div>
+            <div class="row">
+                <ul class="p-3 pb-0">
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom fw-bold">
+                            <p class="mb-0">使用者姓名</p>
+                        </div>
+                        <input type="text" class="my-3 text-center form-control" value="<?= $row["name"] ?>"></input>
+                    </li>
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom fw-bold">
+                            <p class="mb-0">寄送地址</p>
+                        </div>
+                        <p class="mt-3 text-center"><?= $row["address"] ?></p>
+                    </li>
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom">
+                            <p class="mb-0 fw-bold">優惠碼 - <?= $row["coupon_name"] ?></p>
+                        </div>
+                        <p class="mt-3 text-center"><?= $row["coupon_content"] ?></p>
+                    </li>
+                    <li class="card shadow-sm px-3 py-2 my-3">
+                        <div class="title border-bottom">
+                            <p class="mb-0 fw-bold">付款狀態 - <?= $row["coupon_name"] ?></p>
+                        </div>
+                        <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example">
+                            <option value="0">未付款</option>
+                            <option value="1">已付款</option>
+                        </select>
+                    </li>
+                    <li class="card shadow-sm px-3 py-2 my-3">
+                        <div class="title border-bottom">
+                            <p class="mb-0 fw-bold">付款方式 - <?= $row["coupon_name"] ?></p>
+                        </div>
+                        <!-- payment_method_name -->
+                        <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example">
+                            <option value="0">未付款</option>
+                            <option value="1">已付款</option>
+                        </select>
+                    </li>
 
 
 
 
 
+                    <!-- <li class="badge rounded-pill bg-warning text-dark shadow-sm ms-2 my-2">
+                        <?= $row["payment_method_name"] ?>
+                    </li> -->
 
-
-                <div class="col-12 d-flex justify-content-end gap-2 mt-3">
-                    <button type="submit" class="btn btn-dark">修改商品</button>
-                    <button type="reset" class="btn btn-outline-dark">重新填寫</button>
+                </ul>
+                <ul class="p-3 pb-0 col-12">
+                    <li class="card shadow-sm px-3 pt-2 my-3">
+                        <div class="title border-bottom fw-bold">
+                            <p class="mb-0">訂單商品</p>
+                        </div>
+                        <?php foreach ($rows as $row_product) : ?>
+                            <div class="row align-items-center justify-content-around mt-4 mx-auto p-4 text-center">
+                                <img class="w-25 col-12 col-lg-2" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
+                                <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
+                                <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
+                                <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
+                                <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p>
+                                <a class="btn btn-danger col-1">刪除</a>
+                            </div>
+                            <hr>
+                        <?php endforeach; ?>
+                        <span class="text-end fw-bold d-flex flex-wrap justify-content-between">
+                            <p class="text-nowrap">總額 - </p>
+                            <p class="text-nowrap">$ <?= $row["total_amount"] ?></p>
+                        </span>
+                    </li>
+                </ul>
+                <div class=" d-flex justify-content-center">
+                    <a href="goral_biker_order_list.php" class="btn btn-secondary w-25 mb-3" aria-current="page">
+                        返回訂單列表
+                    </a>
                 </div>
             </div>
         </div>
-
-
-
-    </form>
-</div>
+    </div>

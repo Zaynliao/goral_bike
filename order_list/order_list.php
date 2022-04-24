@@ -4,22 +4,22 @@ require_once("../db-connect.php");
 $sql = "SELECT * FROM order_list";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-$path_query="goral_biker_order_list.php?";
+$path_query = "goral_biker_order_list.php?";
 $a = array(
-"依訂單ID正序排列",
-"依訂單ID反序排列", 
-"依使用者ID正序排列",
-"依使用者ID反序排列",
-"依總價正序排列",
-"依總價反序排列",
-"依訂單狀態正序排列", 
-"依訂單狀態反序排列", 
-"依日期正序排列",
-"依日期反序排列",
-"依付款方式正序排列",
-"依付款方式反序排列",
-"依優惠卷正序排列",
-"依優惠卷反序排列"
+    "依訂單ID正序排列",
+    "依訂單ID反序排列",
+    "依使用者ID正序排列",
+    "依使用者ID反序排列",
+    "依總價正序排列",
+    "依總價反序排列",
+    "依訂單狀態正序排列",
+    "依訂單狀態反序排列",
+    "依日期正序排列",
+    "依日期反序排列",
+    "依付款方式正序排列",
+    "依付款方式反序排列",
+    "依優惠卷正序排列",
+    "依優惠卷反序排列"
 );
 
 // var_dump($rows);
@@ -30,7 +30,7 @@ if (!isset($_GET["p"])) {
     $p = $_GET["p"];
 }
 if (!isset($_GET["type"])) {
-    $type = 1;
+    $type = 0;
 } else {
     $type = $_GET["type"];
 }
@@ -122,8 +122,7 @@ $product_count = $result->num_rows;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 
 
@@ -138,13 +137,12 @@ $product_count = $result->num_rows;
             第<?= $p ?>頁,共<?= $total ?>筆,共<?= $page_count ?>頁
         </div>
 
-        <select class="form-select w-25" aria-label="Default select example"
-            onchange="location.href=this.options[this.selectedIndex].value;">
+        <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
             <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-            <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>" <?php if ($type == $i) echo "selected" ?>>
-                <?= $a[$i] ?></option>
+                <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>" <?php if ($type == $i) echo "selected" ?>>
+                    <?= $a[$i] ?></option>
             <?php endfor; ?>
 
         </select>
@@ -152,8 +150,7 @@ $product_count = $result->num_rows;
         <div class="py-2">
 
             <p class="text-end">
-                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     篩選
                 </button>
             </p>
@@ -164,35 +161,14 @@ $product_count = $result->num_rows;
                     <form action="" method="post">
                         <?php  ?>
                         <div class="row justify-content-start align-items-center gx-2">
-                            <h5 class="fw-bold mt-3">商品價格篩選</h5>
-
-
-
-
 
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
 
-                            <div class="row mt-2">
-                                <div class="col">
-                                    <input type="number" class="form-control" value="<?= $min_price ?>" name="min_price"
-                                        id="min_price" placeholder="min_price" aria-label="min_price">
-                                </div>
-
-
-                            </div>
-
-                            <h5 class="fw-bold mt-3">上架日期篩選</h5>
-
-                            <div class="col-12 mt-2">
-                                <input type="date" name="date" value="<?= $date ?>" class="form-control">
-                            </div>
-
                             <h5 class="fw-bold mt-3">商品名稱篩選</h5>
 
                             <div class="col my-2">
-                                <input type="text" class="form-control" value="" name="search" id="search"
-                                    placeholder="search" aria-label="search">
+                                <input type="text" class="form-control" value="" name="search" id="search" placeholder="search" aria-label="search">
                             </div>
                             <p></p>
                             <div class="col-auto ms-auto mt-1">
@@ -209,7 +185,7 @@ $product_count = $result->num_rows;
         </div>
 
 
-        <table class="table table-bordered mt-5">
+        <table class="table table-bordered mt-5 text-center">
             <thead>
                 <tr>
                     <td><input class="form-check-input mt-3" type="checkbox" onclick="usel();"></td>
@@ -223,7 +199,7 @@ $product_count = $result->num_rows;
                     <td>付款方式</td>
                     <td>優惠卷</td>
                     <td>詳細資訊</td>
-                    <td>修改訂單</td>
+
                     <td>刪除訂單</td>
                 </tr>
             </thead>
@@ -232,28 +208,25 @@ $product_count = $result->num_rows;
 
                 <?php
                 foreach ($rows as $row) : ?>
-                <tr>
-                    <td>
-                        <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
-                    </td>
-                    <td><?= $row["order_id"] ?></td>
-                    <td><?= $row["user_id"] ?></td>
-                    <td><?= $row["order_address"] ?></td>
-                    <td><?= $row["total_amount"] ?></td>
-                    <td><?= $row["order_status"] ?></td>
-                    <td><?= $row["order_create_time"] ?></td>
-                    <td><?= $row["remark"] ?></td>
-                    <td><?= $row["payment_method_id"] ?></td>
-                    <td><?= $row["coupon_id"] ?></td>
-                    <td><a class="btn btn-primary text-white"
-                            href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
-                    </td>
-                    <td><a class="btn btn-dark text-white"
-                            href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td>
-                    <td><a class="btn btn-danger text-white"
-                            href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <input class="form-check-input mt-3" type="checkbox" value="" name="check[]" id="check">
+                        </td>
+                        <td><?= $row["order_id"] ?></td>
+                        <td><?= $row["user_id"] ?></td>
+                        <td><?= $row["order_address"] ?></td>
+                        <td><?= $row["total_amount"] ?></td>
+                        <td><?= $row["order_status"] ?></td>
+                        <td><?= $row["order_create_time"] ?></td>
+                        <td><?= $row["remark"] ?></td>
+                        <td><?= $row["payment_method_id"] ?></td>
+                        <td><?= $row["coupon_id"] ?></td>
+                        <td><a class="btn btn-primary text-white" href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
+                        </td>
+                        <!-- <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td> -->
+                        <td><a class="btn btn-danger text-white" href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
 
             </tbody>
@@ -273,8 +246,7 @@ $product_count = $result->num_rows;
                 </li>
 
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark"
-                        href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_order_list.php?p=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
 
 
@@ -288,11 +260,11 @@ $product_count = $result->num_rows;
     </div>
 
     <script type="text/javascript">
-    function usel() {
-        //變數checkItem為checkbox的集合
-        var checkItem = document.getElementsByName("check[]");
-        for (var i = 0; i < checkItem.length; i++) {
-            checkItem[i].checked = !checkItem[i].checked;
+        function usel() {
+            //變數checkItem為checkbox的集合
+            var checkItem = document.getElementsByName("check[]");
+            for (var i = 0; i < checkItem.length; i++) {
+                checkItem[i].checked = !checkItem[i].checked;
+            }
         }
-    }
     </script>

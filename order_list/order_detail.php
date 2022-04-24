@@ -32,7 +32,7 @@ AND `order_list`.`coupon_id`=`coupons`.`id` ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-$sql_product = "SELECT `product`.`product_name`,`product`.`product_images`,`product`.`product_price` ,`product_category_name`
+$sql_product = "SELECT `product`.`product_name`,`product_order`.`order_count`,`product`.`product_images`,`product`.`product_price` ,`product_category_name`
 FROM product_order,product,order_list ,`product_category`
 WHERE  `order_list`.`order_id`=`product_order`.`order_id` 
 AND `product_order`.`product_id`=`product`.`product_id` 
@@ -58,8 +58,8 @@ if ($row["order_status"] == 1) {
 }
 
 ?>
-<div class="d-flex align-items-center vh-100">
-    <div class="container">
+<div class="container d-flex align-items-center">
+    <div class="">
         <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
         <div class="card shadow-sm bg-light p-4 mb-5 pb-0">
             <div class="badge bg-dark d-flex flex-nowrap align-items-center py-0">
@@ -70,7 +70,7 @@ if ($row["order_status"] == 1) {
                 </p>
             </div>
             <div class="row">
-                <ul class="p-3 pb-0 col-6">
+                <ul class="p-3 pb-0">
                     <li class="card shadow-sm px-3 pt-2 my-3">
                         <div class="title border-bottom fw-bold">
                             <p class="mb-0">使用者姓名</p>
@@ -90,17 +90,19 @@ if ($row["order_status"] == 1) {
                         <p class="mt-3 text-center"><?= $row["coupon_content"] ?></p>
                     </li>
                 </ul>
-                <ul class="p-3 pb-0 col-6">
+                <ul class="p-3 pb-0 col-12">
                     <li class="card shadow-sm px-3 pt-2 my-3">
                         <div class="title border-bottom fw-bold">
                             <p class="mb-0">訂單商品</p>
                         </div>
                         <?php foreach ($rows as $row_product) : ?>
-                            <div class="row align-items-center justify-content-evenly mt-4 ms-3">
-                                <img class="w-25 col-12 col-lg-3" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
-                                <p class="col-12 col-xl-3"><?= $row_product["product_name"] ?></p>
-                                <p class="col-12 col-xl-3"><?= $row_product["product_category_name"] ?></p>
-                                <p class="col-12 col-xl-3">$<?= $row_product["product_price"] ?></p>
+                            <div class="row align-items-center justify-content-around mt-4 mx-auto p-4 text-center">
+                                <img class="w-25 col-12 col-lg-2" src="../product/goral_bike_pic/<?= $row_product["product_images"] ?>" alt="">
+                                <p class="col-12 col-xl-2"><?= $row_product["product_name"] ?></p>
+                                <p class="col-12 col-xl-2"><?= $row_product["product_category_name"] ?></p>
+                                <p class="col-12 col-xl-2">$<?= $row_product["product_price"] ?></p>
+                                <p class="col-12 col-xl-2">數量：<?= $row_product["order_count"] ?></p>
+                                <a class="btn btn-danger col-1">刪除</a>
                             </div>
                             <hr>
                         <?php endforeach; ?>
@@ -110,7 +112,8 @@ if ($row["order_status"] == 1) {
                         </span>
                     </li>
                 </ul>
-                <div class=" d-flex justify-content-center">
+                <div class="row justify-content-end gap-3">
+                    <a class="btn btn-dark text-white w-25 mb-3 " href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a>
                     <a href="goral_biker_order_list.php" class="btn btn-secondary w-25 mb-3" aria-current="page">
                         返回訂單列表
                     </a>
