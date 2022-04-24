@@ -78,27 +78,30 @@ $conn->close();
   </head>
   <body>
       <div class="container">
-      <a href="goral_biker_payment_method.php" class="btn btn-secondary my-3">Back to payment list</a>
-          <div class="row col-11 justify-content-between align-items-between">
-            <table class="table-bordered">
-              <tr>
+        <a href="goral_biker_payment_method.php" class="btn btn-secondary my-3">Back to payment list</a>
+        <div>
+          <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
                 <td>Coupon id</td>
                 <td>Payment method name</td>
                 <td>Restore coupon</td>
                 <td>Delete</td>
               </tr>
+            </thead>
+            <tbody>
               <?php foreach($rows as $row) : 
-            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["payment_method_name"].'</td><td>'?>
-
-          <a href="../payment_method/payment_method_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore payment method</a></td><td>
-          <a href="../payment_method/payment_method_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td></tr>
-          <?php endforeach;?>
+                echo '<tr class="table-light"><td>' .$row["id"]. '</td><td>'.$row["payment_method_name"].'</td><td>'?>
+                <a href="../payment_method/payment_method_restore.php?id=<?=$row["id"]?>" class="btn btn-info text-white">Restore payment method</a></td><td>
+                <a href="../payment_method/payment_method_delete.php?id=<?=$row["id"]?>" class="btn btn-danger">Delete</a></td></tr>
+              <?php endforeach;?>
+            </tbody>
         </table>
         </div>
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item ">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
+                <a class="page-link text-dark" href="goral_biker_payment_method_restore.php?p=<?php if($p > 1){echo $p-1;}else{echo $p;} ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -115,7 +118,7 @@ $conn->close();
 
 
             <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
+                <a class="page-link text-dark" href="goral_biker_payment_method_restore.php?p=<?php if($p < $i-1){echo $p+1;}else{echo $p;} ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

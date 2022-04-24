@@ -86,8 +86,9 @@ $conn->close();
     <a href="goral_biker_coupons_restore.php" class="btn btn-dark my-3">Restore hidden coupons</a>
     <a href="goral_biker_coupons_create.php" class="btn btn-success">Create coupons</a>
     <div>
-            <table class="table-bordered w-100">
-              <tr>
+      <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
                 <td>Coupon id</td>
                 <td>Coupon name</td>
                 <td>Coupon code</td>
@@ -97,19 +98,22 @@ $conn->close();
                 <td>Edit coupon</td>
                 <td>Hide</td>
               </tr>
+              </thead>
+              <tbody>
               <?php foreach($rows as $row) : 
-            echo '<tr><td>' .$row["id"]. '</td><td>'.$row["coupon_name"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_discount"].'</td><td>'?>
+                echo '<tr class="table-light"><td>' .$row["id"]. '</td><td>'.$row["coupon_name"]. '</td><td>'.$row["coupon_code"]. '</td><td>'.$row["coupon_content"]. '</td><td>'.$row["coupon_expiry_date"]. '</td><td>'.$row["coupon_discount"].'</td><td>'?>
 
-          <a href="goral_biker_coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>&discount=<?= $row["coupon_discount"]?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td>
+                <a href="goral_biker_coupons_edit_get.php?id=<?= $row["id"] ?>&name=<?= $row["coupon_name"] ?>&code=<?= $row["coupon_code"] ?>&content=<?= $row["coupon_content"] ?>&date=<?= $row["coupon_expiry_date"] ?>&discount=<?= $row["coupon_discount"]?>" class="btn btn-info text-white m-auto">Edit coupon</a></td><td>
 
-          <a href="../coupons/coupons_hide.php?id=<?= $row["id"] ?>" class="btn btn-danger m-auto">Hide coupon</a></td></tr>
-          <?php endforeach;?>
+                <a href="../coupons/coupons_hide.php?id=<?= $row["id"] ?>" class="btn btn-danger m-auto">Hide coupon</a></td></tr>
+              <?php endforeach;?>
+          </tbody>
         </table>
         </div>
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item ">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
+                <a class="page-link text-dark" href="goral_biker_coupons.php?p=<?php if($p > 1){echo $p-1;}else{echo $p;} ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -126,7 +130,7 @@ $conn->close();
 
 
             <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
+                <a class="page-link text-dark" href="goral_biker_coupons.php?p=<?php if($p < $i-1){echo $p+1;}else{echo $p;} ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
