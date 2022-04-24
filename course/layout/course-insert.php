@@ -40,6 +40,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
+    
     <div class="container">
         <div class="row justify-content-center">
             <div>
