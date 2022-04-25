@@ -19,7 +19,7 @@
           <input type="text" name="code"  class="form-control my-2" placeholder="Enter coupon code">
           <input type="text" name="content" class="form-control my-2" placeholder="Enter coupon content">
           <input type="date" name="date" class="form-control my-2" placeholder="Enter coupon expiry date">
-          <input type="number" name="discount" class="form-control my-2" placeholder="Enter coupon discount">
+          <input type="number" name="discount" class="form-control my-2" placeholder="Enter coupon discount" min="0">
 
           <button type="submit" class="btn btn-success mt-2 my-2 text-white">Create Coupon</button>
           <button type="reset" class="btn btn-warning mt-2 my-2">Reset</button>
