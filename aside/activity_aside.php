@@ -9,10 +9,8 @@ $file = basename($path);
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-
-
         <li class="nav-item">
-            <a href="#" class="nav-link fst-6 text-center text-wrap text-white" aria-current="page">全部活動</a>
+            <a href="../goral_bike_layout/goral_biker_activity-list.php" class="nav-link fst-6 text-center text-wrap text-white" aria-current="page">全部活動</a>
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link  fst-6 text-center text-wrap  text-white" aria-current="page">活動地區</a>

@@ -1,0 +1,48 @@
+header .form-control {
+  background: #495057;
+  border: none;
+}
+
+.dashboard-name {
+  text-decoration: none;
+  width: 260px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.dashboard-aside {
+  top: 0;
+  width: 260px;
+  background: #f8f9fa;
+  height: 100vh;
+  padding-top: 60px;
+  overflow: auto;
+}
+
+.dashboard-aside nav li.active a {
+  color: #000;
+}
+
+.dashboard-aside nav li.active a:hover {
+  color: #000;
+}
+
+.dashboard-aside nav li a {
+  color: #6c757d;
+  text-decoration: none;
+  display: block;
+  padding: 8px 14px;
+}
+
+.dashboard-aside nav li a:hover {
+  color: #343a40;
+}
+
+.dashboard-aside nav li a i {
+  margin-right: 7px;
+}
+
+.dashboard-main {
+  margin: 40px 0 0 260px;
+}
+/*# sourceMappingURL=admin.css.map */
