@@ -43,7 +43,7 @@ if (!isset($_GET["per_page"])) {
 }
 
 if (!isset($_GET["search"])) {
-    $search="";
+    $search = "";
     $path_query = "goral_biker_order_list.php?";
 } else {
     $search = $_GET["search"];
@@ -151,15 +151,14 @@ $product_count = $result->num_rows;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
-    .object-cover {
-        width: 24px;
-        height: 24px;
-        object-fit: cover;
-    }
+        .object-cover {
+            width: 24px;
+            height: 24px;
+            object-fit: cover;
+        }
     </style>
 
 </head>
@@ -173,25 +172,21 @@ $product_count = $result->num_rows;
             第<?= $p ?>頁,共<?= $total ?>筆,共<?= $page_count ?>頁
         </div>
 
-        <select class="form-select w-25" aria-label="Default select example"
-            onchange="location.href=this.options[this.selectedIndex].value;">
+        <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
             <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-            <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>"
-                <?php if ($type == $i) echo "selected" ?>>
-                <?= $a[$i] ?></option>
+                <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>>
+                    <?= $a[$i] ?></option>
             <?php endfor; ?>
 
         </select>
 
-        <select class="form-select w-25" aria-label="Default select example"
-            onchange="location.href=this.options[this.selectedIndex].value;">
+        <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
 
             <?php for ($i = 1; $i <= 4; $i++) : ?>
 
-            <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>"
-                <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
+                <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
 
             <?php endfor; ?>
 
@@ -200,8 +195,7 @@ $product_count = $result->num_rows;
         <div class="py-2">
 
             <p class="text-end">
-                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     篩選
                 </button>
             </p>
@@ -220,8 +214,7 @@ $product_count = $result->num_rows;
                             <h5 class="fw-bold mt-3">名稱篩選</h5>
 
                             <div class="col my-2">
-                                <input type="text" class="form-control" value="<?=$search?>" name="search" id="search"
-                                    placeholder="search" aria-label="search">
+                                <input type="text" class="form-control" value="<?= $search ?>" name="search" id="search" placeholder="search" aria-label="search">
                             </div>
                             <p></p>
                             <div class="col-auto ms-auto mt-1">
@@ -271,31 +264,29 @@ $product_count = $result->num_rows;
 
                 <?php
                 foreach ($rows as $row) : ?>
-                <?php
-                if ($row["order_status"] == 1) {
-                    $statusName = "check.png";
-                } else {
-                    $statusName = "remove.png";
-                }
-                ?>
-                <tr>
+                    <?php
+                    if ($row["order_status"] == 1) {
+                        $statusName = "check.png";
+                    } else {
+                        $statusName = "remove.png";
+                    }
+                    ?>
+                    <tr>
 
-                    <td><?= $row["order_id"] ?></td>
-                    <td><?= $row["name"] ?></td>
-                    <td><img class="object-cover" src="../order_list/icon/<?=  $statusName ?>" alt=""></td>
-                    <td><?= $row["total_amount"] ?></td>
-                    <td><?= $row["order_create_time"] ?></td>
-                    <td><?= $row["remark"] ?></td>
-                    <td><?= $row["payment_method_name"] ?></td>
-                    <td><?= $row["coupon_name"] ?></td>
-                    <td><a class="btn btn-primary text-white"
-                            href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
-                    </td>
-                    <!-- <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td> -->
-                    <td class="delete-table"><a class="btn btn-danger text-white"
-                            href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
-                    </td>
-                </tr>
+                        <td><?= $row["order_id"] ?></td>
+                        <td><?= $row["name"] ?></td>
+                        <td><img class="object-cover" src="../order_list/icon/<?= $statusName ?>" alt=""></td>
+                        <td><?= $row["total_amount"] ?></td>
+                        <td><?= $row["order_create_time"] ?></td>
+                        <td><?= $row["remark"] ?></td>
+                        <td><?= $row["payment_method_name"] ?></td>
+                        <td><?= $row["coupon_name"] ?></td>
+                        <td><a class="btn btn-primary text-white" href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
+                        </td>
+                        <!-- <td><a class="btn btn-dark text-white" href="goral_biker_order_list_edit.php?order_id=<?= $row["order_id"] ?>">修改</a></td> -->
+                        <td class="delete-table"><a class="btn btn-danger text-white" href="../product/goral_bike_php/order_list_Delete.php?order_id=<?= $row["order_id"] ?>">刪除</a>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
 
             </tbody>
@@ -311,10 +302,9 @@ $product_count = $result->num_rows;
 
 
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link "
-                        href="<?= $path_query ?>&p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?>"
-                        <?php if ($type == $i) echo "selected" ?>><?= $i ?></a>
-                </li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>">
+                        <a class="page-link " href="<?= $path_query ?>&p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>><?= $i ?></a>
+                    </li>
                 <?php endfor; ?>
 
 
@@ -323,11 +313,11 @@ $product_count = $result->num_rows;
     </div>
 
     <script type="text/javascript">
-    function usel() {
-        //變數checkItem為checkbox的集合
-        var checkItem = document.getElementsByName("check[]");
-        for (var i = 0; i < checkItem.length; i++) {
-            checkItem[i].checked = !checkItem[i].checked;
+        function usel() {
+            //變數checkItem為checkbox的集合
+            var checkItem = document.getElementsByName("check[]");
+            for (var i = 0; i < checkItem.length; i++) {
+                checkItem[i].checked = !checkItem[i].checked;
+            }
         }
-    }
     </script>
