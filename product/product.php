@@ -192,25 +192,56 @@ $conn->close();
                 <a class="btn btn-dark" data-bs-toggle="collapse" href="#insert" role="button" aria-expanded="false" aria-controls="insert">新增商品</a>
 
 
-                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+                <!-- 排序下拉式選單 -->
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- 排序方式選擇 -->
+                        <?php
+                        for ($i = 0; $i < count($a); $i++) {
+                            if ($i == $type) {
+                                echo $a[$i];
+                            }
+                        }
+                        ?>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
-                    <?php for ($i = 0; $i < count($a); $i++) : ?>
 
-                        <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>><?= $a[$i] ?></option>
+                        <?php for ($i = 0; $i < count($a); $i++) : ?>
+                            <li>
+                                <a type="" class="dropdown-item" href="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>"><?= $a[$i] ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
 
-                    <?php endfor; ?>
+                    </ul>
+                </div>
+                <!-- 排序下拉式選單end -->
+                <!-- 分頁下拉式選單 -->
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- 分頁選擇 -->
+                        <?php
+                        for ($i = 1; $i <= 4; $i++) {
+                            if ($i * 4 == $per_page) {
+                                echo "每頁" . ($i * 4) . "筆";
+                            }
+                        }
+                        ?>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
 
-                </select>
 
-                <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+                        <?php for ($i = 1; $i <= 4; $i++) : ?>
+                            <li>
+                                <a type="" class="dropdown-item" href="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>">每頁<?= $i * 4 ?>筆
+                                </a>
+                            </li>
+                        <?php endfor; ?>
 
-                    <?php for ($i = 1; $i <= 4; $i++) : ?>
-
-                        <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
-
-                    <?php endfor; ?>
-
-                </select>
+                    </ul>
+                </div>
+                <!-- 分頁下拉式選單end -->
 
 
 
@@ -298,6 +329,8 @@ $conn->close();
 
                             <input type="hidden" name="p" id="p" value="<?= $p ?>">
                             <input type="hidden" name="type" id="type" value="<?= $type ?>">
+                            <input type="hidden" name="per_page" id="per_page" value="<?= $per_page ?>">
+
 
                             <div class="row mt-2">
                                 <div class="col">

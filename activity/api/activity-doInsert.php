@@ -25,7 +25,7 @@ if(empty($category)||empty($fileName)||empty($name)||empty($date)||empty($locati
     exit;
 }
 
-if($date_start < $date_start ){
+if($dateEnd < $date_start ){
     echo "<script>alert('錯誤：報名開始日期不可大於報名結束日期')</script>";
     echo "<script>history.go(-1)</script> ";
     exit;
