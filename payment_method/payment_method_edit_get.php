@@ -1,11 +1,11 @@
 <?php
 //Make a sorting thing
 require_once("../db-connect.php"); 
-if((!isset($_GET["name"])) || (!isset($_GET["id"]))){
-    echo "this ain't it chief";
+if((!isset($_GET["payment_method_name"])) || (!isset($_GET["id"]))){
+    echo "error";
 }
 $id = $_GET["id"];
-$name = $_GET["name"];
+$name = $_GET["payment_method_name"];
 //prepare the statement
 $sql="SELECT * FROM payment_method WHERE valid=1";
 $select = mysqli_query($conn, "SELECT * FROM payment_method WHERE id = '".$_GET["id"]."'");

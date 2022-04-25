@@ -5,11 +5,11 @@ if(!isset($_GET["id"])){
     echo "this ain't it chief";
 }
 $id = $_GET["id"];
-$name = $_GET["name"];
-$code = $_GET["code"];
-$content = $_GET["content"];
-$date = $_GET["date"];
-$discount = $_GET["discount"];
+$name = $_GET["coupon_name"];
+$code = $_GET["coupon_code"];
+$content = $_GET["coupon_content"];
+$date = $_GET["coupon_expiry_date"];
+$discount = $_GET["coupon_discount"];
 //prepare the statement
 $sql="SELECT id, coupon_name, coupon_code, coupon_content, coupon_expiry_date FROM coupons WHERE valid=1";
 $select = mysqli_query($conn, "SELECT * FROM coupons WHERE id = '".$_GET["id"]."'");
