@@ -278,7 +278,9 @@ $product_count = $result->num_rows;
                         <td><img class="object-cover" src="../order_list/icon/<?= $statusName ?>" alt=""></td>
                         <td><?= $row["total_amount"] ?></td>
                         <td><?= $row["order_create_time"] ?></td>
-                        <td><?= $row["remark"] ?></td>
+                        <td>
+                            <?= $row["remark"] ?>
+                        </td>
                         <td><?= $row["payment_method_name"] ?></td>
                         <td><?= $row["coupon_name"] ?></td>
                         <td><a class="btn btn-primary text-white" href="goral_biker_order_list_detail.php?order_id=<?= $row["order_id"] ?>">詳細資訊</a>
