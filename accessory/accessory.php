@@ -186,7 +186,7 @@ $conn->close();
                     <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- 分頁選擇 -->
                         <?php
-                        for ($i = 0; $i < count($a); $i++) {
+                        for ($i = 1; $i < 4 ; $i++) {
                             if ($i * 4 == $per_page) {
                                 echo "每頁" . ($i * 4) . "筆";
                             }
@@ -203,7 +203,7 @@ $conn->close();
                                 </li>
                             <?php endfor; ?>
                         <?php else : ?>
-                            <?php for ($i = 0; $i < count($a); $i++) : ?>
+                            <?php for ($i = 1; $i < 4; $i++) : ?>
                                 <li>
                                     <a type="" class="dropdown-item <?php if ($per_page == $i * 5) echo "active" ?>" href="../goral_bike_layout/goral_biker_accessory.php?p=<?= $p ?>&type=<?= $type ?>&accessory_category=<?= $accessory_category ?>&per_page=<?= $i * 4 ?><?= $searchQuery ?>">每頁<?= $i * 4 ?>筆
                                     </a>
@@ -328,6 +328,7 @@ $conn->close();
         </div>
     </div>
     <!-- 篩選end -->
+    <!-- 主列表 -->
     <div class="row">
         <h2 class="h2 mt-5">配件列表</h2>
         <p class="text-end">今日日期：<?= $today ?></p>
@@ -365,6 +366,8 @@ $conn->close();
             </div>
         <?php endif; ?>
     </div>
+    <!-- 主列表end -->
+    <!-- 分頁 -->
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
             <?php if (strpos($file, "accessory_category") === false) : ?>
@@ -383,4 +386,5 @@ $conn->close();
     <div class="py-2 text-center">
         第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
     </div>
+    <!-- 分頁end -->
 </div>
