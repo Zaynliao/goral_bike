@@ -34,17 +34,19 @@
 
 <body>
     <div class="container-fluid p-0 m-0">
-    <!-- ================= header ================= -->
+        <!-- ================= header ================= -->
         <header class="header">
             <?php require("goral_biker_nav.php") ?>
         </header>
-
+        
         <section class="row p-0 m-0 vh-100">
     <!-- ================= aside ================= -->
             <aside class="aside col-2 p-0 ">
+            <!-- ================= aside ================= -->
+            <aside class="aside col-2 p-0">
                 <?php require("../aside/activity_aside.php") ?>
             </aside>
-    <!-- ================= article ================= -->
+            <!-- ================= article ================= -->
             <article class="article col-10 ">
                 <?php
                 require("../activity/layout/activity-list.php");
@@ -56,4 +58,5 @@
     <!-- Bootstrap JavaScript Libraries -->
     <?php require_once("../product/goral_bike_php/js.php") ?>
 </body>
+
 </html>

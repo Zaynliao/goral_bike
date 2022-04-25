@@ -5,11 +5,11 @@ if(!isset($_GET["id"])){
     echo "this ain't it chief";
 }
 $id = $_GET["id"];
-$name = $_GET["name"];
-$code = $_GET["code"];
-$content = $_GET["content"];
-$date = $_GET["date"];
-$discount = $_GET["discount"];
+$name = $_GET["coupon_name"];
+$code = $_GET["coupon_code"];
+$content = $_GET["coupon_content"];
+$date = $_GET["coupon_expiry_date"];
+$discount = $_GET["coupon_discount"];
 //prepare the statement
 $sql="SELECT id, coupon_name, coupon_code, coupon_content, coupon_expiry_date FROM coupons WHERE valid=1";
 $select = mysqli_query($conn, "SELECT * FROM coupons WHERE id = '".$_GET["id"]."'");
@@ -39,17 +39,22 @@ $conn -> close();
 
           <div>
           <input type="hidden" name="id" id="id" class="form-control my-2" value="<?=$id?>">
-            <table class="table-bordered w-100">
-              <tr>
-                <td>Coupon id</td>
-                <td>Coupon name</td>
-                <td>Coupon code</td>
-                <td>Coupon content</td>
-                <td>Coupon expiry date</td>
-                <td>Coupon discount</td>
-                <td>Edit coupon</td>
-                <td>Reset</td>
-              </tr>
+          <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
+                  <td>Coupon id</td>
+                  <td>Coupon name</td>
+                  <td>Coupon code</td>
+                  <td>Coupon content</td>
+                  <td>Coupon expiry date</td>
+                  <td>Coupon discount</td>
+                  <td>Edit coupon</td>
+                  <td>Reset</td>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
               <td>
                 <?=$id?>
               </td>
@@ -66,7 +71,7 @@ $conn -> close();
               <input type="date" name="date" id="date" class="form-control mt-2" value="<?=$date?>">
               </td>
               <td>
-              <input type="number" name="discount" id="discount" class="form-control mt-2" value="<?=$discount?>">
+              <input type="number" name="discount" id="discount" class="form-control mt-2" min="0" max="100" value="<?=$discount?>">
               </td>
 
               <input type="hidden" name="name2" id="name" class="form-control my-2" value="<?=$name?>">
