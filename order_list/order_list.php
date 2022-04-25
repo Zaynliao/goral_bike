@@ -251,7 +251,7 @@ $product_count = $result->num_rows;
                     <td>狀態</td>
                     <td>總價</td>
                     <td>創建時間</td>
-                    <td>備註</td>
+                    <td width="480px">備註</td>
                     <td>付款方式</td>
                     <td>優惠卷</td>
                     <td>詳細資訊</td>
@@ -278,7 +278,7 @@ $product_count = $result->num_rows;
                         <td><img class="object-cover" src="../order_list/icon/<?= $statusName ?>" alt=""></td>
                         <td><?= $row["total_amount"] ?></td>
                         <td><?= $row["order_create_time"] ?></td>
-                        <td>
+                        <td width="480px">
                             <?= $row["remark"] ?>
                         </td>
                         <td><?= $row["payment_method_name"] ?></td>
