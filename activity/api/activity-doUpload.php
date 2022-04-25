@@ -33,7 +33,7 @@ if(empty($fileName)){
 }
 
 
-if($dateEnd < $date_start ){
+if($dateEnd < $dateStart ){
     echo "<script>alert('錯誤：報名開始日期不可大於報名結束日期')</script>";
     echo "<script>history.go(-1)</script> ";
     exit;
