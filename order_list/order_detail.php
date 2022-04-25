@@ -73,6 +73,7 @@ if ($row["order_status"] == 1) {
 }
 
 ?>
+
 <div class="container d-flex align-items-center">
     <div class="">
         <p class="badge mb-0 mt-4 text-dark d-flex justify-content-end">訂單創建時間 : <?= $row["order_create_time"] ?></p>
@@ -128,9 +129,9 @@ if ($row["order_status"] == 1) {
                             <hr>
                         <?php endforeach; ?>
                         <h4 class="h4 text-end py-4 mx-3">總金額：＄<?= $row_total["total"] ?></h4>
-                        <input type="hidden" name="total" id="total" value="<?= $row_total["total"] ?>">
-                        <h4 class="h4 text-success text-end py-4 mx-3">優惠卷折扣 總金額：＄<?= $row_total["total"] * $row["coupon_discount"] / 100 ?> </h4>
-                        <input type="hidden" name="total" id="total" value="<?= $row_total["total"] * $row["coupon_discount"] / 100 ?>">
+
+                        <h4 class="h4 text-success text-end py-4 mx-3">優惠卷折扣 總金額：＄<?= $row_total["total"] * $row["coupon_discount"] / 100 ?></h4>
+                        <input type="hidden" name="total_final" id="total_final" value="<?= $row_total["total"] * $row["coupon_discount"] / 100 ?>">
                     </li>
                 </ul>
                 <div class="row justify-content-end gap-3">

@@ -23,12 +23,12 @@ $coupon_id = $_POST["coupon_id"];
 
 $remark = $_POST["remark"];
 
-$total_amount = $_POST["total"];
+$total_amount = $_POST["total_final"];
 
 
 // $order_count = $_POST["order_count"];
 
-
+// echo $total_amount;
 
 
 // echo $order_address . $order_id . $order_status . $payment_method_id . $coupon_id . $remark.$total_amount;
