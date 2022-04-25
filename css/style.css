@@ -1,0 +1,17 @@
+.page-item.active .page-link {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.page-link {
+  color: #6c757d !important;
+}
+
+.page-link:hover {
+  color: #000000 !important;
+}
+
+.btn-dark:hover {
+  background-color: #000000 !important;
+}
+/*# sourceMappingURL=style.css.map */

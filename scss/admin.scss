@@ -1,0 +1,61 @@
+@import "functions";
+@import "variables";
+@import "mixins";
+@import "utilities";
+
+$aside-width:260px;
+
+// body{
+//     height: 300vh;
+// }
+
+
+header{
+    .form-control{
+        background: $gray-700;
+        border:none;
+    }
+}
+
+.dashboard-name{
+    text-decoration: none;
+    width: $aside-width;
+    flex-shrink: 0;
+}
+
+.dashboard-aside {
+    top:0;
+    width: $aside-width;
+    background: $gray-100;
+    height: 100vh;
+    padding-top: 60px;
+    overflow: auto;
+    nav {
+        li {
+            &.active{
+                a{
+                    color: $primary;
+                    &:hover{
+                        color: $primary;
+                    }
+                }
+            }
+            a {
+                color: $gray-600;
+                text-decoration: none;
+                display: block;
+                padding: 8px 14px;
+                &:hover{
+                    color: $gray-800;
+                }
+                i{
+                    margin-right: 7px;
+                }
+            }
+        }
+    }
+}
+
+.dashboard-main{
+   margin:40px 0 0 $aside-width;
+}

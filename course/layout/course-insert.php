@@ -108,7 +108,7 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                     <button id="send" class="btn btn-dark text-white mb-2 fw-bold" type="submit">送出</button>
                     <div class="text-end pb-4">
                     <a class="btn btn-dark text-white position-relative fw-bold"
-                        href="../goral_bike_layout/goral_biker_course-list.php">返回課程管理</a>
+                        href="../goral_bike_layout/goral_biker_course-list.php?valid=1&per_page=6">返回課程管理</a>
                 </div>
                 </form>
             </div>

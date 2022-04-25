@@ -101,11 +101,11 @@ if (!isset($_GET["cate"])) {
     // 詳見   <!-- 課程類別按鈕(動態新增) -->
     $cate = 0;
     $cates = "";
-    $cateURL ="";
+    $cateURL = "";
 } else {
     $cate = $_GET["cate"];
     $cates = "AND classes.course_category_id=$cate";
-    $cateURL ="&cate=$cate";
+    $cateURL = "&cate=$cate";
 }
 
 // ==========判斷排序方式==========
@@ -180,39 +180,22 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-    .product-img {
-        width: 100%;
-    }
 
-    .object-cover {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .page-item.active .page-link {
-        background-color: #000000;
-        border-color: #000000;
-    }
-
-    .page-link {
-        color: #6c757d;
-    }
-
-    .page-link:hover {
-        color: #000000;
-    }
-
-    .btn-dark:hover {
-        background-color: #000000;
-    }
-    </style>
 </head>
+<style>
+    .product-img {
+  width: 100%;
+}
 
+.object-cover {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+
+</style>
 <body>
     <div class="container mb-5 mt-4">
         <!-- header -->
@@ -382,7 +365,7 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                                         <input type="hidden" name="cate" value="<?= $cate ?>"
                                             <?php if(!$cate) echo "disabled"?>>
                                         <input type="hidden" name="valid" value="<?= $valid ?>">
-                                        <input type="hidden" name="per_page" value="<?= $_GET["per_page"] ?>">
+                                        <input type="hidden" name="per_page" value="<?= $per_page ?>">
                                     </div>
                                 </div>
                             </div>
@@ -657,7 +640,7 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
         </div>
     </div>
 
-    <?php require("../course/api/js.php") ?>
+
 
             <script>
             // 抓網頁上的 btns
