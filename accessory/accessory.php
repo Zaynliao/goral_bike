@@ -139,9 +139,9 @@ $conn->close();
         <div class="py-2 text-end ">
             <div class="py-2 text-end">
 
-                <a class="btn btn-outline-dark" href="goral_biker_off_accessory.php">全部商品</a>
+                <a class="btn btn-outline-dark" href="goral_biker_accessory.php">全部商品</a>
                 <?php foreach ($accessory_category_rows as $p_c_r) : ?>
-                    <a class=" btn btn-outline-dark" href="goral_biker_off_accessory.php?accessory_category=<?= $p_c_r["id"] ?>&type=<?= $type ?>&per_page=<?= $per_page ?>"><?= $p_c_r["accessory_category_name"] ?></a>
+                    <a class=" btn btn-outline-dark" href="goral_biker_accessory.php?accessory_category=<?= $p_c_r["id"] ?>&type=<?= $type ?>&per_page=<?= $per_page ?>"><?= $p_c_r["accessory_category_name"] ?></a>
                 <?php endforeach; ?>
 
             </div>
