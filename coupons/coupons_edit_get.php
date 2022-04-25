@@ -71,7 +71,7 @@ $conn -> close();
               <input type="date" name="date" id="date" class="form-control mt-2" value="<?=$date?>">
               </td>
               <td>
-              <input type="number" name="discount" id="discount" class="form-control mt-2" value="<?=$discount?>">
+              <input type="number" name="discount" id="discount" class="form-control mt-2" min="0" max="100" value="<?=$discount?>">
               </td>
 
               <input type="hidden" name="name2" id="name" class="form-control my-2" value="<?=$name?>">
