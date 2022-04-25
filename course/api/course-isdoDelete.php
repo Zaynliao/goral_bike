@@ -3,7 +3,7 @@ require_once("../../db-connect.php");
 
 $id=$_POST["id"];
 
-$sql="DELETE classes WHERE course_id='$id'";
+$sql="DELETE FROM classes WHERE course_id='$id'";
 
 if ($conn->query($sql) === TRUE) {
 

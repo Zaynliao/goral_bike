@@ -15,7 +15,7 @@ $file = basename($path);
             <!-- 網址參數預設 -->
             <!-- 上架商品 valid=1 -->
             <!-- 顯示 6 筆資料 per_page=6 -->
-            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1&per_page=6" class="nav-link  fst-6 text-center text-wrap text-white
+            <a href="../goral_bike_layout/goral_biker_course-list.php?valid=1" class="nav-link  fst-6 text-center text-wrap text-white
             <?php
             // strpos — 查找字符串首次出现的位置
             // 如果是上架商品且無類別則為所有課程

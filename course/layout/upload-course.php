@@ -117,17 +117,6 @@ $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
                             value="<?=$rows["course_end_time"]?>">
                     </div>
                     <div class="mb-2">
-                        <label for="">課程報名狀態</label>
-                        <select class="form-control" name="statu" id="statu">
-                            <?php foreach($rowsStatu as $row): ?>
-                            <option value="<?=$row["course_status_id"]?>"
-                                <?php if($row["course_status_id"]==$idStatu):  echo "selected"?> <?php else:?>
-                                <?php endif;?>>
-                                <?=$row["course_status_name"]?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="mb-2">
                         <label for="">課程費用</label>
                         <input class="form-control" type="number" name="price" id="price"
                             value="<?=$rows["course_price"]?>">

@@ -18,6 +18,8 @@ $valid=$_POST["valid"];
 
 $dateNew=strtotime($date);
 $dateEnd=strtotime($end_time);
+$dateStart=strtotime($start_time);
+$today=time();
 
 if(empty($name)||empty($date)||empty($enrollment)||empty($start_time)||empty($end_time)||empty($price)||$inventory==null||empty($content)){
     echo "<script>alert('有欄位未填寫')</script>";
@@ -37,6 +39,15 @@ if($end_time < $start_time|| $dateNew < $dateEnd){
     }else{
         $imageIs="course_pictures='$fileName',";
     }
+
+    if($dateStart > $today){
+        $statu=1;
+    }elseif($dateEnd < $today &&  $today < $dateStart){
+        $statu=2;
+    }else{
+        $statu=3;
+    }
+    
 
     $sql="UPDATE classes SET 
     course_category_id='$category',

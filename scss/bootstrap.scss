@@ -5,7 +5,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
-
 // scss-docs-start import-stack
 // Configuration
 @import "functions";
@@ -45,8 +44,10 @@
 @import "spinners";
 @import "offcanvas";
 @import "placeholders";
+
 // Helpers
 @import "helpers";
+
 // Utilities
 @import "utilities/api";
 // scss-docs-end import-stack
