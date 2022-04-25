@@ -39,17 +39,22 @@ $conn -> close();
 
           <div>
           <input type="hidden" name="id" id="id" class="form-control my-2" value="<?=$id?>">
-            <table class="table-bordered w-100">
-              <tr>
-                <td>Coupon id</td>
-                <td>Coupon name</td>
-                <td>Coupon code</td>
-                <td>Coupon content</td>
-                <td>Coupon expiry date</td>
-                <td>Coupon discount</td>
-                <td>Edit coupon</td>
-                <td>Reset</td>
-              </tr>
+          <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
+                  <td>Coupon id</td>
+                  <td>Coupon name</td>
+                  <td>Coupon code</td>
+                  <td>Coupon content</td>
+                  <td>Coupon expiry date</td>
+                  <td>Coupon discount</td>
+                  <td>Edit coupon</td>
+                  <td>Reset</td>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
               <td>
                 <?=$id?>
               </td>
