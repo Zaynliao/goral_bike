@@ -7,10 +7,11 @@
 
 // $path = $_SERVER["REQUEST_URI"];
 require_once("../db-connect.php");
-
 // $sql = "SELECT * FROM product_category";
 // $result = $conn->query($sql);
 // $rows = $result->fetch_all(MYSQLI_ASSOC);
+$path = $_SERVER["REQUEST_URI"];
+$file = basename($path);
 
 ?>
 
@@ -24,7 +25,7 @@ require_once("../db-connect.php");
 
         <li class="nav-item">
             <a href="goral_biker_accessory.php" class="nav-link  fst-6 text-center text-wrap text-white
-            <?php if (basename($_SERVER['PHP_SELF']) === "goral_biker_accessory.php" && strpos($file, "accessory_category") === false) echo "active" ?>
+            <?php if (strpos($file, "biker_accessory.php") !== false) echo "active" ?>
              " aria-current="page">
                 所有配件
             </a>
@@ -32,7 +33,7 @@ require_once("../db-connect.php");
 
         <li class="nav-item">
             <a href="goral_biker_off_accessory.php" class="nav-link text-white fst-6 text-center text-wrap
-            <?php if (basename($_SERVER['PHP_SELF']) === "goral_biker_off_accessory.php") echo "active" ?>
+            <?php if (strpos($file, "biker_off_accessory.php") !== false) echo "active" ?>
             ">
                 管理下架配件
             </a>
