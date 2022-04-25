@@ -91,7 +91,7 @@ $conn->close();
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <a href="goral_biker_coupons_restore.php" class="btn btn-dark my-3">Restore hidden coupons</a>
     <a href="goral_biker_coupons_create.php" class="btn btn-success">Create coupons</a>
     <div class="d-flex">

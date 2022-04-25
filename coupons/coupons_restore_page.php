@@ -79,7 +79,7 @@ $conn->close();
 
   </head>
   <body>
-      <div class="container">
+      <div class="container-fluid">
         <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary my-3">Back to coupon page</a>
         <div class="d-flex">
       <div class="w-50 m-0 p-0 d-block">
