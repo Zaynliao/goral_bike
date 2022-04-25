@@ -38,10 +38,8 @@
         <header class="header">
             <?php require("goral_biker_nav.php") ?>
         </header>
-        
+
         <section class="row p-0 m-0 vh-100">
-    <!-- ================= aside ================= -->
-            <aside class="aside col-2 p-0 ">
             <!-- ================= aside ================= -->
             <aside class="aside col-2 p-0">
                 <?php require("../aside/activity_aside.php") ?>
