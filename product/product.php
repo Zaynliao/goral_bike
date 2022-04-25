@@ -233,10 +233,14 @@ $conn->close();
                                     <input type="number" class="form-control" name="product_price" min=0 id="product_price" min=0 placeholder="請輸入商品價格">
                                 </div>
 
+
+
                                 <div class="col-8">
                                     <div class="mb-3">
                                         <label for="product_images" class="form-label">商品圖片</label>
                                         <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
+                                    </div>
+                                    <div class="img-thumbnail text-center"> <img src="../../goral_bike_First/course/icon/no-image.png" class=" img-fluid" id="img-view">
                                     </div>
                                 </div>
 
@@ -422,5 +426,31 @@ $conn->close();
         for (var i = 0; i < checkItem.length; i++) {
             checkItem[i].checked = !checkItem[i].checked;
         }
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $("#product_images").change(function() {
+
+        readURL(this);
+
+    });
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+
+                $("#img-view").attr('src', e.target.result);
+
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+
     }
 </script>
