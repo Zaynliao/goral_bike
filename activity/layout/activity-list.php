@@ -1,21 +1,55 @@
 <?php
 require_once("../db-connect.php");
 
-/* ================= 每頁幾筆 =================  */
+/* ================= 判斷每頁幾筆 =================  */
 if (!isset($_GET["p"])) {
     $p = 1;
 } else {
     $p = $_GET["p"];
 }
 
-/* ================= 上架狀態 =================  */
+/* ================= 判斷上架狀態 =================  */
 if (!isset($_GET["valid"])) {
     $valid = 1;
 } else {
     $valid = $_GET["valid"];
 }
 
-if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
+/* ================= 判斷活動排序 =================  */
+if (!isset($_GET["type"])) {
+    $type = 5;
+} else {
+    $type = $_GET["type"];
+}
+
+/* ================= 排序 =================  */
+switch ($type) {
+    case "0":
+        $order = "activity_fee ASC"; // 價錢 $-$$$
+        break;
+    case "1":
+        $order = "activity_fee DESC"; // 價錢 $$$-$
+        break;
+    case "2":
+        $order = "activity_date ASC"; // 活動日期 ▲
+        break;
+    case "3";
+        $order = "activity_date DESC"; //活動日期 ▼
+        break;
+    case "4";
+        $order = "id ASC"; //上架時間 新-舊
+        break;
+    case "5";
+        $order = "id DESC"; //上架時間 舊-新
+        break;
+    default:
+        $order = "id DESC"; //上架時間 舊-新
+}
+
+
+
+
+if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
     $activity_venue_id = "%";
     $activity_status_id = "%";
 
@@ -25,12 +59,13 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
     WHERE activity_valid='$valid'
     AND activity_venue_id LIKE '$activity_venue_id'
     AND activity_status_id LIKE '$activity_status_id'
+    ORDER BY $order
 
     ";
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-    
-    
+
+
     /* ================= 分頁 =================  */
     $total = $resultAct->num_rows;
     // echo $total;
@@ -38,31 +73,33 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
     $page_count = ceil($total / $per_page); //總頁數
     $start = ($p - 1) * $per_page;
     // echo $page_count;
-    
+
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_venue_id LIKE '$activity_venue_id'
     AND activity_status_id LIKE '$activity_status_id'
+    ORDER BY $order
+
 
     LIMIT $start,$per_page";
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-
-}elseif(isset($_GET["activity_venue_id"])){
+} elseif (isset($_GET["activity_venue_id"])) {
     $activity_venue_id = $_GET["activity_venue_id"];
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_venue_id LIKE '$activity_venue_id'
+    ORDER BY $order
 
     ";
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-    
-    
+
+
     /* ================= 分頁 =================  */
     $total = $resultAct->num_rows;
     // echo $total;
@@ -70,30 +107,30 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
     $page_count = ceil($total / $per_page); //總頁數
     $start = ($p - 1) * $per_page;
     // echo $page_count;
-    
+
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_venue_id LIKE '$activity_venue_id'
+    ORDER BY $order
 
     LIMIT $start,$per_page";
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-
-}elseif(isset($_GET["activity_status_id"])){
+} elseif (isset($_GET["activity_status_id"])) {
     $activity_status_id = $_GET["activity_status_id"];
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_status_id LIKE '$activity_status_id'
+    ORDER BY $order
 
     ";
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-    
-    
+
     /* ================= 分頁 =================  */
     $total = $resultAct->num_rows;
     // echo $total;
@@ -101,20 +138,18 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
     $page_count = ceil($total / $per_page); //總頁數
     $start = ($p - 1) * $per_page;
     // echo $page_count;
-    
+
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_status_id LIKE '$activity_status_id'
+    ORDER BY $order
 
     LIMIT $start,$per_page";
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
 }
-
-
-
 
 ?>
 
@@ -135,17 +170,20 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
 <body>
     <div class="container mt-5">
         <!-- ================= 活動時間篩選 ================= -->
-        <div class="d-flex justify-content-between">
-
+        <div class="d-flex justify-content-end">
             <!-- ================= 排序 ================= -->
             <div class="mt-2 d-flex">
+                <?php // 排序方式名稱陣列
+                $typeNames = ["價錢 $-$$$", "價錢 $$$-$", "活動日期 ▲", "活動日期 ▼", "上架時間 新-舊", "上架時間 舊-新"];?> 
                 <div>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>排列方式</option>
-                        <option value="1">價錢 $-$$$</option>
-                        <option value="2">價錢 $$$-$</option>
-                        <option value="1">活動日期 ▲</option>
-                        <option value="2">活動日期 ▼</option>
+                    <select class="form-select" aria-label="Default select example" 
+                    onchange="location.href=this.options[this.selectedIndex].value;">
+                    <?php for ($i = 0; $i <= 5; $i++): ?>
+
+                        <option <?php if ($type == $i )echo "selected"?> value="../goral_bike_layout/goral_biker_activity-list.php?valid=<?=$valid?>&type=<?=$i?>">
+                        <?=$typeNames[$i]?>
+                        </option>
+                    <?php endfor; ?>
                     </select>
                 </div>
                 <div>
@@ -195,16 +233,16 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
                     <div class="col-3 align-items-center d-flex ps-5">
                         <div class="d-flex ">
                             <a class="btn btn-outline-success mx-1" href="goral_biker_activity-upload.php?id=<?= $row["id"] ?>&status=<?= $row["activity_status_id"] ?>&venue=<?= $row["activity_venue_id"] ?>">編輯</a>
-                            <?php if($valid == 1) : ?>
+                            <?php if ($valid == 1) : ?>
                                 <a href="../activity/api/activity-doDelisting.php?id=<?= $row["id"] ?>" class="btn btn-outline-warning mx-1">
-                                下架
+                                    下架
                                 </a>
                             <?php else :  ?>
                                 <a href="../activity/api/activity-doListed.php?id=<?= $row["id"] ?>" class="btn btn-outline-warning mx-1">
-                                上架
+                                    上架
                                 </a>
                             <?php endif; ?>
-                                <a href="../activity/api/activity-doDelete.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger mx-1">刪除</a>
+                            <a href="../activity/api/activity-doDelete.php?id=<?= $row["id"] ?>" class="btn btn-outline-danger mx-1">刪除</a>
                         </div>
                     </div>
                 </div>
@@ -215,81 +253,94 @@ if(!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])){
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id?>" aria-label="Previous">
+                        <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <?php if($page_count == 1): ?>
-                        <li class="page-item">
-                            <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id?>">
+                    <?php if ($page_count == 1) : ?>
+                        <li class="page-item active">
+                            <a class="page-link " href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                 1
                             </a>
                         </li>
-                    <?php elseif($page_count == 2): ?>
-
-                        <li class="page-item">
-                            <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id?>">
-                                1
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id?>">
-                                2
-                            </a>
-                        </li>
-                    <?php else: ?>
+                    <?php elseif ($page_count == 2) : ?>
                         <?php if ($p == 1) : ?>
+                            <li class="page-item active">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
+                                    1
+                                </a>
+                            </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
+                                    2
+                                </a>
+                            </li>
+                        <?php else : ?>
+                            <li class="page-item">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
+                                    1
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
+                                    2
+                                </a>
+                            </li>
+
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <?php if ($p == 1) : ?>
+                            <li class="page-item active">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p + 1 ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 2 ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 2 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p + 2 ?>
                                 </a>
                             </li>
                         <?php elseif ($p + 1 <= $page_count) : ?>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p - 1 ?>
                                 </a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id?>">
+                            <li class="page-item active">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p + 1 ?>
                                 </a>
                             </li>
                         <?php elseif ($p == $page_count) : ?>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 2 ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 2 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p - 2 ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id?>">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p - 1 ?>
                                 </a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id?>">
+                            <li class="page-item active">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>">
                                     <?= $p ?>
                                 </a>
                             </li>
                         <?php endif; ?>
                     <?php endif; ?>
                     <li class="page-item">
-                        <a class="page-link" href="goral_biker_activity-list.php?p=<?= $page_count ?>&activity_venue_id=<?= $activity_venue_id?>" aria-label="Next">
+                        <a class="page-link" href="goral_biker_activity-list.php?p=<?= $page_count ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?=$i?>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

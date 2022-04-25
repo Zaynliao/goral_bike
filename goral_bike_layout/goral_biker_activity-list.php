@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
     <!-- ================= CSS ================= -->
     <style>
-
         .object-cover {
             width: 100%;
             height: 220px;
@@ -21,6 +22,7 @@
         p {
             margin: 0px;
         }
+
         .activity_cont {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -28,7 +30,6 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
-
     </style>
 </head>
 

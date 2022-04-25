@@ -15,8 +15,8 @@ $file = basename($path);
         <li class="nav-item">
             <a class=" nav-link fst-6 text-center text-wrap text-white" aria-current="page" data-bs-toggle="collapse" href="#collapseValid" role="button" aria-expanded="false" aria-controls="collapseValid">活動地區</a>
             <div class="collapse " id="collapseValid">
-                <ul class="">
-                    <li class="list-unstyled">
+                <ul class="p-0">
+                    <li class="list-unstyled text-center">
                         <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_venue_id=1" class="nav-link fst-6 text-wrap text-white">北部</a>
                         <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_venue_id=2" class="nav-link fst-6 text-wrap text-white">中部</a>
                         <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_venue_id=3" class="nav-link fst-6 text-wrap text-white">南部</a>
@@ -28,13 +28,13 @@ $file = basename($path);
         <li class="nav-item">
             <a class=" nav-link fst-6 text-center text-wrap text-white" aria-current="page" data-bs-toggle="collapse" href="#collapseStatus" role="button" aria-expanded="false" aria-controls="collapseStatus">報名狀態</a>
             <div class="collapse " id="collapseStatus">
-                <ul>
-                    <li class="list-unstyled">
-                        <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_venue_id=1" 
+                <ul class="p-0">
+                    <li class="list-unstyled text-center">
+                        <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_status_id=1" 
                            class="nav-link fst-6 text-wrap text-white">未開放報名</a>
-                        <a href="#" 
+                        <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_status_id=2" 
                            class="nav-link fst-6 text-wrap text-white">報名開放中</a>
-                        <a href="#"
+                        <a href="../goral_bike_layout/goral_biker_activity-list.php?activity_status_id=3"
                            class="nav-link fst-6 text-wrap text-white">報名已截止</a>
                     </li>
                 </ul>
