@@ -83,7 +83,7 @@ $conn->close();
 
     <div class="container mt-5">
         <div class="container">
-            <a href="goral_biker_product_category_create.php" class="btn btn-success mb-3">Create payment method</a>
+            <a href="goral_biker_product_category_create.php" class="btn btn-success mb-3">Create product category</a>
             <div class="d-flex">
     <div class="w-50 m-0 p-0 d-block">
         <h5 class="p-0 m-0">Sort:</h5>

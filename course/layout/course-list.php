@@ -16,12 +16,12 @@ require_once("../db-connect.php");
 // ==========判斷有無上下架屬性==========
 
 
-if (!isset($_GET["valid"])) {   
+if (!isset($_GET["valid"])) {
     // 若 URL 沒有 valid 的變數，$valid 放入預設值 1 (上架)
     $valid = 1;
     // $validURL = "";  
     // 由於自訂義 URL 基底為 "../..php?valid=$valid"，故不另設 $validURL
-} else {  
+} else {
     // 若 URL 有 valid 的變數，$valid 放入 $_GET["valid"] 的值
     $valid = $_GET["valid"];
 }
@@ -34,11 +34,11 @@ if (!isset($_GET["p"])) {
     $pURL = "";
     // "../..php?valid=$valid"
 } else {
-     // 若 URL 有 p 的變數，$p 放入 $_GET["p"] 的值
+    // 若 URL 有 p 的變數，$p 放入 $_GET["p"] 的值
     $p = $_GET["p"];
     $pURL = "&p=$p";
-     // "../..php?valid=$valid" + "$pURL"
-     // "../..php?valid=$valid&p=$p
+    // "../..php?valid=$valid" + "$pURL"
+    // "../..php?valid=$valid&p=$p
 }
 
 // ==========判斷有無排序屬性==========
@@ -53,16 +53,16 @@ if (!isset($_GET["type"])) {
 
 // ==========判斷有無期間屬性==========
 
-if(isset($_GET["date1"]) && isset($_GET["date2"])){
-    $date1=$_GET["date1"];
-    $date2=$_GET["date2"];
+if (isset($_GET["date1"]) && isset($_GET["date2"])) {
+    $date1 = $_GET["date1"];
+    $date2 = $_GET["date2"];
     // 將期間篩選 SQL 語法存入字串
-    $dateorder="AND classes.course_date BETWEEN '$date1' AND '$date2'";
-    $dateURL="&date1=$date1&date2=$date2";
-} else{
-     // $dateorder = "空字串" -> 不使用期間篩選語法
-    $dateorder="";
-    $dateURL="";
+    $dateorder = "AND classes.course_date BETWEEN '$date1' AND '$date2'";
+    $dateURL = "&date1=$date1&date2=$date2";
+} else {
+    // $dateorder = "空字串" -> 不使用期間篩選語法
+    $dateorder = "";
+    $dateURL = "";
 }
 
 // ==========判斷有無筆數屬性==========
@@ -70,27 +70,26 @@ if(isset($_GET["date1"]) && isset($_GET["date2"])){
 if (!isset($_GET["per_page"])) {
     // 預設筆數 = 6
     $per_page = 6;
-    $perpageURL ="";
+    $perpageURL = "";
 } else {
     $per_page = $_GET["per_page"];
-    $perpageURL ="&per_page=$per_page";
+    $perpageURL = "&per_page=$per_page";
 }
 
 // ==========判斷有無關鍵字屬性==========
 
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
-    $searchs =" AND (course_title LIKE '%$search%'
+    $searchs = " AND (course_title LIKE '%$search%'
     OR course_category_name LIKE '%$search%'
     OR course_status_name LIKE '%$search%'
     OR course_price LIKE '%$search%'
     OR course_date LIKE '%$search%')";
-    $searchURL="&search=$search";
-} 
-else {
-    $search="";
-    $searchs ="";
-    $searchURL="";
+    $searchURL = "&search=$search";
+} else {
+    $search = "";
+    $searchs = "";
+    $searchURL = "";
 }
 
 // ==========判斷有無課程類別屬性==========
@@ -143,7 +142,7 @@ LEFT JOIN course_status on classes.course_status_id=course_status.course_status_
 WHERE course_valid='$valid' $cates $dateorder $searchs";
 $result = $conn->query($sql);
 $total = $result->num_rows;
- //計算所需分頁數量
+//計算所需分頁數量
 $page_count = ceil($total / $per_page);
 $start = ($p - 1) * $per_page;
 
@@ -225,7 +224,7 @@ a{
                     <select class="me-2 form-select w-auto" aria-label="Default select example" id="pageCount">
 
                         <!-- 做 3 個 option ，筆數各為 6 的倍數 -->
-                        <?php for($i=1;$i<=3;$i++): $per_page=$i*6; ?>
+                        <?php for ($i = 1; $i <= 3; $i++) : $per_page = $i * 6; ?>
 
                         <option <?php if (isset($_GET["per_page"]) && $per_page == $_GET["per_page"] ) echo "selected"
                                  //若有 per_page 且 per_page 等於選擇的 per_page，則印出 selected 屬性?> value="<?=$per_page?>">
@@ -241,7 +240,7 @@ a{
                                 -->
                         </option>
 
-                        <?php endfor;?>
+                        <?php endfor; ?>
 
                     </select>
                     <span class="text-nowrap pt-2">
@@ -255,7 +254,7 @@ a{
                     <?php
 
                     // 排序方式名稱陣列
-                    $typeNames=["依序號正序","依序號反序","依課程時間正序","依課程時間反序","依課程價錢正序","依課程價錢反序"];
+                    $typeNames = ["依序號正序", "依序號反序", "依課程時間正序", "依課程時間反序", "依課程價錢正序", "依課程價錢反序"];
 
                     ?>
 
@@ -265,7 +264,7 @@ a{
                         onchange="location.href=this.options[this.selectedIndex].value;">
 
                         <!-- 做 6 個 option -->
-                        <?php for($i=0;$i<=5;$i++): ?>
+                        <?php for ($i = 0; $i <= 5; $i++) : ?>
 
                         <option
                             <?php if ($type == $i+1) echo "selected" //陣列以 0 為開頭，$type 以 1 為開頭，故 $type 隨著陣列的增加要加 1 ?>
@@ -275,7 +274,7 @@ a{
                             <?=$typeNames[$i]?>
                         </option>
 
-                        <?php endfor;?>
+                        <?php endfor; ?>
                     </select>
                 </div>
             </div>
@@ -385,13 +384,13 @@ a{
 
                     <?php
                     // 課程類別陣列
-                    $cateNames=["全部課程","入門課程","進階課程"];
+                    $cateNames = ["全部課程", "入門課程", "進階課程"];
                     // 課程類別按鈕對應顏色陣列
-                    $cateColors=["btn-dark","btn-success","btn-danger"];
+                    $cateColors = ["btn-dark", "btn-success", "btn-danger"];
                     ?>
 
                     <!-- 做 3 個課程類別按鈕 -->
-                    <?php for($i=0;$i<=2;$i++):?>
+                    <?php for ($i = 0; $i <= 2; $i++) : ?>
 
                     <a <?php if ($cate == $i) echo "active"?> <?php if ($valid!=0) echo "hidden"?> href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
                             &cate=<?=$i?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>"
@@ -402,7 +401,7 @@ a{
                         <?=$cateNames[$i]?>
                     </a>
 
-                    <?php endfor;?>
+                    <?php endfor; ?>
                 </div>
                 <!-- 篩選區塊(bs5/摺疊) -->
                 <div class="text-end">
@@ -420,8 +419,7 @@ a{
                             <div class="row gap-2">
                                 <!-- 關鍵字篩選 -->
                                 <div class="col-12">
-                                    <input class="form-control" type="search" placeholder="搜尋關鍵字" aria-label="Search"
-                                        name="search" id="search" value="<?=$search?>">
+                                    <input class="form-control" type="search" placeholder="搜尋關鍵字" aria-label="Search" name="search" id="search" value="<?= $search ?>">
                                 </div>
                                 <!-- 日期篩選 -->
                                 <!-- value 預設值為課程最小 $rowMinDate['course_date']及最大值 $rowMaxDate['course_date'] -->
@@ -447,8 +445,7 @@ a{
                                 <div>
                                     <!-- 額外需求值 -->
                                     <div class="hidden-input">
-                                        <input type="hidden" name="cate" value="<?= $cate ?>"
-                                            <?php if(!$cate) echo "disabled"?>>
+                                        <input type="hidden" name="cate" value="<?= $cate ?>" <?php if (!$cate) echo "disabled" ?>>
                                         <input type="hidden" name="valid" value="<?= $valid ?>">
                                         <input type="hidden" name="per_page" value="<?= $per_page ?>">
                                     </div>
@@ -578,7 +575,13 @@ a{
                 請選擇其他條件
             </p>
 
-            <?php endif; ?>
+            <p class="text-center mt-4 fw-bold text-secondary">
+                無資料符合
+                <br>
+                請選擇其他條件
+            </p>
+
+        <?php endif; ?>
         </div>
         <!-- 分頁 -->
         <div class="py-2">
@@ -658,7 +661,7 @@ a{
 
                         <?php endif; ?>
 
-                        <?php elseif($page_count==2):?>
+                        <?php elseif ($page_count == 2) : ?>
 
                         <?php if($p==1):?>
 
@@ -675,7 +678,7 @@ a{
                             </a>
                         </li>
 
-                        <?php else:?>
+                        <?php else : ?>
 
                         <li class="page-item">
                             <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
@@ -719,6 +722,7 @@ a{
             </div>
 
         </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -885,26 +889,6 @@ a{
         }
     }
 
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
     </script>
 </body>
 

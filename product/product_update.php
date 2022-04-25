@@ -63,7 +63,7 @@ $conn->close();
                             <div class="py-2 px-3">
                                 <label for="product_price" class="form-label">商品價格 $</label>
                                 <div class=" text-end">
-                                    <input type="number" name="product_price" id="product_price" value="<?= $row["product_price"] ?>" class=" form-control">
+                                    <input type="number" min=0 name="product_price" id="product_price" value="<?= $row["product_price"] ?>" class=" form-control">
                                 </div>
                             </div>
                             <div class="py-2 px-3">

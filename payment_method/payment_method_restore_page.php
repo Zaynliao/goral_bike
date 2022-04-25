@@ -79,7 +79,7 @@ $conn->close();
 
   </head>
   <body>
-      <div class="container">
+      <div class="container-fluid">
       <a href="goral_biker_payment_method.php" class="btn btn-secondary my-3">Back to payment list</a>
       <div class="d-flex">
     <div class="w-50 m-0 p-0 d-block">

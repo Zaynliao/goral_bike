@@ -30,13 +30,16 @@ $conn -> close();
       <div class="container-fluid">
         <form action="../payment_method/payment_method_edit.php" method="get">
         <h5>Coupon: <?=$id?></h5>
-          <table class="table-bordered w-100">
-              <tr>
+        <table class="table table-bordered w-100">
+            <thead class="table-dark">
+              <tr class="text-center">
                 <td>Payment method id</td>
                 <td>Payment method name</td>
                 <td>Edit coupon</td>
                 <td>Reset</td>
               </tr>
+            </thead>
+            <tbody class="table-light">
               <td>
                 <?=$id?>
               </td>
@@ -52,6 +55,7 @@ $conn -> close();
               <td>
               <button type="reset" class="btn btn-warning mt-2 my-2 text-white">Reset</button>
               </td>
+            </tbody>
             </table>
             <a href="../goral_bike_layout/goral_biker_payment_method.php" class="btn btn-secondary text-white">Return</a>
 

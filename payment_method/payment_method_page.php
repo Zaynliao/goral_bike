@@ -82,7 +82,7 @@ $conn->close();
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <a href="goral_biker_payment_method_restore.php" class="btn btn-dark my-3">Restore hidden payment method</a>
     <a href="goral_biker_payment_method_create.php" class="btn btn-success">Create payment method</a>
     <div class="d-flex">

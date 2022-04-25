@@ -40,5 +40,5 @@ if ($conn->query($sql) === TRUE) {
 // header("location: coupons_alter.php");
 }
 $conn->close();
-
+echo "<script>alert(\"Success\")</script>";
 ?>
