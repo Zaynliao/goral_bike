@@ -88,11 +88,13 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
 } elseif (isset($_GET["activity_venue_id"])) {
     $activity_venue_id = $_GET["activity_venue_id"];
+    $activity_status_id = "%";
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_venue_id LIKE '$activity_venue_id'
+    AND activity_status_id LIKE '$activity_status_id'
     ORDER BY $order
 
     ";
@@ -113,6 +115,7 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_venue_id LIKE '$activity_venue_id'
+    AND activity_status_id LIKE '$activity_status_id'
     ORDER BY $order
 
     LIMIT $start,$per_page";
@@ -120,11 +123,13 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
 } elseif (isset($_GET["activity_status_id"])) {
     $activity_status_id = $_GET["activity_status_id"];
+    $activity_venue_id = "%";
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
     LEFT JOIN activity_status on activity.activity_status_id=activity_status.id
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_status_id LIKE '$activity_status_id'
+    AND activity_venue_id LIKE '$activity_venue_id'
     ORDER BY $order
 
     ";
@@ -144,6 +149,7 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
     LEFT JOIN activity_venue on activity.activity_venue_id=activity_venue.id
     WHERE activity_valid='$valid'
     AND activity_status_id LIKE '$activity_status_id'
+    AND activity_venue_id LIKE '$activity_venue_id'
     ORDER BY $order
 
     LIMIT $start,$per_page";
@@ -180,7 +186,7 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
                     onchange="location.href=this.options[this.selectedIndex].value;">
                     <?php for ($i = 0; $i <= 5; $i++): ?>
 
-                        <option <?php if ($type == $i )echo "selected"?> value="../goral_bike_layout/goral_biker_activity-list.php?valid=<?=$valid?>&type=<?=$i?>">
+                        <option <?php if ($type == $i )echo "selected"?> value="../goral_bike_layout/goral_biker_activity-list.php?valid=<?=$valid?>&type=<?=$i?>&activity_venue_id=<?=$activity_venue_id?>&activity_status_id=<?=$activity_status_id?>">
                         <?=$typeNames[$i]?>
                         </option>
                     <?php endfor; ?>
@@ -231,7 +237,7 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
                     </div>
                     <!-- ================= 修改 ================= -->
                     <div class="col-3 align-items-center d-flex ps-5">
-                        <div class="d-flex ">
+                        <div class="d-flex g-0">
                             <a class="btn btn-outline-success mx-1" href="goral_biker_activity-upload.php?id=<?= $row["id"] ?>&status=<?= $row["activity_status_id"] ?>&venue=<?= $row["activity_venue_id"] ?>">編輯</a>
                             <?php if ($valid == 1) : ?>
                                 <a href="../activity/api/activity-doDelisting.php?id=<?= $row["id"] ?>" class="btn btn-outline-warning mx-1">
