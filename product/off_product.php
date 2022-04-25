@@ -302,11 +302,11 @@ $conn->close();
 
                             <div class="row mt-2">
                                 <div class="col">
-                                    <input type="number" class="form-control" value="<?= $min_price ?>" name="min_price" id="min_price" placeholder="min_price" aria-label="min_price">
+                                    <input type="number" min=0 class="form-control" value="<?= $min_price ?>" name="min_price" id="min_price" placeholder="min_price" aria-label="min_price">
                                 </div>
 
                                 <div class="col">
-                                    <input type="number" class="form-control" value="<?= $max_price ?>" name="max_price" id="max_price" placeholder="max_price" aria-label="max_price">
+                                    <input type="number" min=0 class="form-control" value="<?= $max_price ?>" name="max_price" id="max_price" placeholder="max_price" aria-label="max_price">
                                 </div>
                             </div>
 
