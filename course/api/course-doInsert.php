@@ -5,6 +5,7 @@ $category=$_POST["category"];
 $name=$_POST["name"];
 $fileName=$_FILES["image"]["name"];
 $date=$_POST["date"];
+$location=$_POST["location"];
 $enrollment=$_POST["enrollment"];
 $start_time=$_POST["start_time"];
 $end_time=$_POST["end_time"];
@@ -38,7 +39,8 @@ if($dateStart > $today){
 }
 
 
-$sql="INSERT INTO classes (course_category_id, course_title, course_pictures, course_date, course_enrollment, course_start_time, course_end_time, course_status_id, course_price, course_content, course_inventory, course_valid) VALUES ('$category', '$name', '$fileName', '$date', '$enrollment', '$start_time', '$end_time', '$statu', '$price', '$content', '$enrollment', 1)";
+
+$sql="INSERT INTO classes (course_category_id, course_title, course_pictures, course_date, course_enrollment, course_start_time, course_end_time, course_status_id, course_price, course_content, course_inventory, course_valid, course_location_id) VALUES ('$category', '$name', '$fileName', '$date', '$enrollment', '$start_time', '$end_time', '$statu', '$price', '$content', '$enrollment', 1, '$location')";
 
 if ($conn->query($sql) === TRUE) {
     echo "<script>alert('新增課程完成')</script>";

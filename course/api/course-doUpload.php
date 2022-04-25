@@ -13,6 +13,7 @@ $end_time=$_POST["end_time"];
 $price=$_POST["price"];
 $content=$_POST["content"];
 $valid=$_POST["valid"];
+$location=$_POST["location"];
 
 
 $dateNew=strtotime($date);
@@ -61,7 +62,8 @@ if($end_time < $start_time|| $dateNew < $dateEnd){
     course_price='$price',
     course_content='$content',
     course_inventory='$inventory',
-    course_valid='$valid'
+    course_valid='$valid',
+    course_location_id='$location'
     WHERE course_id='$id'";
 
 if ($conn->query($sql) === TRUE) {

@@ -521,7 +521,6 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                                 </span>
                                 <span class="badge bg-dark rounded-pill px-2 me-1"
                                     <?php if (!$row["course_location_id"]) echo "hidden" //標籤hidden判斷?>>
-
                                     <!-- 地點名稱顯示 -->
                                     <?= $row["course_location_name"] ?>
                                 </span>
