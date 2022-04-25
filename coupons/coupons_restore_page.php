@@ -81,9 +81,9 @@ $conn->close();
       <div class="container">
         <a href="../goral_bike_layout/goral_biker_coupons.php" class="btn btn-secondary my-3">Back to coupon page</a>
         <form action="goral_biker_coupons_restore.php" method="get" class="mb-3 d-flex flex-row-reverse">
-          <input type="text" name="filter_name" class="form-control w-25">
-          <button type="submit" class="btn btn-success">Submit</button>
           <button type="reset" class="btn btn-warning">Reset</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+          <input type="text" name="filter_name" class="form-control w-25">
         </form>
         <div>
           <table class="table table-bordered w-100">
@@ -110,17 +110,21 @@ $conn->close();
         </div>
         <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
+          <li class="page-item ">
+              <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=1<?php if(isset($filter_name)){echo "&coupon_name=$filter_name";} ?>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
             <li class="page-item ">
-                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php if($p > 1){echo $p-1;}else{echo $p;} if(isset($filter_name)){echo "&filter_name=$filter_name";}?>" aria-label="Previous">
+                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php if($p > 1){echo $p-1;}else{echo $p;} if(isset($filter_name)){echo "&coupon_name=$filter_name";}?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
 
 
 
-
             <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?=$i?><?php if(isset($filter_name)){echo "&filter_name=$filter_name";}?>"><?=$i?></a>
+                <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?=$i?><?php if(isset($filter_name)){echo "&coupon_name=$filter_name";}?>"><?=$i?></a>
                 </li>
             <?php endfor; ?>
 
@@ -128,7 +132,13 @@ $conn->close();
 
 
             <li class="page-item">
-                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php if($p < $i-1){echo $p+1;}else{echo $p;} if(isset($filter_name)){echo "&filter_name=$filter_name";}?>" aria-label="Next">
+                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php if($p < $i-1){echo $p+1;}else{echo $p;} if(isset($filter_name)){echo "&coupon_name=$filter_name";}?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+              <?php $i--; ?>
+            <li class="page-item">
+                <a class="page-link text-dark" href="goral_biker_coupons_restore.php?p=<?php echo $i; if(isset($filter_name)){echo "&coupon_name=$filter_name";}?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
