@@ -17,7 +17,7 @@
         <form action="../user/backend/register.php" method="POST" onsubmit="return checkForm()">
             <div class="row justify-content-center">
                 <div class="col-lg-4">
-                    <h1>註冊</h1>
+                    <h1 class="mt-5">註冊</h1>
 
                     <div class="mb-2">
                         <label for="">姓名</label>
