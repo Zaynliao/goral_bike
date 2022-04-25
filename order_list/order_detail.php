@@ -18,6 +18,7 @@ $sql = "SELECT
 `payment_method`.`payment_method_name`,
 `coupons`.`coupon_name`,
 `coupons`.`coupon_content`,
+`coupons`.`coupon_discount`,
 `order_list`.`total_amount`,
 `order_list`.`remark`,
 `product_category`.`product_category_id`,
@@ -128,8 +129,8 @@ if ($row["order_status"] == 1) {
                         <?php endforeach; ?>
                         <h4 class="h4 text-end py-4 mx-3">總金額：＄<?= $row_total["total"] ?></h4>
                         <input type="hidden" name="total" id="total" value="<?= $row_total["total"] ?>">
-                        <h4 class="h4 text-success text-end py-4 mx-3">優惠卷折扣 總金額：＄<?= $row_total["total"] * $row["discount"] ?> </h4>
-                        <input type="hidden" name="total" id="total" value="<?= $row_total["total"] * $row["discount"] ?>">
+                        <h4 class="h4 text-success text-end py-4 mx-3">優惠卷折扣 總金額：＄<?= $row_total["total"] * $row["coupon_discount"] / 100 ?> </h4>
+                        <input type="hidden" name="total" id="total" value="<?= $row_total["total"] * $row["coupon_discount"] / 100 ?>">
                     </li>
                 </ul>
                 <div class="row justify-content-end gap-3">
