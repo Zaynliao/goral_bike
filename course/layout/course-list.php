@@ -44,7 +44,7 @@ if (!isset($_GET["p"])) {
 // ==========判斷有無排序屬性==========
 
 if (!isset($_GET["type"])) {
-    $type = 1;
+    $type = 4;
     $typeURL ="";
 } else {
     $type = $_GET["type"];
@@ -171,10 +171,22 @@ $sqlMaxDate = "SELECT MAX(course_date) AS course_date FROM classes";
 $resultMaxDate = $conn->query($sqlMaxDate);
 $rowMaxDate = $resultMaxDate->fetch_assoc();
 
+// ==========資料庫課程類型抓取==========
+$sqlCate = "SELECT * FROM course_category";
+$resultCate = $conn->query($sqlCate);
+$rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
+
+// ==========資料庫課程地點抓取==========
+$sqlLoca = "SELECT * FROM course_location";
+$resultLoca = $conn->query($sqlLoca);
+$rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Course List</title>
     <!-- Required meta tags -->
@@ -183,19 +195,22 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
 
 </head>
 <style>
-    .product-img {
-  width: 100%;
+.product-img {
+    width: 100%;
 }
 
 .object-cover {
-  width: 100%;
-  height: 200px;
-  -o-object-fit: cover;
-     object-fit: cover;
+    width: 100%;
+    height: 200px;
+    -o-object-fit: cover;
+    object-fit: cover;
 }
 
-
+a{
+    text-decoration: none;
+}
 </style>
+
 <body>
     <div class="container mb-5 mt-4">
         <!-- header -->
@@ -212,13 +227,11 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                         <!-- 做 3 個 option ，筆數各為 6 的倍數 -->
                         <?php for($i=1;$i<=3;$i++): $per_page=$i*6; ?>
 
-                            <option
-                                <?php if (isset($_GET["per_page"]) && $per_page == $_GET["per_page"] ) echo "selected"
-                                 //若有 per_page 且 per_page 等於選擇的 per_page，則印出 selected 屬性?>
-                                value="<?=$per_page?>">
-                                <!-- 筆數顯示 -->
-                                <?=$per_page?>
-                                <!-- if 的寫法 
+                        <option <?php if (isset($_GET["per_page"]) && $per_page == $_GET["per_page"] ) echo "selected"
+                                 //若有 per_page 且 per_page 等於選擇的 per_page，則印出 selected 屬性?> value="<?=$per_page?>">
+                            <!-- 筆數顯示 -->
+                            <?=$per_page?>
+                            <!-- if 的寫法 
                                     一、if() echo ""
                                     二、if(): echo ""
                                         elseif(): echo ""
@@ -226,7 +239,7 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                                         endif;
                                     三、if(){}elseif(){}else{};
                                 -->
-                            </option>
+                        </option>
 
                         <?php endfor;?>
 
@@ -248,18 +261,19 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
 
                     <!-- 選擇改變時，跳轉至此select的options中，被選中 option 順序的值 -->
                     <!-- option 的 value 可放 url -->
-                    <select class="form-select w-auto" name="" id="select" onchange="location.href=this.options[this.selectedIndex].value;">
+                    <select class="form-select w-auto" name=""
+                        onchange="location.href=this.options[this.selectedIndex].value;">
 
                         <!-- 做 6 個 option -->
                         <?php for($i=0;$i<=5;$i++): ?>
 
-                            <option 
-                                <?php if ($type == $i+1) echo "selected" //陣列以 0 為開頭，$type 以 1 為開頭，故 $type 隨著陣列的增加要加 1 ?>
-                                value="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
+                        <option
+                            <?php if ($type == $i+1) echo "selected" //陣列以 0 為開頭，$type 以 1 為開頭，故 $type 隨著陣列的增加要加 1 ?>
+                            value="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
                                 <?=$cateURL?><?=$pURL?>&type=<?=$i+1?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                <!-- 排序類別名稱顯示 -->
-                                <?=$typeNames[$i]?>
-                            </option>
+                            <!-- 排序類別名稱顯示 -->
+                            <?=$typeNames[$i]?>
+                        </option>
 
                         <?php endfor;?>
                     </select>
@@ -267,14 +281,104 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
             </div>
             <!-- header-right -->
             <div class="col-12 col-sm-6 col-md-8 mb-2 mb-sm-0">
-                <!-- 新增課程按鈕 -->
+
+                <!-- 新增功能區塊(bs5/右進視窗) -->
                 <div class="text-end">
-                    <a 
-                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" // 若有 valid 且 valid 等於 0，則印出 hidden 屬性?>
-                        href="../goral_bike_layout/goral_biker_course-insert.php"
-                        class="btn btn-dark text-white position-relative fw-bold">
-                        新增課程
-                    </a>
+                    <!-- 新增右進視窗開啟按鈕 -->
+                    <button class="btn btn-dark text-white position-relative fw-bold mb-2" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" // 若有 valid 且 valid 等於 0，則印出 hidden 屬性?>>新增課程</button>
+                </div>
+                <!-- 新增右進視窗區塊 -->
+                <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+                    id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                    <!-- 新增視窗區塊 header -->
+                    <div class="offcanvas-header">
+                        <!-- 新增 title -->
+                        <h3 id="offcanvasRightLabel" class="fw-bold">新增課程</h3>
+                        <!-- 新增關閉紐 x -->
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <!-- 新增視窗內文區塊 body-->
+                    <div class="offcanvas-body">
+                        <!-- 新增-Form表單 -->
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div>
+                                    <form action="../course/api/course-doInsert.php" enctype="multipart/form-data"
+                                        method="post">
+                                        <div class="mb-2">
+                                            <label for="category">課程類別</label>
+                                            <select class="form-control" name="category" id="category">
+                                                <?php foreach ($rowsCate as $row) : ?>
+                                                <option value="<?= $row["course_category_id"] ?>">
+                                                    <?= $row["course_category_name"] ?>
+                                                </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="name">課程名稱</label>
+                                            <input class="form-control" type="text" name="name" id="name">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="image">課程圖片</label>
+                                            <input type="file" class="form-control" name="image" id="image"
+                                                accept=".jpg, .jpeg, .png, .webp, .svg">
+                                            <div class="img-thumbnail text-center"> <img
+                                                    src="../../goral_bike_First/course/icon/no-image.png"
+                                                    class=" img-fluid" id="img-view">
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="date">課程時間</label>
+                                            <input class="form-control" type="date" name="date" id="date">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="location">課程地點</label>
+                                            <select class="form-control" name="location" id="location">
+                                                <?php foreach ($rowsLoca as $row) : ?>
+                                                <option value="<?= $row["course_location_id"] ?>">
+                                                    <?= $row["course_location_name"] ?>
+                                                </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="enrollment">課程人數</label>
+                                            <input class="form-control" type="number" name="enrollment" id="enrollment">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="start_time">課程報名開始時間</label>
+                                            <input class="form-control" type="datetime-local" name="start_time"
+                                                id="start_time">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="end_time">課程報名結束時間</label>
+                                            <input class="form-control" type="datetime-local" name="end_time"
+                                                id="end_time">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="price">課程費用</label>
+                                            <input class="form-control" type="number" name="price" id="price">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="content">課程內容</label>
+                                            <textarea class="form-control" name="content" id="content" cols="30"
+                                                rows="10"></textarea>
+                                        </div>
+                                        <button class="btn btn-secondary text-white mb-2 me-2 fw-bold" type="reset"
+                                            value="清除表單">清除</button>
+                                        <button id="send" class="btn btn-dark text-white mb-2 fw-bold"
+                                            type="submit">送出</button>
+                                        <div class="text-end pb-4">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- 課程類別按鈕(動態新增) -->
                 <div class="text-end">
@@ -289,39 +393,29 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                     <!-- 做 3 個課程類別按鈕 -->
                     <?php for($i=0;$i<=2;$i++):?>
 
-                        <a  
-                            <?php if ($cate == $i) echo "active"?>
-                            <?php if ($valid!=0) echo "hidden"?>
-                            href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
+                    <a <?php if ($cate == $i) echo "active"?> <?php if ($valid!=0) echo "hidden"?> href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
                             &cate=<?=$i?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>"
-                            class="btn <?=$cateColors[$i]?> text-white fw-bold">
-                            <!-- $cateColors=["btn-dark","btn-success","btn-danger"]; -->
-                            <!-- 使對應不同類別按鈕的 class 樣式 -->
-                            <!-- 課程類別名稱顯示 -->
-                            <?=$cateNames[$i]?>
-                        </a>
+                        class="btn <?=$cateColors[$i]?> text-white fw-bold mb-2">
+                        <!-- $cateColors=["btn-dark","btn-success","btn-danger"]; -->
+                        <!-- 使對應不同類別按鈕的 class 樣式 -->
+                        <!-- 課程類別名稱顯示 -->
+                        <?=$cateNames[$i]?>
+                    </a>
 
                     <?php endfor;?>
                 </div>
-
-                <!-- 篩選功能區塊(bs5/右進視窗) -->
+                <!-- 篩選區塊(bs5/摺疊) -->
                 <div class="text-end">
-                    <!-- 篩選右進視窗開啟按鈕 -->
-                    <button class="btn btn-secondary fw-bold py-0 mt-2" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">關鍵字/日期篩選</button>
+                    <!-- 篩選摺疊按鈕 -->
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        關鍵字/日期篩選
+                    </button>
                 </div>
-                <!-- 篩選右進視窗區塊 -->
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                    <!-- 右進視窗區塊 header -->
-                    <div class="offcanvas-header">
-                        <!-- 篩選 title -->
-                        <h5 id="offcanvasRightLabel" class="fw-bold">請輸入篩選條件</h5>
-                        <!-- 關閉紐 x -->
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <!-- 右進視窗區塊 body-->
-                    <div class="offcanvas-body">
-                        <!-- 關鍵字/篩選-Form表單 -->
+                <!-- 篩選內容區塊 -->
+                <div class="collapse mt-2" id="collapseExample">
+                    <div class="card card-body">
+                        <h5 class="fw-bold">請輸入篩選條件</h5>
                         <form class="form-filter" action="../goral_bike_layout/goral_biker_course-list.php">
                             <div class="row gap-2">
                                 <!-- 關鍵字篩選 -->
@@ -331,30 +425,21 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                                 </div>
                                 <!-- 日期篩選 -->
                                 <!-- value 預設值為課程最小 $rowMinDate['course_date']及最大值 $rowMaxDate['course_date'] -->
-                                <div class="col-12">
-                                    <input
-                                        <?php if(isset($_GET["date1"])):?>
-                                        value="<?=$_GET["date1"]?>" 
-                                        
-                                        <?php else: ?>
-                                        value="<?=$rowMinDate['course_date']?>"
-                                        
-                                        <?php endif;?>
-                                        type="date" name="date1" id="date1" 
-                                        class="form-control text-secondary" required>
+                                <div class="d-flex">
+                                    <div class="col-6 pe-1">
+                                        <input <?php if(isset($_GET["date1"])):?> value="<?=$_GET["date1"]?>"
+                                            <?php else: ?> value="<?=$rowMinDate['course_date']?>" <?php endif;?>
+                                            type="date" name="date1" id="date1" class="form-control text-secondary"
+                                            required>
+                                    </div>
+                                    <div class="col-6 ps-1">
+                                        <input <?php if(isset($_GET["date2"])):?> value="<?=$_GET["date2"]?>"
+                                            <?php else: ?> value="<?=$rowMaxDate['course_date']?>" <?php endif;?>
+                                            type="date" name="date2" id="date2" class="form-control text-secondary"
+                                            required>
+                                    </div>
                                 </div>
-                                <div class="col-12">
-                                    <input 
-                                        <?php if(isset($_GET["date2"])):?>
-                                        value="<?=$_GET["date2"]?>" 
 
-                                        <?php else: ?>
-                                        value="<?=$rowMaxDate['course_date']?>" 
-
-                                        <?php endif;?>
-                                        type="date" name="date2" id="date2"
-                                        class="form-control text-secondary" required>
-                                </div>
                                 <!-- 搜尋按鈕 -->
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-secondary fw-bold w-100 mt-1">搜尋</button>
@@ -380,80 +465,75 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
             <h1 class="fw-bold">COURSE LIST -</h1>
             <!-- 有資料就列出 -->
             <?php if ($course_count > 0) : ?>
-                <!-- 全選範圍表單 -->
-                <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post">
-                    <!-- 批次功能按鈕區塊 -->
-                    <div class="d-flex align-items-center gap-3 mb-3 ms-3">
-                        <!-- button 的 formaction 屬性可用來改變 from 的 action -->
-                        <button type="submit" id="batchDel" name="batchDel"
-                                class="batch-delete-btn btn btn-secondary fw-bold"
-                                <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
-                        <button type="submit" id="batchDel" name="batchDel" 
-                                class="btn btn-secondary fw-bold"
-                                formaction="../course/api/course-doBatchValid.php"
-                                <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
-                        <button type="submit" id="batchDel" name="batchDel" 
-                                class="btn btn-secondary fw-bold"
-                                formaction="../course/api/course-doBatchIsDoDelete.php"
-                                <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
-                        <!-- 全選勾選checkbox -->
-                        <span class="">
-                            <input class="ms-1 me-2 form-check-input" type="checkbox"
-                                    name="checkall" id="checkall"
-                                    onclick="CheckedAll()" />全選
-                                    <!-- 如果勾選，則執行 CheckedAll()-->
-                        </span>
-                    </div>
-                    <!-- 課程顯示 -->
-                    <div class="d-flex flex-wrap">
+            <!-- 全選範圍表單 -->
+            <form action="../course/api/course-doBatchDelete.php" class="p-0" method="post">
+                <!-- 批次功能按鈕區塊 -->
+                <div class="d-flex align-items-center gap-3 mb-3 ms-3">
+                    <!-- button 的 formaction 屬性可用來改變 from 的 action -->
+                    <button type="submit" id="batchDel" name="batchDel"
+                        class="batch-delete-btn btn btn-secondary fw-bold"
+                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0) echo "hidden" ?>>批次下架</button>
+                    <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
+                        formaction="../course/api/course-doBatchValid.php"
+                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次上架</button>
+                    <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
+                        formaction="../course/api/course-doBatchIsDoDelete.php"
+                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
+                    <!-- 全選勾選checkbox -->
+                    <span class="">
+                        <input class="ms-1 me-2 form-check-input" type="checkbox" name="checkall" id="checkall"
+                            onclick="CheckedAll()" />全選
+                        <!-- 如果勾選，則執行 CheckedAll()-->
+                    </span>
+                </div>
+                <!-- 課程顯示 -->
+                <div class="d-flex flex-wrap">
 
-                        <?php foreach ($rows as $row) : ?>
+                    <?php foreach ($rows as $row) : ?>
 
-                            <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
-                                <div class="card shadow-sm mx-2">
-                                    <figure class="product-img text-center">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+                        <div class="card shadow-sm mx-2">
+                            <figure class="product-img text-center">
 
-                                        <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
-                                        <!-- 每個產品的 checkbox -->
-                                        <div class="text-start">
-                                            <input class="checkbox form-check-input ms-2 mt-2 position-absolute top-0 start-0"
-                                                name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
-                                                aria-label="">
-                                        </div>
+                                <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
+                                <!-- 每個產品的 checkbox -->
+                                <div class="text-start">
+                                    <input class="checkbox form-check-input ms-2 mt-2 position-absolute top-0 start-0"
+                                        name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
+                                        aria-label="">
+                                </div>
 
-                                    </figure>
+                            </figure>
                             <div class="pb-2 px-3">
-                                <span class="badge rounded-pill px-2 me-1
+                                <a class="badge rounded-pill px-2 me-1
                                         <?php if ($row["course_category_id"] == 1) : echo "bg-success" ?>
                                         <?php else : echo "bg-danger" ?>
                                         <?php endif; //標籤顏色判斷 ?>"
+                                    <?php if (!$row["course_category_id"]) echo "hidden" //標籤hidden判斷?>>
 
-                                        <?php if (!$row["course_category_id"]) echo "hidden" //標籤hidden判斷?>>
-
-                                        <!-- 類別名稱顯示 -->
-                                        <?= $row["course_category_name"] ?>
-                                </span>
-                                <span class="badge rounded-pill px-2 me-1
+                                    <!-- 類別名稱顯示 -->
+                                    <?= $row["course_category_name"] ?>
+                                </a>
+                                <a class="badge rounded-pill px-2 me-1
                                         <?php if ($row["course_status_id"] == 1) : echo "bg-secondary" ?>
                                         <?php elseif ($row["course_status_id"] == 2) : echo "bg-success" ?>
                                         <?php else : echo "bg-danger" ?>
-                                        <?php endif; //標籤顏色判斷 ?>" 
+                                        <?php endif; //標籤顏色判斷 ?>"
+                                    <?php if (!$row["course_status_id"]) echo "hidden" //標籤hidden判斷?>>
 
-                                        <?php if (!$row["course_status_id"]) echo "hidden" //標籤hidden判斷?>>
-
-                                        <!-- 狀態名稱顯示 -->
-                                        <?= $row["course_status_name"] ?>
-                                </span>
+                                    <!-- 狀態名稱顯示 -->
+                                    <?= $row["course_status_name"] ?>
+                                </a>
                                 <span class="badge bg-dark rounded-pill px-2 me-1"
-                                        <?php if (!$row["course_location_id"]) echo "hidden" //標籤hidden判斷?>>
+                                    <?php if (!$row["course_location_id"]) echo "hidden" //標籤hidden判斷?>>
 
-                                        <!-- 地點名稱顯示 -->
-                                        <?= $row["course_location_name"] ?>
+                                    <!-- 地點名稱顯示 -->
+                                    <?= $row["course_location_name"] ?>
                                 </span>
                                 <span class="badge bg-dark rounded-pill px-2 me-2"
-                                        <?php if (!$row["course_price"]) echo "hidden"?>>
+                                    <?php if (!$row["course_price"]) echo "hidden"?>>
 
-                                        <!-- 價錢顯示 -->
+                                    <!-- 價錢顯示 -->
                                     <?= $row["course_price"] ?> / 人
                                 </span>
                                 <!-- 課程名稱與時間顯示 -->
@@ -470,164 +550,165 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
                                 </div>
                                 <!-- 單次 delete/update 按鈕 -->
                                 <div class="d-grid">
-                                    <button class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
+                                    <button formaction="../course/api/course-doDelete"
+                                        class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
                                         data-id="<?= $row["course_id"] ?>"
                                         <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0)  echo "hidden" ?>>下架課程</button>
-                                    <button class="valid-btn btn btn-info text-white mb-2 fw-bold"
+                                    <button formaction="../course/api/course-doValid.php"
+                                        class="valid-btn btn btn-info text-white mb-2 fw-bold"
                                         data-id="<?= $row["course_id"] ?>"
                                         <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>上架課程</button>
-                                    <button class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
+                                    <button formaction="../course/api/course-isdoDelete.php"
+                                        class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
                                         data-id="<?= $row["course_id"] ?>"
                                         <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>刪除課程</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+            </form>
 
-                        <?php endforeach; ?>
+            <?php endforeach; ?>
 
             <?php else : ?>
-                
-                                <p class="text-center mt-4 fw-bold text-secondary">
-                                無資料符合
-                                <br>
-                                請選擇其他條件
-                                </p>
+
+            <p class="text-center mt-4 fw-bold text-secondary">
+                無資料符合
+                <br>
+                請選擇其他條件
+            </p>
 
             <?php endif; ?>
         </div>
-            <!-- 分頁 -->
+        <!-- 分頁 -->
         <div class="py-2">
             <div class="d-flex justify-content-center">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item <?php if($p==1 || $p==2)echo "disabled"?>">
-                            <a class="page-link" aria-label="Previous"
-                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                            <a class="page-link" aria-label="Previous" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                 &p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
 
                         <?php if($page_count>=3):?>
-                            <?php if ($p == 1) : ?>
+                        <?php if ($p == 1) : ?>
 
-                                <li class="page-item <?php if($p == 1) echo "active"?>">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                        <li class="page-item <?php if($p == 1) echo "active"?>">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p ?>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p ?>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p + 1 ?>
-                                </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p + 1 ?>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p+2 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p + 2 ?>
-                                    </a>
-                                </li>
+                                <?= $p + 2 ?>
+                            </a>
+                        </li>
 
-                            <?php elseif ($p + 1 <= $page_count) : ?>
+                        <?php elseif ($p + 1 <= $page_count) : ?>
 
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p - 1 ?>
-                                    </a>
-                                </li>
-                                <li class="page-item  active">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p - 1 ?>
+                            </a>
+                        </li>
+                        <li class="page-item  active">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p ?>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p ?>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p + 1 ?>
-                                    </a>
-                                </li>
+                                <?= $p + 1 ?>
+                            </a>
+                        </li>
 
-                            <?php elseif ($p == $page_count) : ?>
+                        <?php elseif ($p == $page_count) : ?>
 
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p-2 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p - 2 ?>
-                                    </a>
-                                </li>
-                                <li class="page-item  <?php if($p == ($page_count-1)) echo "active"?>">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p - 2 ?>
+                            </a>
+                        </li>
+                        <li class="page-item  <?php if($p == ($page_count-1)) echo "active"?>">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p - 1 ?>
-                                    </a>
-                                </li>
-                                <li class="page-item  <?php if($p == $page_count) echo "active"?>">
-                                    <a class="page-link"href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p - 1 ?>
+                            </a>
+                        </li>
+                        <li class="page-item  <?php if($p == $page_count) echo "active"?>">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p ?>
-                                    </a>
-                                </li>
+                                <?= $p ?>
+                            </a>
+                        </li>
 
-                            <?php endif; ?>
+                        <?php endif; ?>
 
                         <?php elseif($page_count==2):?>
 
-                            <?php if($p==1):?>
+                        <?php if($p==1):?>
 
-                                <li class="page-item active">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                        <li class="page-item active">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p ?>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                <?= $p ?>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p+1 ?>
-                                    </a>
-                                </li>
-
-                            <?php else:?>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p-1 ?>
-                                    </a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                        <?= $p ?>
-                                    </a>
-                                </li>
-
-                            <?php endif; ?>
+                                <?= $p+1 ?>
+                            </a>
+                        </li>
 
                         <?php else:?>
 
-                            <li class="page-item active">
-                                <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                        <li class="page-item">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                                <?= $p-1 ?>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
-                                    <?= $p ?>
-                                </a>
-                            </li>
+                                <?= $p ?>
+                            </a>
+                        </li>
+
+                        <?php endif; ?>
+
+                        <?php else:?>
+
+                        <li class="page-item active">
+                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                                <?= $p ?>
+                            </a>
+                        </li>
 
                         <?php endif; ?>
 
                         <li class="page-item 
                                 <?php if($p==$page_count || $p+1==$page_count) echo "disabled"?>">
-                                <a class="page-link" aria-label="Next"
-                                    href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                            <a class="page-link" aria-label="Next" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
                                     &p=<?= $page_count ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
                                 <span aria-hidden="true">&raquo;</span>
-                                </a>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -639,156 +720,192 @@ $rowMaxDate = $resultMaxDate->fetch_assoc();
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+    // 抓網頁上的 btns
+    let deleteBtns = document.querySelectorAll(".delete-btn");
+    let isdeleteBtns = document.querySelectorAll(".isdelete-btn");
+    let validBtns = document.querySelectorAll(".valid-btn");
 
+    // 用迴圈幫 btns 加上事件監聽
+    for (let i = 0; i < deleteBtns.length; i++) {
+        deleteBtns[i].addEventListener("click", function() {
+            console.log("click");
+            let id = this.dataset.id;
+            deleteCourse(id);
+        })
+    }
 
+    for (let i = 0; i < isdeleteBtns.length; i++) {
+        isdeleteBtns[i].addEventListener("click", function() {
+            console.log("click");
+            let id = this.dataset.id;
+            isdeleteCourse(id);
+        })
+    }
 
-            <script>
-            // 抓網頁上的 btns
-            let deleteBtns = document.querySelectorAll(".delete-btn");
-            let isdeleteBtns = document.querySelectorAll(".isdelete-btn");
-            let validBtns = document.querySelectorAll(".valid-btn");
+    for (let i = 0; i < validBtns.length; i++) {
+        validBtns[i].addEventListener("click", function() {
+            console.log("click");
+            let id = this.dataset.id;
+            validCourse(id);
+        })
+    }
 
-            // 用迴圈幫 btns 加上事件監聽
-            for (let i = 0; i < deleteBtns.length; i++) {
-                deleteBtns[i].addEventListener("click", function() {
-                    console.log("click");
-                    let id = this.dataset.id;
-                    deleteCourse(id);
-                })
-            }
-
-            for (let i = 0; i < isdeleteBtns.length; i++) {
-                isdeleteBtns[i].addEventListener("click", function() {
-                    console.log("click");
-                    let id = this.dataset.id;
-                    isdeleteCourse(id);
-                })
-            }
-
-            for (let i = 0; i < validBtns.length; i++) {
-                validBtns[i].addEventListener("click", function() {
-                    console.log("click");
-                    let id = this.dataset.id;
-                    validCourse(id);
-                })
-            }
-
-            // 下架 js
-            function deleteCourse(id) {
-                $.ajax({
-                        method: "POST",
-                        url: "../course/api/course-doDelete.php",
-                        dataType: "json",
-                        data: {
-                            id: id
-                        }
-                    })
-                    .done(function(response) {
-                        let status = response.status;
-                        let content = "";
-                        switch (status) {
-                            case 0:
-                                content = response.message;
-                                alert(content)
-                                break;
-                            case 1:
-                                content = response.message;
-                                alert(content)
-                                //重新整理頁面
-                                location.reload()
-                                break;
-                        }
-
-                    }).fail(function(jqXHR, textStatus) {
-                        console.log("Request failed: " + textStatus);
-                    });
-            }
-
-             // 刪除 js
-            function isdeleteCourse(id) {
-                $.ajax({
-                        method: "POST",
-                        url: "../course/api/course-isdoDelete.php",
-                        dataType: "json",
-                        data: {
-                            id: id
-                        }
-                    })
-                    .done(function(response) {
-                        let status = response.status;
-                        let content = "";
-                        switch (status) {
-                            case 0:
-                                content = response.message;
-                                alert(content)
-                                break;
-                            case 1:
-                                content = response.message;
-                                alert(content)
-                                //重新整理頁面
-                                location.reload()
-                                break;
-                        }
-
-                    }).fail(function(jqXHR, textStatus) {
-                        console.log("Request failed: " + textStatus);
-                    });
-            }
-
-             // 上架 js
-            function validCourse(id) {
-                $.ajax({
-                        method: "POST",
-                        url: "../course/api/course-doValid.php",
-                        dataType: "json",
-                        data: {
-                            id: id
-                        }
-                    })
-                    .done(function(response) {
-                        let status = response.status;
-                        let content = "";
-                        switch (status) {
-                            case 0:
-                                content = response.message;
-                                alert(content)
-                                break;
-                            case 1:
-                                content = response.message;
-                                alert(content)
-                                //重新整理頁面
-                                location.reload()
-                                break;
-                        }
-
-                    }).fail(function(jqXHR, textStatus) {
-                        console.log("Request failed: " + textStatus);
-                    });
-            }
-
-            //select 選擇特定選項 option 的 js
-            $(function() {      
-                $("#select").change(function() {
-                    var op = $("#select").find('option');
-                });
+    // 下架 js
+    function deleteCourse(id) {
+        $.ajax({
+                method: "POST",
+                url: "../course/api/course-doDelete.php",
+                dataType: "json",
+                data: {
+                    id: id
+                }
             })
+            .done(function(response) {
+                let status = response.status;
+                let content = "";
+                switch (status) {
+                    case 0:
+                        content = response.message;
+                        alert(content)
+                        break;
+                    case 1:
+                        content = response.message;
+                        alert(content)
+                        //重新整理頁面
+                        location.reload()
+                        break;
+                }
 
-            // 切換分頁的 js
-            let pageCount = document.querySelector("#pageCount");
-            pageCount.addEventListener("change", function(e) {
-                console.log(e.target.value);
-                location.href =
-                    `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>&p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=${e.target.value}<?=$dateURL?>`;
+            }).fail(function(jqXHR, textStatus) {
+                console.log("Request failed: " + textStatus);
+            });
+    }
+
+    // 刪除 js
+    function isdeleteCourse(id) {
+        $.ajax({
+                method: "POST",
+                url: "../course/api/course-isdoDelete.php",
+                dataType: "json",
+                data: {
+                    id: id
+                }
             })
+            .done(function(response) {
+                let status = response.status;
+                let content = "";
+                switch (status) {
+                    case 0:
+                        content = response.message;
+                        alert(content)
+                        break;
+                    case 1:
+                        content = response.message;
+                        alert(content)
+                        //重新整理頁面
+                        location.reload()
+                        break;
+                }
 
-            //全選 js
-            function CheckedAll() {
-                var checkall = $('#checkall')[0].checked;
-                $('input:checkbox.checkbox').each(function() {
-                    this.checked = checkall;
-                });
+            }).fail(function(jqXHR, textStatus) {
+                console.log("Request failed: " + textStatus);
+            });
+    }
+
+    // 上架 js
+    function validCourse(id) {
+        $.ajax({
+                method: "POST",
+                url: "../course/api/course-doValid.php",
+                dataType: "json",
+                data: {
+                    id: id
+                }
+            })
+            .done(function(response) {
+                let status = response.status;
+                let content = "";
+                switch (status) {
+                    case 0:
+                        content = response.message;
+                        alert(content)
+                        break;
+                    case 1:
+                        content = response.message;
+                        alert(content)
+                        //重新整理頁面
+                        location.reload()
+                        break;
+                }
+
+            }).fail(function(jqXHR, textStatus) {
+                console.log("Request failed: " + textStatus);
+            });
+    }
+
+    //select 選擇特定選項 option 的 js
+    // $(function() {      
+    //     $("#select").change(function() {
+    //         var op = $("#select").find('option');
+
+    //     });
+    // });
+
+    // 切換分頁的 js
+    let pageCount = document.querySelector("#pageCount");
+    pageCount.addEventListener("change", function(e) {
+        location.href =
+            `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>&p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=${e.target.value}<?=$dateURL?>`;
+
+    })
+
+    //全選 js
+    function CheckedAll() {
+        var checkall = $('#checkall')[0].checked;
+        $('input:checkbox.checkbox').each(function() {
+            this.checked = checkall;
+        });
+    }
+
+    //圖片即時預覽 js
+    $("#image").change(function() {
+        readURL(this);
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#img-view").attr('src', e.target.result);
             }
-            </script>
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    </script>
 </body>
 
 </html>

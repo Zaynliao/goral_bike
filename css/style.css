@@ -15,4 +15,8 @@
 .btn-dark:hover {
   background-color: #000000 !important;
 }
+
+.offcanvas-end {
+  width: 50vw;
+}
 /*# sourceMappingURL=style.css.map */
