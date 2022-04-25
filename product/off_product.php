@@ -420,7 +420,7 @@ $conn->close();
     </nav>
 
     <div class="py-2 text-center">
-        第 <?= $p ?> 頁 , 共 <?= $page_count ?> 頁 , 共 <?= $total ?> 筆
+        第　<?= $p ?>　頁　，　共　<?= $total ?>　筆　，　共　<?= $page_count ?>　頁
     </div>
 
     <script type="text/javascript">

@@ -168,29 +168,29 @@ $product_count = $result->num_rows;
     <div class="container-fluid">
 
 
-        <div class="py-2 text-end mt-5">
-            第<?= $p ?>頁,共<?= $total ?>筆,共<?= $page_count ?>頁
+
+        <div class="row justify-content-end gap-3 mt-3">
+
+            <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+
+                <?php for ($i = 0; $i < count($a); $i++) : ?>
+
+                    <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>>
+                        <?= $a[$i] ?></option>
+                <?php endfor; ?>
+
+            </select>
+
+            <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
+
+                <?php for ($i = 1; $i <= 4; $i++) : ?>
+
+                    <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
+
+                <?php endfor; ?>
+
+            </select>
         </div>
-
-        <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
-
-            <?php for ($i = 0; $i < count($a); $i++) : ?>
-
-                <option value="<?= $path_query ?>&type=<?= $i ?>&p=<?= $p ?>&per_page=<?= $per_page ?>" <?php if ($type == $i) echo "selected" ?>>
-                    <?= $a[$i] ?></option>
-            <?php endfor; ?>
-
-        </select>
-
-        <select class="form-select w-25" aria-label="Default select example" onchange="location.href=this.options[this.selectedIndex].value;">
-
-            <?php for ($i = 1; $i <= 4; $i++) : ?>
-
-                <option value="<?= $path_query ?>&type=<?= $type ?>&p=<?= $p ?>&per_page=<?= $i * 4 ?>" <?php if ($per_page == $i * 4) echo "selected" ?>>每頁<?= $i * 4 ?>筆</option>
-
-            <?php endfor; ?>
-
-        </select>
 
         <div class="py-2">
 
@@ -310,6 +310,9 @@ $product_count = $result->num_rows;
 
             </ul>
         </nav>
+        <div class="py-2 text-center">
+            第　<?= $p ?>　頁　，　共　<?= $total ?>　筆　，　共　<?= $page_count ?>　頁
+        </div>
     </div>
 
     <script type="text/javascript">
