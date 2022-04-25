@@ -333,7 +333,7 @@ $conn->close();
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_off_accessory.php?p=<?= $p ?>&accessory_category=<?= $category ?>&type=<?= $type ?>&<?= $path_query ?>"><?= $i ?></a></li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link" href="../goral_bike_layout/goral_biker_off_accessory.php?p=<?= $p ?>&accessory_category=<?= $category ?>&type=<?= $type ?>&<?= $path_query ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
         </ul>
     </nav>

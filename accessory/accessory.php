@@ -369,11 +369,11 @@ $conn->close();
         <ul class="pagination">
             <?php if (strpos($file, "accessory_category") === false) : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_accessory.php?p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?><?= $searchQuery ?>"><?= $i ?></a></li>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link" href="../goral_bike_layout/goral_biker_accessory.php?p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?><?= $searchQuery ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
             <?php else : ?>
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
-                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link text-dark" href="../goral_bike_layout/goral_biker_accessory.php?p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&accessory_category=<?= $accessory_category ?><?= $searchQuery ?>"><?= $i ?></a>
+                    <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link" href="../goral_bike_layout/goral_biker_accessory.php?p=<?= $i ?>&type=<?= $type ?>&per_page=<?= $per_page ?>&accessory_category=<?= $accessory_category ?><?= $searchQuery ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             <?php endif; ?>
