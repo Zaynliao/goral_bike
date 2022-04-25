@@ -221,7 +221,7 @@ $conn->close();
                     <div class="collapse multi-collapse" id="insert">
                         <div class="container">
 
-                            <form class="row g-3 mt-2" name="insert" action="../product/goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
+                            <form class="row g-3 mt-2 text-start" name="insert" action="../product/goral_bike_php/product_insert.php" method="post" enctype="multipart/form-data">
 
                                 <div class="col-md-6">
                                     <label for="product_name" class="form-label">商品名稱</label>
@@ -233,18 +233,16 @@ $conn->close();
                                     <input type="number" class="form-control" name="product_price" min=0 id="product_price" min=0 placeholder="請輸入商品價格">
                                 </div>
 
-
-
-                                <div class="col-8">
+                                <div class="col-12">
                                     <div class="mb-3">
                                         <label for="product_images" class="form-label">商品圖片</label>
                                         <input class="form-control" type="file" name="product_images" id="product_images" placeholder="請輸入商品圖片">
                                     </div>
-                                    <div class="img-thumbnail text-center"> <img src="../../goral_bike_First/course/icon/no-image.png" class=" img-fluid" id="img-view">
+                                    <div class="img-thumbnail text-center py-5"> <img src="../../goral_bike_First/course/icon/no-image.png" class=" img-fluid" id="img-view">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label for="product_update" class="form-label">上架日期</label>
                                     <input type="date" class="form-control" name="product_update" id="product_update">
                                 </div>
