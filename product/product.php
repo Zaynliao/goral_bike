@@ -230,7 +230,7 @@ $conn->close();
 
                                 <div class="col-md-6">
                                     <label for="product_price" class="form-label">商品價格</label>
-                                    <input type="text" class="form-control" name="product_price" id="product_price" placeholder="請輸入商品價格">
+                                    <input type="number" class="form-control" name="product_price" id="product_price" placeholder="請輸入商品價格">
                                 </div>
 
                                 <div class="col-8">
@@ -411,6 +411,8 @@ $conn->close();
     <div class="py-2 text-center">
         第　<?= $p ?>　頁　，　共　<?= $total ?>　筆　，　共　<?= $page_count ?>　頁
     </div>
+
+
 </div>
 
 <script type="text/javascript">
