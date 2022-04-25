@@ -205,9 +205,7 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
     object-fit: cover;
 }
 
-a{
-    text-decoration: none;
-}
+
 </style>
 
 <body>
@@ -487,7 +485,7 @@ a{
                 <div class="d-flex flex-wrap">
 
                     <?php foreach ($rows as $row) : ?>
-
+                    <input type="hidden" name="id" id="id" value="<?= $row["course_id"] ?>">
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
                         <div class="card shadow-sm mx-2">
                             <figure class="product-img text-center">
@@ -502,7 +500,7 @@ a{
 
                             </figure>
                             <div class="pb-2 px-3">
-                                <a class="badge rounded-pill px-2 me-1
+                                <span class="badge rounded-pill px-2 me-1
                                         <?php if ($row["course_category_id"] == 1) : echo "bg-success" ?>
                                         <?php else : echo "bg-danger" ?>
                                         <?php endif; //標籤顏色判斷 ?>"
@@ -510,8 +508,8 @@ a{
 
                                     <!-- 類別名稱顯示 -->
                                     <?= $row["course_category_name"] ?>
-                                </a>
-                                <a class="badge rounded-pill px-2 me-1
+                                </span>
+                                <span class="badge rounded-pill px-2 me-1
                                         <?php if ($row["course_status_id"] == 1) : echo "bg-secondary" ?>
                                         <?php elseif ($row["course_status_id"] == 2) : echo "bg-success" ?>
                                         <?php else : echo "bg-danger" ?>
@@ -520,7 +518,7 @@ a{
 
                                     <!-- 狀態名稱顯示 -->
                                     <?= $row["course_status_name"] ?>
-                                </a>
+                                </span>
                                 <span class="badge bg-dark rounded-pill px-2 me-1"
                                     <?php if (!$row["course_location_id"]) echo "hidden" //標籤hidden判斷?>>
 
@@ -547,7 +545,7 @@ a{
                                 </div>
                                 <!-- 單次 delete/update 按鈕 -->
                                 <div class="d-grid">
-                                    <button formaction="../course/api/course-doDelete"
+                                    <button formaction="../course/api/course-doDelete.php"
                                         class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
                                         data-id="<?= $row["course_id"] ?>"
                                         <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0)  echo "hidden" ?>>下架課程</button>
@@ -568,12 +566,6 @@ a{
             <?php endforeach; ?>
 
             <?php else : ?>
-
-            <p class="text-center mt-4 fw-bold text-secondary">
-                無資料符合
-                <br>
-                請選擇其他條件
-            </p>
 
             <p class="text-center mt-4 fw-bold text-secondary">
                 無資料符合

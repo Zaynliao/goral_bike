@@ -11,12 +11,13 @@ $end_time=$_POST["end_time"];
 $price=$_POST["price"];
 $content=$_POST["content"];
 
+
 $dateNew=strtotime($date);
 $dateEnd=strtotime($end_time);
 $dateStart=strtotime($start_time);
 $today=time();
 
-if(empty($category)||empty($name)||empty($fileName)||empty($date)||empty($enrollment)||empty($start_time)||empty($end_time)||empty($statu)||empty($price)||empty($content)){
+if(empty($category)||empty($name)||empty($fileName)||empty($date)||empty($enrollment)||empty($start_time)||empty($end_time)||empty($price)||empty($content)){
     echo "<script>alert('錯誤:存在未填寫欄位')</script>";
     echo "<script>history.go(-1)</script> ";
     exit;
@@ -30,9 +31,9 @@ if($end_time < $start_time|| $dateNew < $dateEnd){
 
 if($dateStart > $today){
     $statu=1;
-}elseif($dateEnd < $today &&  $today < $dateStart){
+}elseif($dateEnd > $today){
     $statu=2;
-}else{
+}elseif($dateEnd < $today){
     $statu=3;
 }
 

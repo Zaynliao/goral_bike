@@ -10,7 +10,6 @@ $enrollment=$_POST["enrollment"];
 $inventory=$_POST["inventory"];
 $start_time=$_POST["start_time"];
 $end_time=$_POST["end_time"];
-$statu=$_POST["statu"];
 $price=$_POST["price"];
 $content=$_POST["content"];
 $valid=$_POST["valid"];
@@ -20,6 +19,7 @@ $dateNew=strtotime($date);
 $dateEnd=strtotime($end_time);
 $dateStart=strtotime($start_time);
 $today=time();
+
 
 if(empty($name)||empty($date)||empty($enrollment)||empty($start_time)||empty($end_time)||empty($price)||$inventory==null||empty($content)){
     echo "<script>alert('有欄位未填寫')</script>";
@@ -42,9 +42,9 @@ if($end_time < $start_time|| $dateNew < $dateEnd){
 
     if($dateStart > $today){
         $statu=1;
-    }elseif($dateEnd < $today &&  $today < $dateStart){
+    }elseif($dateEnd > $today){
         $statu=2;
-    }else{
+    }elseif($dateEnd < $today){
         $statu=3;
     }
     
