@@ -79,7 +79,7 @@ $conn->close();
 
     <div class="container mt-5">
         <div class="container">
-            <a href="goral_biker_product_category_create.php" class="btn btn-success mb-3git ">Create payment method</a>
+            <a href="goral_biker_product_category_create.php" class="btn btn-success mb-3">Create payment method</a>
             <div>
                 <table class="table table-bordered w-100">
                     <thead class="table-dark">
@@ -102,6 +102,7 @@ $conn->close();
                             <td class="text-center">
                                 <a href="../product_category/product_category_delete.php?id=<?= $row["product_category_id"] ?>"
                                     class="btn btn-danger">Delete product category</a>
+                                    
                             </td>
                         </tr>
                         <?php endforeach;?>
@@ -117,7 +118,7 @@ $conn->close();
 
                 <?php for ($i = 1; $i <= $page_count; $i++) : ?>
                 <li class="page-item <?php if ($i == $p) echo "active" ?>"><a class="page-link "
-                        href="goral_biker_product_category.php?p=<?=$i?>" <?=$i?>><?=$i?></a>
+                        href="goral_biker_product_category.php?p=<?=$i?>"><?=$i?></a>
                 </li>
                 <?php endfor; ?>
 
