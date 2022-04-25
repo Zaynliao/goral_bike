@@ -32,7 +32,7 @@ $conn->close();
                 <div class="row g-0">
 
                     <div class="col-md-5 my-auto">
-                        <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>" class="img-fluid rounded-start" alt="<?= $row["product_name"] ?>">
+                        <img src="../product/goral_bike_pic/<?= $row["product_images"] ?>" class="img-fluid rounded-start" name="img-view" id="img-view" alt="<?= $row["product_name"] ?>">
                     </div>
                     <div class="col-md-7 my-auto">
                         <div class="card-body">
@@ -94,3 +94,29 @@ $conn->close();
         </form>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $("#product_images").change(function() {
+
+        readURL(this);
+
+    });
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+
+                $("#img-view").attr('src', e.target.result);
+
+            }
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+
+    }
+</script>
