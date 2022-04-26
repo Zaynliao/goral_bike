@@ -197,7 +197,7 @@ if ($row["order_status"] == 1) {
 
                             <h4 class="h4 text-end py-4 mx-3">總金額：＄
                                 <?php if ($row_total["total"] > 0) : ?>
-                                    <? $row_total["total"] ?>
+                                    <?= $row_total["total"] ?>
                                 <?php else : ?>
                                     0
                                 <?php endif; ?>
