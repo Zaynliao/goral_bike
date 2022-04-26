@@ -195,7 +195,14 @@ if ($row["order_status"] == 1) {
                                 <hr>
                             <?php endforeach; ?>
 
-                            <h4 class="h4 text-end py-4 mx-3">總金額：＄<?= $row_total["total"] ?></h4>
+                            <h4 class="h4 text-end py-4 mx-3">總金額：＄
+                                <?php if ($row_total["total"] > 0) : ?>
+                                    <? $row_total["total"] ?>
+                                <?php else : ?>
+                                    0
+                                <?php endif; ?>
+
+                            </h4>
 
                             <h4 class="h4 text-success text-end py-4 mx-3">優惠卷折扣 總金額：＄<?= $row_total["total"] * $row["coupon_discount"] / 100 ?> </h4>
                             <input type="hidden" name="total_final" id="total_final" value="<?= $row_total["total"] * $row["coupon_discount"] / 100 ?>">
