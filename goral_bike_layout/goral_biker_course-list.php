@@ -9,6 +9,7 @@
 
     <!-- css & bs5 -->
     <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../fontawesome-free-6.0.0-web/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -38,6 +39,7 @@
 
     </div>
     <!-- Bootstrap JavaScript Libraries -->
+    
     <?php require_once("../product/goral_bike_php/js.php") ?>
 
 </body>

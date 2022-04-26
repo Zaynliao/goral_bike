@@ -94,7 +94,7 @@ if (isset($_GET["search"])) {
 
 // ==========判斷有無課程類別屬性==========
 
-if (!isset($_GET["cate"])) {
+if (!isset($_GET["cate"]) || $_GET["cate"]==0) {
     // $cateNames=["全部課程","入門課程","進階課程"];
     // 此處 0 非指資料庫的 id，而是 $cateName 的 index[0]
     // 詳見   <!-- 課程類別按鈕(動態新增) -->
@@ -105,6 +105,17 @@ if (!isset($_GET["cate"])) {
     $cate = $_GET["cate"];
     $cates = "AND classes.course_category_id=$cate";
     $cateURL = "&cate=$cate";
+}
+
+
+// ==========判斷有無列表類別屬性==========
+
+if (!isset($_GET["mode"])) {
+    $mode=1;
+    $modeURL = "&mode=1";
+} else {
+    $mode=$_GET["mode"];
+    $modeURL = "&mode=$mode";
 }
 
 // ==========判斷排序方式==========
@@ -127,6 +138,30 @@ switch ($type) {
         break;
     case "6";
         $order = "course_price DESC"; //價錢反序
+        break;
+    case "7";
+        $order = "course_title ASC"; //名字正序
+        break;
+    case "8";
+        $order = "course_title DESC"; //名字反序
+        break;
+    case "9";
+        $order = "classes.course_location_id ASC"; //名字正序
+        break;
+    case "10";
+        $order = "classes.course_location_id DESC"; //名字反序
+        break;
+    case "11";
+        $order = "classes.course_category_id ASC"; //名字正序
+        break;
+    case "12";
+        $order = "classes.course_category_id DESC"; //名字反序
+        break;
+    case "13";
+        $order = "classes.course_status_id ASC"; //名字正序
+        break;
+    case "14";
+        $order = "classes.course_status_id DESC"; //名字反序
         break;
     default:
         $order = "course_id ASC"; //ID 正序
@@ -205,7 +240,20 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
     object-fit: cover;
 }
 
+a {
+    text-decoration: none;
+}
 
+.table-title{
+    background: black;
+    color: white;
+}
+
+
+.fa-caret-up,
+.fa-caret-down{
+    color: white;
+}
 </style>
 
 <body>
@@ -247,7 +295,7 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                 </div>
 
                 <!-- 排序方式選擇區塊 -->
-                <div class="mt-2">
+                <div class="mt-2 <?php if($mode==2) echo "d-none"?>" <?php if($mode==2) echo "disabled"?>>
 
                     <?php
 
@@ -267,7 +315,7 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <option
                             <?php if ($type == $i+1) echo "selected" //陣列以 0 為開頭，$type 以 1 為開頭，故 $type 隨著陣列的增加要加 1 ?>
                             value="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
-                                <?=$cateURL?><?=$pURL?>&type=<?=$i+1?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                                <?=$cateURL?><?=$pURL?>&type=<?=$i+1?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                             <!-- 排序類別名稱顯示 -->
                             <?=$typeNames[$i]?>
                         </option>
@@ -390,9 +438,9 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                     <!-- 做 3 個課程類別按鈕 -->
                     <?php for ($i = 0; $i <= 2; $i++) : ?>
 
-                    <a <?php if ($cate == $i) echo "active"?> <?php if ($valid!=0) echo "hidden"?> href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
-                            &cate=<?=$i?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>"
-                        class="btn <?=$cateColors[$i]?> text-white fw-bold mb-2">
+                    <a <?php if ($cate == $i) echo "active"?> <?php if ($valid!=0) echo "hidden"?>
+                        href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
+                            &cate=<?=$i?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>" class="btn <?=$cateColors[$i]?> text-white fw-bold mb-2">
                         <!-- $cateColors=["btn-dark","btn-success","btn-danger"]; -->
                         <!-- 使對應不同類別按鈕的 class 樣式 -->
                         <!-- 課程類別名稱顯示 -->
@@ -417,7 +465,8 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                             <div class="row gap-2">
                                 <!-- 關鍵字篩選 -->
                                 <div class="col-12">
-                                    <input class="form-control" type="search" placeholder="搜尋關鍵字" aria-label="Search" name="search" id="search" value="<?= $search ?>">
+                                    <input class="form-control" type="search" placeholder="搜尋關鍵字" aria-label="Search"
+                                        name="search" id="search" value="<?= $search ?>">
                                 </div>
                                 <!-- 日期篩選 -->
                                 <!-- value 預設值為課程最小 $rowMinDate['course_date']及最大值 $rowMaxDate['course_date'] -->
@@ -443,9 +492,11 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                                 <div>
                                     <!-- 額外需求值 -->
                                     <div class="hidden-input">
-                                        <input type="hidden" name="cate" value="<?= $cate ?>" <?php if (!$cate) echo "disabled" ?>>
+                                        <input type="hidden" name="cate" value="<?= $cate ?>"
+                                            <?php if (!$cate) echo "disabled" ?>>
                                         <input type="hidden" name="valid" value="<?= $valid ?>">
                                         <input type="hidden" name="per_page" value="<?= $per_page ?>">
+                                        <input type="hidden" name="mode" value="<?= $mode ?>">
                                     </div>
                                 </div>
                             </div>
@@ -474,95 +525,33 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                     <button type="submit" id="batchDel" name="batchDel" class="btn btn-secondary fw-bold"
                         formaction="../course/api/course-doBatchIsDoDelete.php"
                         <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>批次刪除</button>
+                    <a class="btn btn-secondary" <?php if($mode==1) echo "hidden"?>
+                        href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
+                                <?=$cateURL?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>&mode=1"><i class="fa-solid fa-grip"></i></a>
+                    <a class="btn btn-secondary" <?php if($mode==2) echo "hidden"?>
+                        href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?>
+                                <?=$cateURL?><?=$pURL?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>&mode=2"><i class="fa-solid fa-list"></i></a>
                     <!-- 全選勾選checkbox -->
-                    <span class="">
+                    <span class="" <?php if($mode==2) echo "disabled hidden"?>>
                         <input class="ms-1 me-2 form-check-input" type="checkbox" name="checkall" id="checkall"
                             onclick="CheckedAll()" />全選
                         <!-- 如果勾選，則執行 CheckedAll()-->
                     </span>
+
                 </div>
                 <!-- 課程顯示 -->
-                <div class="d-flex flex-wrap">
 
-                    <?php foreach ($rows as $row) : ?>
-                    <input type="hidden" name="id" id="id" value="<?= $row["course_id"] ?>">
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
-                        <div class="card shadow-sm mx-2">
-                            <figure class="product-img text-center">
+                <?php if($mode==1):?>
 
-                                <img class="object-cover" src="../course/images/<?= $row["course_pictures"] ?>" alt="">
-                                <!-- 每個產品的 checkbox -->
-                                <div class="text-start">
-                                    <input class="checkbox form-check-input ms-2 mt-2 position-absolute top-0 start-0"
-                                        name="checkbox[]" id="checkbox" type="checkbox" value="<?= $row["course_id"] ?>"
-                                        aria-label="">
-                                </div>
+                <?php require("../course/layout/course-list-image.php");?>
 
-                            </figure>
-                            <div class="pb-2 px-3">
-                                <span class="badge rounded-pill px-2 me-1
-                                        <?php if ($row["course_category_id"] == 1) : echo "bg-success" ?>
-                                        <?php else : echo "bg-danger" ?>
-                                        <?php endif; //標籤顏色判斷 ?>"
-                                    <?php if (!$row["course_category_id"]) echo "hidden" //標籤hidden判斷?>>
+                <?php elseif($mode==2):?>
 
-                                    <!-- 類別名稱顯示 -->
-                                    <?= $row["course_category_name"] ?>
-                                </span>
-                                <span class="badge rounded-pill px-2 me-1
-                                        <?php if ($row["course_status_id"] == 1) : echo "bg-secondary" ?>
-                                        <?php elseif ($row["course_status_id"] == 2) : echo "bg-success" ?>
-                                        <?php else : echo "bg-danger" ?>
-                                        <?php endif; //標籤顏色判斷 ?>"
-                                    <?php if (!$row["course_status_id"]) echo "hidden" //標籤hidden判斷?>>
+                <?php require("../course/layout/course-list-row.php");?>
 
-                                    <!-- 狀態名稱顯示 -->
-                                    <?= $row["course_status_name"] ?>
-                                </span>
-                                <span class="badge bg-dark rounded-pill px-2 me-1"
-                                    <?php if (!$row["course_location_id"]) echo "hidden" //標籤hidden判斷?>>
-                                    <!-- 地點名稱顯示 -->
-                                    <?= $row["course_location_name"] ?>
-                                </span>
-                                <span class="badge bg-dark rounded-pill px-2 me-2"
-                                    <?php if (!$row["course_price"]) echo "hidden"?>>
+                <?php endif;?>
 
-                                    <!-- 價錢顯示 -->
-                                    <?= $row["course_price"] ?> / 人
-                                </span>
-                                <!-- 課程名稱與時間顯示 -->
-                                <div class="name-time mt-3">
-                                    <h3 class="text-dark fw-bold"><?= $row["course_title"] ?></h3>
-                                    <h5 class="text-dark fw-bold"><?= $row["course_date"] ?></h5>
-                                </div>
-                                <!-- 單次修改課程按鈕 -->
-                                <div class="d-grid mt-4">
-                                    <!-- 需傳送特定單筆資料的各式欄位，以到修改頁面能取得 GET -->
-                                    <a class="btn btn-dark text-white mb-2 fw-bold"
-                                        href="../goral_bike_layout/goral_biker_course-upload.php?id=<?= $row["course_id"] ?>&statu=<?= $row["course_status_id"] ?>
-                                        &loca=<?= $row["course_location_id"] ?>&cate=<?= $row["course_category_id"] ?>">修改課程</a>
-                                </div>
-                                <!-- 單次 delete/update 按鈕 -->
-                                <div class="d-grid">
-                                    <button formaction="../course/api/course-doDelete.php"
-                                        class="delete-btn btn btn-secondary text-white mb-2 fw-bold"
-                                        data-id="<?= $row["course_id"] ?>"
-                                        <?php if (isset($_GET["valid"]) && $_GET["valid"] == 0)  echo "hidden" ?>>下架課程</button>
-                                    <button formaction="../course/api/course-doValid.php"
-                                        class="valid-btn btn btn-info text-white mb-2 fw-bold"
-                                        data-id="<?= $row["course_id"] ?>"
-                                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>上架課程</button>
-                                    <button formaction="../course/api/course-isdoDelete.php"
-                                        class="isdelete-btn btn btn-danger text-white mb-2 fw-bold"
-                                        data-id="<?= $row["course_id"] ?>"
-                                        <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>刪除課程</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
             </form>
-
-            <?php endforeach; ?>
 
             <?php else : ?>
 
@@ -572,8 +561,10 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                 請選擇其他條件
             </p>
 
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
+
+
         <!-- 分頁 -->
         <div class="py-2">
             <div class="d-flex justify-content-center">
@@ -581,7 +572,7 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                     <ul class="pagination">
                         <li class="page-item <?php if($p==1 || $p==2)echo "disabled"?>">
                             <a class="page-link" aria-label="Previous" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                &p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                                &p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -590,20 +581,23 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <?php if ($p == 1) : ?>
 
                         <li class="page-item <?php if($p == 1) echo "active"?>">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p + 1 ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p+2 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p+2 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p + 2 ?>
                             </a>
                         </li>
@@ -611,20 +605,23 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <?php elseif ($p + 1 <= $page_count) : ?>
 
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p - 1 ?>
                             </a>
                         </li>
                         <li class="page-item  active">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p + 1 ?>
                             </a>
                         </li>
@@ -632,20 +629,23 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <?php elseif ($p == $page_count) : ?>
 
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p-2 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p-2 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p - 2 ?>
                             </a>
                         </li>
                         <li class="page-item  <?php if($p == ($page_count-1)) echo "active"?>">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p - 1 ?>
                             </a>
                         </li>
                         <li class="page-item  <?php if($p == $page_count) echo "active"?>">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p ?>
                             </a>
                         </li>
@@ -657,14 +657,16 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <?php if($p==1):?>
 
                         <li class="page-item active">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p ?>
                             </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p+1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p+1 ?>
                             </a>
                         </li>
@@ -672,14 +674,16 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <?php else : ?>
 
                         <li class="page-item">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p-1 ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p-1 ?>
                             </a>
                         </li>
                         <li class="page-item active">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p ?>
                             </a>
                         </li>
@@ -689,8 +693,9 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
                         <?php else:?>
 
                         <li class="page-item active">
-                            <a class="page-link" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $p ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <?= $p ?>
                             </a>
                         </li>
@@ -699,8 +704,9 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
 
                         <li class="page-item 
                                 <?php if($p==$page_count || $p+1==$page_count) echo "disabled"?>">
-                            <a class="page-link" aria-label="Next" href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
-                                    &p=<?= $page_count ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?>">
+                            <a class="page-link" aria-label="Next"
+                                href="../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>
+                                    &p=<?= $page_count ?><?=$typeURL?><?=$dateURL?><?=$searchURL?><?=$perpageURL?><?=$modeURL?>">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -715,6 +721,7 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
         </div>
 
     </div>
+    <script src="./js/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
@@ -853,7 +860,7 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
     let pageCount = document.querySelector("#pageCount");
     pageCount.addEventListener("change", function(e) {
         location.href =
-            `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>&p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=${e.target.value}<?=$dateURL?>`;
+            `../goral_bike_layout/goral_biker_course-list.php?valid=<?=$valid?><?=$cateURL?>&p=1<?=$typeURL?><?=$dateURL?><?=$searchURL?>&per_page=${e.target.value}<?=$dateURL?><?=$modeURL?>`;
 
     })
 
@@ -861,6 +868,14 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
     function CheckedAll() {
         var checkall = $('#checkall')[0].checked;
         $('input:checkbox.checkbox').each(function() {
+            this.checked = checkall;
+        });
+    }
+
+    //全選 js
+    function CheckedAllrow() {
+        var checkall = $('#checkallrow')[0].checked;
+        $('input:checkbox.checkboxrow').each(function() {
             this.checked = checkall;
         });
     }
@@ -880,6 +895,11 @@ $rowsLoca = $resultLoca->fetch_all(MYSQLI_ASSOC);
         }
     }
 
+    // data-bs-toggl's js
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     </script>
 </body>
 

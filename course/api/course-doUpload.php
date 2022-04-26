@@ -16,6 +16,7 @@ $valid=$_POST["valid"];
 $location=$_POST["location"];
 
 
+
 $dateNew=strtotime($date);
 $dateEnd=strtotime($end_time);
 $dateStart=strtotime($start_time);

@@ -44,12 +44,12 @@ $sql="INSERT INTO classes (course_category_id, course_title, course_pictures, co
 
 if ($conn->query($sql) === TRUE) {
     echo "<script>alert('新增課程完成')</script>";
-    echo "<script>location.href='../../goral_bike_layout/goral_biker_course-list.php?valid=1'</script> ";
+    echo "<script>self.location=document.referrer;</script>";;
     exit;
 
 } else {
     echo "<script>alert('新增課程錯誤')</script>";
-    echo "<script>history.go(-1)</script> ";
+    echo "<script>history.go(-1)</script>";
     exit;
 }
 
