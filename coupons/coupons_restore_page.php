@@ -13,10 +13,10 @@ $type=1;
 $type=$_GET["type"];
 }
 
-if(!isset($_GET["filter_name"])){
+if(!isset($_GET["coupon_name"])){
   $filter_name = "";
 }else{
-  $filter_name = $_GET["filter_name"];
+  $filter_name = $_GET["coupon_name"];
 }
 
 
