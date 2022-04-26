@@ -4,10 +4,10 @@
             <input class="form-check-input" type="checkbox" name="checkall" id="checkallrow"
                 onclick="CheckedAllrow()" />
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
             <input class="checkboxrow form-check-input" name="checkbox[]" id="checkbox" type="checkbox"
-                value="<?= $row["course_id"] ?>" aria-label="">
+                value="<?= $value["course_id"] ?>" aria-label="">
         </div>
         <?php endforeach;?>
     </div>
@@ -27,9 +27,9 @@
                 </div>
             </div>
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href=""><?=$row["course_title"]?></a>
+        <?php foreach($rows as $row => $value):?>
+        <div class="border-top py-2 px-3" <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href=""><?=$value["course_title"]?></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -49,9 +49,9 @@
                 </div>
             </div>
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href=""><?=$row["course_category_name"]?></a>
+        <?php foreach( $rows as $row=>$value):?>
+        <div class="border-top py-2 px-3" <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href=""><?=$value["course_category_name"]?></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -71,9 +71,9 @@
                 </div>
             </div>
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href=""><?=$row["course_date"]?></a>
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3" <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href=""><?=$value["course_date"]?></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -93,9 +93,9 @@
                 </div>
             </div>
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href=""><?=$row["course_location_name"]?></a>
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href=""><?=$value["course_location_name"]?></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -115,9 +115,9 @@
                 </div>
             </div>
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href=""> $ <?=$row["course_price"]?></a>
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href=""> $ <?=$value["course_price"]?></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -137,13 +137,13 @@
                 </div>
             </div>
         </div>
-        <?php foreach($rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href="" data-bs-toggle="tooltip" data-bs-placement="right" <?php if($row["course_status_id"] == 1) :?>
-                title="報名未開放" <?php elseif($row["course_status_id"] == 2):?> title="報名開放中" <?php else:?> title="報名已截止"
+        <?php foreach($rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href="" data-bs-toggle="tooltip" data-bs-placement="right" <?php if($value["course_status_id"] == 1) :?>
+                title="報名未開放" <?php elseif($value["course_status_id"] == 2):?> title="報名開放中" <?php else:?> title="報名已截止"
                 <?php endif; ?>>
-                <i <?php if($row["course_status_id"] == 1) :?> class="fa-regular fa-circle-xmark" style="color:firebrick;"
-                    <?php elseif($row["course_status_id"] == 2):?> class="fa-regular fa-circle-check" style="color:green;"<?php else:?>
+                <i <?php if($value["course_status_id"] == 1) :?> class="fa-regular fa-circle-xmark" style="color:firebrick;"
+                    <?php elseif($value["course_status_id"] == 2):?> class="fa-regular fa-circle-check" style="color:green;"<?php else:?>
                     class="fa-solid fa-ban" style="color:#666;" <?php endif; ?>></i>
             </a>
         </div>
@@ -153,10 +153,10 @@
         <div class="table-title py-2 px-3 fw-bold">
             編輯
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href="../goral_bike_layout/goral_biker_course-upload.php?id=<?= $row["course_id"] ?>&statu=<?= $row["course_status_id"] ?>
-                        &loca=<?= $row["course_location_id"] ?>&cate=<?= $row["course_category_id"] ?>"><i
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href="../goral_bike_layout/goral_biker_course-upload.php?id=<?= $value["course_id"] ?>&statu=<?= $value["course_status_id"] ?>
+                        &loca=<?= $value["course_location_id"] ?>&cate=<?= $value["course_category_id"] ?>"><i
                     class="fa-solid fa-pen-to-square"></i></a>
         </div>
         <?php endforeach;?>
@@ -165,9 +165,9 @@
         <div class="table-title py-2 px-3 fw-bold"  style="border-top-right-radius: 5px;" >
             下架
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href="#" class="delete-btn" data-id="<?= $row["course_id"] ?>"><i class="fa-solid fa-clipboard"></i></i></a>
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href="#" class="delete-btn" data-id="<?= $value["course_id"] ?>"><i class="fa-solid fa-clipboard"></i></i></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -175,9 +175,9 @@
         <div class="table-title py-2 px-3 fw-bold">
             上架
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href="#" class="valid-btn" data-id="<?= $row["course_id"] ?>"><i class="fa-solid fa-clipboard-check"></i></a>
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href="#" class="valid-btn" data-id="<?= $value["course_id"] ?>"><i class="fa-solid fa-clipboard-check"></i></a>
         </div>
         <?php endforeach;?>
     </div>
@@ -185,9 +185,9 @@
         <div class="table-title py-2 px-3 fw-bold" style="border-top-right-radius: 5px;" >
             刪除
         </div>
-        <?php foreach( $rows as $row):?>
-        <div class="border-top py-2 px-3">
-            <a href="#" class="isdelete-btn" data-id="<?= $row["course_id"] ?>"> <i
+        <?php foreach( $rows as $row => $value):?>
+        <div class="border-top py-2 px-3"  <?php if (($row%2)!==0) echo "style=background:#f8f9fa;"?>>
+            <a href="#" class="isdelete-btn" data-id="<?= $value["course_id"] ?>"> <i
                     class="fa-solid fa-trash"></i></a>
         </div>
         <?php endforeach;?>
