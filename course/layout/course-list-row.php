@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-evenly align-content-center border rounded text-nowrap">
+<div class="d-flex justify-content-evenly align-content-center border rounded text-nowrap my-5 shadow">
     <div class="col-auto text-center">
         <div class="table-title py-2 px-3"  style="border-top-left-radius: 5px;">
             <input class="form-check-input" type="checkbox" name="checkall" id="checkallrow"
@@ -99,7 +99,7 @@
         </div>
         <?php endforeach;?>
     </div>
-    <div class="col d-none d-lg-block border-start text-center">
+    <div class="col-auto d-none d-lg-block border-start text-center">
         <div class="table-title pt-1 pb-2 px-3 d-flex justify-content-center">
             <div class="col-auto pt-1 fw-bold">
                 價錢 / 人
@@ -121,7 +121,7 @@
         </div>
         <?php endforeach;?>
     </div>
-    <div class="col border-start text-center d-none d-sm-block">
+    <div class="col-auto border-start text-center d-none d-sm-block">
         <div class="table-title pt-1 pb-2 px-3 d-flex justify-content-center">
             <div class="col-auto pt-1 fw-bold">
                 狀態
@@ -149,7 +149,7 @@
         </div>
         <?php endforeach;?>
     </div>
-    <div class="col border-start text-center">
+    <div class="col-auto border-start text-center">
         <div class="table-title py-2 px-3 fw-bold">
             編輯
         </div>
@@ -161,7 +161,7 @@
         </div>
         <?php endforeach;?>
     </div>
-    <div class="col border-start text-center"<?php if (isset($_GET["valid"]) && $_GET["valid"] == 0)  echo "hidden" ?>>
+    <div class="col-auto border-start text-center"<?php if (isset($_GET["valid"]) && $_GET["valid"] == 0)  echo "hidden" ?>>
         <div class="table-title py-2 px-3 fw-bold"  style="border-top-right-radius: 5px;" >
             下架
         </div>
@@ -171,7 +171,7 @@
         </div>
         <?php endforeach;?>
     </div>
-    <div class="col border-start text-center" <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>
+    <div class="col-auto border-start text-center" <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>
         <div class="table-title py-2 px-3 fw-bold">
             上架
         </div>
@@ -181,7 +181,7 @@
         </div>
         <?php endforeach;?>
     </div>
-    <div class="col border-start text-center" <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>
+    <div class="col-auto border-start text-center" <?php if (!isset($_GET["valid"]) || $_GET["valid"] == 1) echo "hidden" ?>>
         <div class="table-title py-2 px-3 fw-bold" style="border-top-right-radius: 5px;" >
             刪除
         </div>
