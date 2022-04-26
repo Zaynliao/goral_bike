@@ -108,7 +108,7 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
 
     $resultAct = $conn->query($sqlAct);
     $rowsAct = $resultAct->fetch_all(MYSQLI_ASSOC);
-} elseif (isset($_GET["activity_venue_id"])) {
+} elseif (isset($_GET["activity_venue_id"]) && $_GET["activity_venue_id"] != "%" ) {
     $activity_venue_id = $_GET["activity_venue_id"];
     $activity_status_id = "%";
     $sqlAct = "SELECT activity.*, activity_status.activity_status_name, activity_venue.activity_venue_name FROM activity
@@ -331,30 +331,30 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
                     </li>
                     <?php if ($page_count == 1) : ?>
                         <li class="page-item active">
-                            <a class="page-link " href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                            <a class="page-link " href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                 1
                             </a>
                         </li>
                     <?php elseif ($page_count == 2) : ?>
                         <?php if ($p == 1) : ?>
                             <li class="page-item active">
-                                <a class="page-link " href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                     1
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                     2
                                 </a>
                             </li>
                         <?php else : ?>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=1&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                     1
                                 </a>
                             </li>
                             <li class="page-item active">
-                                <a class="page-link " href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=2&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                     2
                                 </a>
                             </li>
@@ -363,56 +363,56 @@ if (!isset($_GET["activity_venue_id"]) && !isset($_GET["activity_status_id"])) {
                     <?php else : ?>
                         <?php if ($p == 1) : ?>
                             <li class="page-item active">
-                                <a class="page-link " href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                     <?= $p ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p + 1 ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 2 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 2 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p + 2 ?>
                                 </a>
                             </li>
                         <?php elseif ($p + 1 <= $page_count) : ?>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p - 1 ?>
                                 </a>
                             </li>
                             <li class="page-item active">
-                                <a class="page-link " href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link " href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p + 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p + 1 ?>
                                 </a>
                             </li>
                         <?php elseif ($p == $page_count) : ?>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 2 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 2 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p - 2 ?>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p - 1 ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>">
                                     <?= $p - 1 ?>
                                 </a>
                             </li>
                             <li class="page-item active">
-                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" ">
+                                <a class="page-link" href="goral_biker_activity-list.php?p=<?= $p ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" >
                                     <?= $p ?>
                                 </a>
                             </li>
                         <?php endif; ?>
                     <?php endif; ?>
                     <li class="page-item">
-                        <a class="page-link" href="goral_biker_activity-list.php?p=<?= $page_count ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>" " aria-label="Next">
+                        <a class="page-link" href="goral_biker_activity-list.php?p=<?= $page_count ?>&activity_venue_id=<?= $activity_venue_id ?>&type=<?= $type ?>&activity_status_id=<?= $activity_status_id ?>&dateSearchStart=<?=$dateSearchStart?>&dateSearchEnd=<?=$dateSearchEnd?>"  aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
